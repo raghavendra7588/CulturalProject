@@ -1,0 +1,29 @@
+<div class="container-fluid">
+
+
+    <div class="row">
+        <div class="col-md-8 col-8 col-sm-8">
+            <mat-form-field style="width: 100% !important;">
+                <mat-label>Reason For Rejection</mat-label>
+                <textarea matInput [(ngModel)]="newProposal.reasonForRejection"></textarea>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-md-12 col-12 col-sm-12" mat-dialog-actions align="end">
+            <button mat-raised-button color="primary" [disabled]="!newProposal.reasonForRejection" (click)="openModal(template)">Confirm</button>
+            <button mat-raised-button color="warn" mat-dialog-close>Cancel</button>
+
+        </div>
+    </div>
+</div>
+
+
+<ng-template #template>
+    <div class="modal-body text-center">
+        <p>Are You Sure You Want To Reject this Artist ?</p>
+        <button type="button" class="btn btn-primary mr-1" (click)="confirm()">Confirm</button>
+        <button type="button" class="btn btn-danger" (click)="decline()">Cancel</button>
+    </div>
+</ng-template>

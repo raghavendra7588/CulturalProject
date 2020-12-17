@@ -1,0 +1,9 @@
+/* .mat-input-element::placeholder{
+    color: red;
+ } */
+
+ 
+ .required:after {
+    content:" *";
+    color: red;
+  }

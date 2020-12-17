@@ -1,0 +1,91 @@
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-md-12 col-12 col-sm-12">
+      <h4 class="text-center" style="color:blue">Approved List (Panchayat)</h4>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 col-12 col-sm-12">
+      <mat-form-field style="width: 100%;">
+        <mat-label>Search</mat-label>
+        <input matInput (keyup)="applyFilter($event.target.value)">
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-12 col-sm-12 col-12 my-5">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+    <ng-container matColumnDef="artistCode">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Code</th>
+      <td mat-cell *matCellDef="let element"> {{element.ArtistSystemCode}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fullName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Full Name</th>
+      <td mat-cell *matCellDef="let element"> {{element.FullName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="place">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Place</th>
+      <td mat-cell *matCellDef="let element"> {{element.Place}} </td>
+    </ng-container>
+    <ng-container matColumnDef="approvalStatus">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+      <td mat-cell *matCellDef="let element"> {{element.StatusName}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="view">
+      <th mat-header-cell *matHeaderCellDef [hidden]="show">view</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button (click)="viewEmployee(element)">
+          <mat-icon class="mat-18">remove_red_eye</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+
+
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef>edit</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button (click)="editUser(element)">
+          <mat-icon class="mat-18">edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="hold">
+      <th mat-header-cell *matHeaderCellDef>Hold</th>
+      <td mat-cell *matCellDef="let element">
+        <!-- <button mat-icon-button (click)="openModal(template,element)" mat-raised-button color="primary">
+          Hold
+        </button> -->
+
+        <button mat-icon-button (click)="onHoldEmployee(element)" mat-raised-button color="primary">
+          Hold
+        </button>
+      </td>
+    </ng-container>
+
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Are You Sure You Want To Hold this Artist ?</p>
+    <button type="button" class="btn btn-primary mr-1" (click)="confirm()">Yes</button>
+    <button type="button" class="btn btn-danger" (click)="decline()">No</button>
+  </div>
+</ng-template>

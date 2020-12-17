@@ -1,0 +1,133 @@
+<!-- <app-header *ngIf="basicUserService.isLoggedIn()"></app-header>
+
+<router-outlet></router-outlet> -->
+
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
+  <mat-toolbar color="primary" class="example-toolbar" *ngIf="basicUserService.isLoggedIn()">
+    <button mat-icon-button (click)="snav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span class="example-spacer"></span>
+    <h3 style="color:white;">{{welcome}} {{userName |uppercase}}</h3>
+
+  </mat-toolbar>
+
+  <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
+      fixedTopGap="56">
+      <!-- <mat-nav-list *ngIf="preferredLanguage === 'true'"> -->
+      <mat-nav-list>
+        <ng-container *ngIf="role === 'ADMIN' || role === 'STATE' || role === 'DISTRICT' || role === 'GRAMPANCHAYAT' ">
+          <h3 class="font-weight-bold text-center">{{welcome}} {{userName |uppercase}}</h3>
+          <h4 class="font-weight-bold text-center" style="color: blue;">{{districtName}}</h4>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+
+        <a mat-list-item (click)="navigateToDashboard()">Dashboard</a>
+        <mat-divider class="my-2"></mat-divider>
+
+        <ng-container *ngIf="role === 'ADMIN' || role === 'STATE'">
+          <h3 class="text-center font-weight-bold">Create User</h3>
+          <a mat-list-item routerLink='add/user'>Create New User</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+        <ng-container *ngIf="role === 'ADMIN'">
+          <h3 class="text-center font-weight-bold">User Management</h3>
+          <a mat-list-item>Admin</a>
+          <a mat-list-item>State</a>
+          <a mat-list-item>District</a>
+          <a mat-list-item>Panchayat</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+        <ng-container *ngIf="role === 'STATE' || role === 'DISTRICT' || role === 'GRAMPANCHAYAT'">
+          <h3 class="text-center font-weight-bold">Access Management</h3>
+          <a mat-list-item *ngIf="role === 'GRAMPANCHAYAT' " routerLink="details/personalDetails">New Member
+            Addition</a>
+          <a mat-list-item *ngIf="role === 'GRAMPANCHAYAT' " routerLink="panchayat/existingMemberAlteration">Existing
+            Member
+            Altration</a>
+
+          <a mat-list-item *ngIf=" role === 'DISTRICT' " routerLink="district/newApprovals"> New Approvals</a>
+          <a mat-list-item *ngIf=" role === 'DISTRICT' || role === 'STATE'" routerLink="district/approvedList"> Approved
+            List</a>
+          <a mat-list-item *ngIf=" role === 'GRAMPANCHAYAT' " routerLink="panchayat/approvedList"> Approved List</a>
+          <a mat-list-item *ngIf=" role === 'DISTRICT' || role === 'GRAMPANCHAYAT'" routerLink="approvalsOnHold">
+            Approvals On
+            Hold</a>
+
+          <a mat-list-item *ngIf=" role === 'DISTRICT' " routerLink="editOrHoldDistrict"> Edit List At District</a>
+          <a mat-list-item *ngIf=" role === 'DISTRICT' ||  role === 'GRAMPANCHAYAT' " routerLink="requestToPutOnHold">
+            Request To Edit / Hold / Release</a>
+          <a mat-list-item *ngIf=" role === 'DISTRICT' || role === 'GRAMPANCHAYAT' ||role === 'STATE'"
+            routerLink="onHold"> List On
+            Hold</a>
+          <a mat-list-item *ngIf=" role === 'DISTRICT' || role === 'GRAMPANCHAYAT' "
+            routerLink="requestToRemoveFromHold"> Req To Remove
+            From Hold
+          </a>
+
+
+          <a mat-list-item *ngIf=" role === 'DISTRICT' || role === 'STATE' || role === 'GRAMPANCHAYAT' "
+            routerLink='listOfRejectedMembers'>List of
+            Rejected Members</a>
+
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+        <ng-container *ngIf="role === 'GRAMPANCHAYAT' ">
+          <h3 class="text-center font-weight-bold">Artist Category</h3>
+          <a mat-list-item routerLink="panchayat/gradeA">Category A</a>
+          <a mat-list-item routerLink="panchayat/gradeB">Category B</a>
+          <a mat-list-item routerLink="panchayat/gradeC">Category C</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+        <ng-container *ngIf="role === 'ADMIN' || role === 'STATE'">
+          <h3 class="text-center font-weight-bold">Role Management</h3>
+          <a mat-list-item routerLink="role/State" *ngIf="role === 'ADMIN' ">State</a>
+          <a mat-list-item routerLink="role/District" *ngIf="role === 'STATE'">District</a>
+          <a mat-list-item routerLink="role/Panchayat" *ngIf="role === 'STATE'">Panchayat</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+        <ng-container *ngIf="role === 'ADMIN' || role === 'STATE' ">
+          <h3 class="text-center font-weight-bold">Data Rights</h3>
+          <a mat-list-item>View</a>
+          <a mat-list-item>Edit</a>
+          <a mat-list-item>Update</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+        <ng-container *ngIf="role === 'GRAMPANCHAYAT' ||role === 'DISTRICT'">
+          <h3 class="text-center font-weight-bold">Forms</h3>
+          <a mat-list-item (click)="navigateToPersonalDetailsEnglish()">Praposal Form</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+        <!-- <ng-container *ngIf="role === 'GRAMPANCHAYAT' ||role === 'DISTRICT'">
+          <h3 class="text-center font-weight-bold">Forms</h3>
+          <a mat-list-item (click)="navigateToPersonalDetailsMarathi()">प्रस्ताव फॉर्म</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container> -->
+
+        <ng-container *ngIf="role === 'GRAMPANCHAYAT' || role === 'DISTRICT' ">
+          <h3 class="text-center font-weight-bold">Reports</h3>
+          <a mat-list-item>Sample Report</a>
+          <a mat-list-item>Sample Report</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+        <a mat-list-item (click)="changePassword()">Change Password</a>
+        <a mat-list-item (click)="[isLogout(),snav.close()]">Logout</a>
+
+      </mat-nav-list>
+
+
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

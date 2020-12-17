@@ -1,0 +1,24 @@
+.bg-orange {
+    background-color: #ffb327;
+    color:#fff;
+    height: 130px;
+  }
+  
+  .bg-green {
+    background-color: #5cb85c;
+    color:#fff;
+    height: 130px;
+  }
+  
+  .bg-red {
+    background-color:  #d9534f;
+    color:#fff;
+    height: 130px;
+  }
+  
+  .bg-blue {
+    background-color: #337ab7;
+    color:#fff;
+    height: 130px;
+  }
+  
