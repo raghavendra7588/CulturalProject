@@ -37,11 +37,31 @@ export class AppComponent {
     public router: Router,
     public employeeService: EmployeesService
   ) {
-    // this.emitterService.isLanguageChanged.subscribe(val => {
-    //   this.preferredLanguage = sessionStorage.getItem('language');
-    // });
+
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
+
+    if ("language" in sessionStorage) {
+      this.preferredLanguage = sessionStorage.getItem('language');
+      // this.spinner.show();
+    }
+
+    if ("districtName" in sessionStorage) {
+      this.districtName = sessionStorage.getItem('districtName');
+
+    }
     this.getDistrictMastersData();
     this.emitterService.isLoggedIn.subscribe(val => {
+
+      if (val) {
+        if ("Name" in sessionStorage) {
+          this.userName = sessionStorage.getItem('Name');
+        }
+      }
+
+
+
       if ("role" in sessionStorage) {
         this.role = sessionStorage.getItem('role');
         this.districtId = Number(sessionStorage.getItem('DistrictId'));
@@ -56,27 +76,10 @@ export class AppComponent {
         else {
           return;
         }
-
-
       }
-      // this.userName = sessionStorage.getItem('Name');
+
     });
-    this.mobileQuery = media.matchMedia('(max-width: 600px)');
-    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-    this.mobileQuery.addListener(this._mobileQueryListener);
 
-    if ("language" in sessionStorage) {
-      this.preferredLanguage = sessionStorage.getItem('language');
-      // this.spinner.show();
-    }
-    if ("Name" in sessionStorage) {
-      this.userName = sessionStorage.getItem('Name');
-
-    }
-    if ("districtName" in sessionStorage) {
-      this.districtName  = sessionStorage.getItem('districtName');
-
-    }
   }
 
 

@@ -45,28 +45,28 @@
           <h3 class="text-center font-weight-bold">Access Management</h3>
           <a mat-list-item *ngIf="role === 'GRAMPANCHAYAT' " routerLink="details/personalDetails">New Member
             Addition</a>
-          <a mat-list-item *ngIf="role === 'GRAMPANCHAYAT' " routerLink="panchayat/existingMemberAlteration">Existing
+          <!-- <a mat-list-item *ngIf="role === 'GRAMPANCHAYAT' " routerLink="panchayat/existingMemberAlteration">Existing
             Member
-            Altration</a>
+            Altration</a> -->
 
           <a mat-list-item *ngIf=" role === 'DISTRICT' " routerLink="district/newApprovals"> New Approvals</a>
           <a mat-list-item *ngIf=" role === 'DISTRICT' || role === 'STATE'" routerLink="district/approvedList"> Approved
             List</a>
           <a mat-list-item *ngIf=" role === 'GRAMPANCHAYAT' " routerLink="panchayat/approvedList"> Approved List</a>
-          <a mat-list-item *ngIf=" role === 'DISTRICT' || role === 'GRAMPANCHAYAT'" routerLink="approvalsOnHold">
+          <!-- <a mat-list-item *ngIf=" role === 'DISTRICT' || role === 'GRAMPANCHAYAT'" routerLink="approvalsOnHold">
             Approvals On
-            Hold</a>
+            Hold</a> -->
 
-          <a mat-list-item *ngIf=" role === 'DISTRICT' " routerLink="editOrHoldDistrict"> Edit List At District</a>
+          <!-- <a mat-list-item *ngIf=" role === 'DISTRICT' " routerLink="editOrHoldDistrict"> Edit List At District</a> -->
           <a mat-list-item *ngIf=" role === 'DISTRICT' ||  role === 'GRAMPANCHAYAT' " routerLink="requestToPutOnHold">
             Request To Edit / Hold / Release</a>
           <a mat-list-item *ngIf=" role === 'DISTRICT' || role === 'GRAMPANCHAYAT' ||role === 'STATE'"
             routerLink="onHold"> List On
             Hold</a>
-          <a mat-list-item *ngIf=" role === 'DISTRICT' || role === 'GRAMPANCHAYAT' "
+          <!-- <a mat-list-item *ngIf=" role === 'DISTRICT' || role === 'GRAMPANCHAYAT' "
             routerLink="requestToRemoveFromHold"> Req To Remove
             From Hold
-          </a>
+          </a> -->
 
 
           <a mat-list-item *ngIf=" role === 'DISTRICT' || role === 'STATE' || role === 'GRAMPANCHAYAT' "
