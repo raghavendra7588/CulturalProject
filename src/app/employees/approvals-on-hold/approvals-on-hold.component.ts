@@ -58,7 +58,7 @@ export class ApprovalsOnHoldComponent implements OnInit {
 
   getOnHoldMemebersByPanchayat(userId) {
     this.employeeService.getListOfOnHolMembersByPanchyat(userId).subscribe(res => {
-      console.log(res);
+   
       this.onHoldData = res;
       let uniquePersonalDetailsData = _.uniqBy(this.onHoldData, 'id');
       this.onHoldData = uniquePersonalDetailsData;
@@ -69,7 +69,7 @@ export class ApprovalsOnHoldComponent implements OnInit {
 
   getOnHoldMemebersAtDistrict(userId) {
     this.employeeService.getListOfOnHolMembersAtPanchayatData(userId).subscribe(res => {
-      console.log(res);
+
       this.onHoldData = res;
       let uniquePersonalDetailsData = _.uniqBy(this.onHoldData, 'id');
       this.onHoldData = uniquePersonalDetailsData;

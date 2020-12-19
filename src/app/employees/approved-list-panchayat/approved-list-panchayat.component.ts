@@ -120,7 +120,6 @@ export class ApprovedListPanchayatComponent implements OnInit {
   confirm(): void {
     this.message = 'Confirmed!';
     this.onHoldProposalForm.id = this.selectedArtist.id;
-    console.log('this.onHoldProposalForm', this.onHoldProposalForm);
     this.employeeService.postOnHoldByPanchayat(this.onHoldProposalForm).subscribe(res => {
       this.toastr.success('Artist OnHolded Successfully');
       this.emitterService.isPanchyatArtistPuttedOnHold.emit(true);

@@ -77,7 +77,6 @@ export class DialogAddUserMasterComponent implements OnInit {
 
   selectedIsActiveFromList(response) {
 
-    console.log(this.userMaster.isActive);
   }
 
   selectedRoleFromList(response) {
@@ -93,7 +92,7 @@ export class DialogAddUserMasterComponent implements OnInit {
   }
 
   selectedDistrictFromList(response) {
-    console.log('PanchyatName', this.userMaster.PanchyatName);
+    //console.log('PanchyatName', this.userMaster.PanchyatName);
   }
 
   getRoleMastersData(roleId) {
@@ -143,7 +142,7 @@ export class DialogAddUserMasterComponent implements OnInit {
       }
 
     }
-    console.log(this.userMaster);
+   
     this.employeeService.saveUserMasterData(this.userMaster).subscribe(res => {
       this.emitterService.isUserMasterCreated.emit(true);
       this.toastr.success('Record Submitted');
@@ -153,7 +152,7 @@ export class DialogAddUserMasterComponent implements OnInit {
 
   assignValues() {
     if (this.userResponse) {
-      console.log('user response', this.userResponse);
+     
       this.userMaster.roleId = this.userResponse.RoleId;
       this.userMaster.name = this.userResponse.Name;
       this.userMaster.userName = this.userResponse.UserName;

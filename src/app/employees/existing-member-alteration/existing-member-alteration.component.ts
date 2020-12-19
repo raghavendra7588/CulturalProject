@@ -40,7 +40,6 @@ export class ExistingMemberAlterationComponent implements OnInit {
 
     this.emitterService.isPersonalDataCreated.subscribe(value => {
       if (value) {
-        console.log('personal data created');
         this.getExistingMemberAlterationData(this.userId);
         this.dataSource.paginator = this.paginator;
       }

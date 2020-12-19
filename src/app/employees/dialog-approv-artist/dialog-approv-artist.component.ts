@@ -99,11 +99,8 @@ export class DialogApprovArtistComponent implements OnInit {
 
   getStatusMaster() {
     this.employeeService.getStatusMasterData().subscribe(res => {
-
       this.statusMaster = res;
       this.submittedByPanchayat = this.statusMaster[5].StatusId;
-      console.log('5', this.statusMaster[5]);
-      console.log('5', this.submittedByPanchayat);
     });
   }
 } 

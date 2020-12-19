@@ -214,7 +214,6 @@ export class DialogPersonalDetailComponent implements OnInit {
       this.preferredLanguage = sessionStorage.getItem('language');
     });
 
-    console.log(this.router.url);
     let getAction = sessionStorage.getItem('action');
     if (this.router.url === '/panchayat/approvedList' && getAction === 'editByPanchayat') {
       this.isExisitingEdit = true;
@@ -280,7 +279,7 @@ export class DialogPersonalDetailComponent implements OnInit {
   saveEmployee() {
     const formData = new FormData();
     if (this.personalDetailsData) {
-      console.log('existing member registration');
+
       this.personalDetails.id = this.personalDetails.id;
       formData.append('id', this.personalDetails.id.toString());
       formData.append('statusId', this.reqForEditForPanchayat.toString());
@@ -611,7 +610,6 @@ export class DialogPersonalDetailComponent implements OnInit {
     this.personalDetails.fullname = [...new Set(this.personalDetails.fullname.split(" "))].join(" ");
     formData.append('fullname', this.personalDetails.fullname);
 
-    console.log(this.personalDetails.fullname.trim());
     formData.append('createdBy', this.userId.toString());
 
     this.employeeService.saveProposalFormData(formData).subscribe(response => {
@@ -715,7 +713,7 @@ export class DialogPersonalDetailComponent implements OnInit {
     const stringDate = [day, month, year].join("/");
     let fullDate = stringDate;
     this.personalDetails.applicationDate = fullDate
-    console.log('fulldate', fullDate);
+
     return fullDate
   }
 
@@ -758,7 +756,7 @@ export class DialogPersonalDetailComponent implements OnInit {
       this.isDateOfBirthProof = true;
 
     }
-    console.log(this.dobFiles);
+
   }
 
   getMahrashtraResidenceFileDetails(e) {
@@ -910,7 +908,6 @@ export class DialogPersonalDetailComponent implements OnInit {
         let filtredStr = x;
         var newStr = filtredStr.replace(/,/g, ' ');
         this.personalDetails.fullname = newStr;
-        console.log(this.personalDetails.fullname);
       }
 
     }

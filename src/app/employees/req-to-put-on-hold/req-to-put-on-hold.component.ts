@@ -81,7 +81,6 @@ export class ReqToPutOnHoldComponent implements OnInit {
 
   getRequestToPutOnHoldDataByDistrict(userId) {
     this.employeeService.getReqToPutOnHoldAtDistrict(userId).subscribe(res => {
-      console.log(res);
       this.putOnHoldData = res;
       let uniquePersonalDetailsData = _.uniqBy(this.putOnHoldData, 'id');
       this.putOnHoldData = uniquePersonalDetailsData;
@@ -94,7 +93,6 @@ export class ReqToPutOnHoldComponent implements OnInit {
 
   getRequestToPutOnHoldDataByPanchayat(userId) {
     this.employeeService.getReqToPutOnHoldAtPanchayat(userId).subscribe(res => {
-      console.log(res);
       this.putOnHoldData = res;
       let uniquePersonalDetailsData = _.uniqBy(this.putOnHoldData, 'id');
       this.putOnHoldData = uniquePersonalDetailsData;
@@ -105,7 +103,6 @@ export class ReqToPutOnHoldComponent implements OnInit {
 
   getRequestToPutOnHoldByState() {
     this.employeeService.getRequestToPutOnHoldByState().subscribe(res => {
-      console.log(res);
       this.putOnHoldData = res;
       let uniquePersonalDetailsData = _.uniqBy(this.putOnHoldData, 'id');
       this.putOnHoldData = uniquePersonalDetailsData;
@@ -132,7 +129,6 @@ export class ReqToPutOnHoldComponent implements OnInit {
 
 
   selectedPanchyatFromList(panchayat) {
-    console.log('panchayat', panchayat);
     this.dynamicStateApproved.panchayatName = panchayat.PanchyatId;
 
   }
@@ -153,7 +149,6 @@ export class ReqToPutOnHoldComponent implements OnInit {
   }
 
   searchRecord() {
-    console.log('search records ', this.dynamicStateApproved);
     this.dynamicStateApproved.roleName = sessionStorage.getItem('role');
     if (this.dynamicStateApproved.districtId === null || this.dynamicStateApproved.districtId === undefined) {
       this.dynamicStateApproved.districtId = 0;

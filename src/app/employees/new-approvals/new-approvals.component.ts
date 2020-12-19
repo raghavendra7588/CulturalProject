@@ -45,7 +45,7 @@ export class NewApprovalsComponent implements OnInit {
 
     if (this.role === 'DISTRICT') {
       this.displayedColumns = ['artistCode', 'fullName', 'place', 'approvalStatus', 'actionTakenBy', 'createdBy', 'view'];
-      // this.displayedColumns = ['artistCode', 'fullName', 'place', 'approvalStatus', 'view'];
+
       this.isDistrict = true;
       this.getPersonalDetailsData();
     }

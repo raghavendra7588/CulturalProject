@@ -259,7 +259,7 @@ export class DialogViewProposalFormComponent implements OnInit {
       reasonToHoldByDistrict: [''],
       reasonForRequestToRemoveFromHoldByPanchayat: ['']
     });
-    console.log('personal details data', this.personalDetailsData);
+
     this.role = sessionStorage.getItem('role');
 
     this.personalDetailsData = data;
@@ -371,7 +371,7 @@ export class DialogViewProposalFormComponent implements OnInit {
 
 
     let action = sessionStorage.getItem('action');
-    console.log(this.router.url);
+
 
     this.emitterService.isApproved.subscribe(val => {
 
@@ -433,7 +433,7 @@ export class DialogViewProposalFormComponent implements OnInit {
 
 
   assignValues() {
-    console.log('personalDetailsData', this.personalDetailsData);
+ 
     this.personalDetails.artistSystemCode = this.personalDetailsData.ArtistSystemCode;
     this.personalDetails.firstName = this.personalDetailsData.FirstName;
     this.personalDetails.middleName = this.personalDetailsData.MiddleName;
@@ -548,7 +548,7 @@ export class DialogViewProposalFormComponent implements OnInit {
       this.toastr.success('Date Of Birth Proof Uploaded');
       this.isDateOfBirthProof = true;
     }
-    console.log(this.dobFiles);
+
   }
 
   getMahrashtraResidenceFileDetails(e) {
@@ -728,8 +728,6 @@ export class DialogViewProposalFormComponent implements OnInit {
 
       this.approvalForEditByDistrictId = this.statusMaster[14].StatusId;
       this.reqToRemoveFromHoldByPanchayat = this.statusMaster[13].StatusId;
-      console.log('reqToRemoveFromHoldByPanchayat', this.reqToRemoveFromHoldByPanchayat);
-      console.log('**', this.statusMaster[13]);
     });
   }
 
@@ -738,7 +736,7 @@ export class DialogViewProposalFormComponent implements OnInit {
     this.onHoldArtistByDistrict.id = Number(this.personalDetailsData.id);
     this.onHoldArtistByDistrict.userId = Number(this.userId);
     this.onHoldArtistByDistrict.statusId = this.holdByDistrict;
-    console.log('final obj', this.onHoldArtistByDistrict);
+
     this.employeeService.postArtistToHoldByDistrict(this.onHoldArtistByDistrict).subscribe(res => {
       this.toastr.success('On Holded Successfully');
       this.emitterService.isApproved.emit(true);
@@ -811,7 +809,7 @@ export class DialogViewProposalFormComponent implements OnInit {
 
   openModalForApprovForEditByDistricT(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
-    console.log('req to hold this artist', this.personalDetailsData);
+  
   }
 
   confirmForEditByDistrict(): void {
@@ -821,7 +819,7 @@ export class DialogViewProposalFormComponent implements OnInit {
     this.approvalForEditByDistrict.userId = Number(this.userId);
     this.approvalForEditByDistrict.ReasonForApprovedForEditByDistrict = this.personalDetails.reasonForApprovedToEditByDistrict;
 
-    console.log(this.approvalForEditByDistrict);
+  
 
     this.employeeService.postApprovToEditByDistrict(this.approvalForEditByDistrict).subscribe(res => {
       this.toastr.success('Approved For Edit Successfully');
@@ -844,8 +842,6 @@ export class DialogViewProposalFormComponent implements OnInit {
     this.reqToHoldArtistToHold.StatusId = Number(this.onHoldByDistrict);
     this.reqToHoldArtistToHold.userId = Number(this.userId);
     this.reqToHoldArtistToHold.ReasonForApprovedForGetReqToHoldActionByDistrict = this.personalDetails.reasonToHoldByDistrict;
-
-    console.log(this.reqToHoldArtistToHold);
 
     this.employeeService.postApprovToHoldToHoldByDistrict(this.reqToHoldArtistToHold).subscribe(res => {
       this.toastr.success('Holded Artist Successfully');

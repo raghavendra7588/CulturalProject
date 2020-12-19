@@ -35,11 +35,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     media: MediaMatcher
   ) {
     this.emitterService.isLanguageChanged.subscribe(val => {
-      // if (val) {
-
       this.preferredLanguage = sessionStorage.getItem('language');
-   
-      // }
+  
     });
 
     this.mobileQuery = media.matchMedia('(max-width: 600px)');

@@ -129,7 +129,6 @@ export class ListOfRejectedMembersComponent implements OnInit {
   }
 
   searchRecord() {
-    console.log(this.dynamicStateApproved);
     if (this.dynamicStateApproved.districtId === null || this.dynamicStateApproved.districtId === undefined) {
       this.dynamicStateApproved.districtId = 0;
     }

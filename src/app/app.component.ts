@@ -109,7 +109,6 @@ export class AppComponent {
 
   isLogout() {
     sessionStorage.clear();
-    //this.drawer.close();
     this.router.navigate(['/login']);
   }
 

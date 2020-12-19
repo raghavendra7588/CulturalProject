@@ -50,7 +50,6 @@ export class PersonalDetailsComponent implements OnInit {
 
     this.emitterService.isPersonalDataCreated.subscribe(value => {
       if (value) {
-        console.log('personal data created');
         this.getPersonalDetailsData();
         this.dataSource.paginator = this.paginator;
       }

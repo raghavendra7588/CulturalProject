@@ -61,7 +61,7 @@ export class DialogRoleManagementComponent implements OnInit {
     this.userResponse = data;
   
     this.userId = Number(sessionStorage.getItem('userId'));
-    console.log(this.router.url);
+
 
     if (this.router.url === '/role/Panchayat') {
       this.isDistrictSelected = true;
@@ -93,7 +93,7 @@ export class DialogRoleManagementComponent implements OnInit {
 
 
   selectedIsActiveFromList(response) {
-    console.log(this.userMaster.isActive);
+    //console.log(this.userMaster.isActive);
   }
 
 
