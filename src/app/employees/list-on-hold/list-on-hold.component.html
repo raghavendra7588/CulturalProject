@@ -64,7 +64,17 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
             <td mat-cell *matCellDef="let element"> {{element.StatusName}} </td>
         </ng-container>
+        <ng-container matColumnDef="holdBy">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Hold By</th>
+            <td mat-cell *matCellDef="let element"> {{element.UserName}} </td>
+        </ng-container>
 
+
+        <ng-container matColumnDef="holdAt">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Hold At</th>
+            <td mat-cell *matCellDef="let element"> {{element.ReasonForApprovedForGetReqToHoldActionByDistrictByAt}}
+            </td>
+        </ng-container>
 
         <ng-container matColumnDef="view">
             <th mat-header-cell *matHeaderCellDef [hidden]="show">view</th>
@@ -105,6 +115,17 @@
             <td mat-cell *matCellDef="let element"> {{element.StatusName}} </td>
         </ng-container>
 
+        <ng-container matColumnDef="holdBy">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Hold By</th>
+            <td mat-cell *matCellDef="let element"> {{element.UserName}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="holdAt">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Hold At</th>
+            <td mat-cell *matCellDef="let element"> {{element.ReasonForApprovedForGetReqToHoldActionByDistrictByAt}}
+            </td>
+        </ng-container>
 
         <ng-container matColumnDef="view">
             <th mat-header-cell *matHeaderCellDef [hidden]="show">view</th>
@@ -118,10 +139,6 @@
         <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef>Hold</th>
             <td mat-cell *matCellDef="let element">
-                <!-- <button mat-icon-button (click)="openModal(template,element)" mat-raised-button color="primary">
-                    Req
-                </button> -->
-                
                 <button mat-icon-button (click)="viewEmployee(element)" mat-raised-button color="primary">
                     Req
                 </button>
@@ -147,6 +164,10 @@
             <td mat-cell *matCellDef="let element"> {{element.FullName}} </td>
         </ng-container>
 
+        <ng-container matColumnDef="district">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>District</th>
+            <td mat-cell *matCellDef="let element"> {{element.DistrictName}} </td>
+        </ng-container>
 
         <ng-container matColumnDef="place">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Place</th>
@@ -167,16 +188,6 @@
                 </button>
             </td>
         </ng-container>
-
-        <!-- <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef>Hold</th>
-            <td mat-cell *matCellDef="let element">
-                <button mat-icon-button (click)="openModal(template,element)" mat-raised-button color="primary">
-                    Req
-                </button>
-            </td>
-        </ng-container> -->
-
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>

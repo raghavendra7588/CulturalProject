@@ -16,8 +16,6 @@ export class ReasonForRejectionComponent implements OnInit {
   modalRef: BsModalRef;
   message: string;
   artistResponse: any;
-
-  //newProposal: ProposalFormRejection = new ProposalFormRejection();
   newProposal: NewProposalBL = new NewProposalBL();
   userId: string;
   gradeArray: any = [];
@@ -78,7 +76,6 @@ export class ReasonForRejectionComponent implements OnInit {
     this.employeeService.getStatusMasterData().subscribe(res => {
       this.statusMaster = res;
       this.rejectStatusCode = this.statusMaster[6].StatusId;
-      console.log('6', this.statusMaster[6]);
     });
   }
 

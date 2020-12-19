@@ -271,10 +271,6 @@ export class DialogViewProposalFormComponent implements OnInit {
     if (this.personalDetailsData && this.role === 'DISTRICT') {
       this.currentStatusId = this.personalDetailsData.StatusId;
       this.currentStatusName = this.personalDetailsData.StatusNamee;
-
-      console.log('currentStatusId', this.currentStatusId);
-      console.log('currentStatusName', this.currentStatusName);
-
       this.isApprovedListRoute = false;
       this.closeButtonOnly = false;
     }
@@ -283,16 +279,10 @@ export class DialogViewProposalFormComponent implements OnInit {
       this.currentStatusId = this.personalDetailsData.StatusId;
       this.currentStatusName = this.personalDetailsData.StatusName;
 
-      console.log('currentStatusId', this.currentStatusId);
-      console.log('currentStatusName', this.currentStatusName);
-
       this.isApprovedListRoute = false;
       this.closeButtonOnly = false;
     }
-    // else {
-    //   this.isApprovedListRoute = true;
-    //   this.closeButtonOnly = false;
-    // }
+
     if (this.router.url === '/requestToPutOnHold' && this.role === 'GRAMPANCHAYAT') {
       this.isApprovedListRoute = true;
       this.closeButtonOnly = true;
@@ -309,7 +299,6 @@ export class DialogViewProposalFormComponent implements OnInit {
     });
     this.role = sessionStorage.getItem('role');
 
-    // || this.router.url === '/onHold'
 
     if (this.router.url === '/district/approvedList' || this.router.url === '/panchayat/gradeA' || this.router.url === '/panchayat/gradeB' ||
       this.router.url === '/panchayat/gradeC' || this.router.url === '/panchayat/existingMemberAlteration'
@@ -319,7 +308,7 @@ export class DialogViewProposalFormComponent implements OnInit {
       this.isNewApprovalsRoute = false;
       this.isApprovalsOnHoldForDistrict = false;
     }
-    if (this.router.url === '/district/newApprovals') {
+    if (this.router.url === '/district/newApprovals' && this.role === 'DISTRICT') {
       this.isNewApprovalsRoute = true;
       this.isApprovedListRoute = false;
       this.isApprovalsOnHoldForDistrict = false;
@@ -345,16 +334,27 @@ export class DialogViewProposalFormComponent implements OnInit {
     if (this.router.url === '/onHold' && this.role === 'DISTRICT') {
       this.isApprovedListRoute = true;
       this.closeButtonOnly = true;
-
     }
-    // if (this.router.url === '/requestToPutOnHold' && this.role === 'DISTRICT') {
+    if ((this.router.url === '/district/newApprovals' || this.router.url === '/district/approvedList' ||
+      this.router.url === '/requestToPutOnHold' || this.router.url === '/onHold' || this.router.url === '/listOfRejectedMembers') && this.role === 'STATE') {
+      this.isApprovedListRoute = true;
+      this.closeButtonOnly = true;
+    }
 
-    //   this.isNewApprovalsRoute = false;
-    //   this.isApprovedListRoute = false;
-    //   this.isApprovalsOnHoldForDistrict = false;
-    //   this.reqToPutOnHoldByDistrict = true;
-    //   this.reqToRemoveFromHoldByDistrict = false;
-    // }
+    if (this.router.url === '/listOfRejectedMembers' && this.role === 'DISTRICT') {
+      this.isApprovedListRoute = true;
+      this.closeButtonOnly = true;
+    }
+
+     if (this.router.url === '/listOfRejectedMembers' && this.role === 'DISTRICT') {
+      this.isApprovedListRoute = true;
+      this.closeButtonOnly = true;
+    }
+
+    if (this.router.url === '/listOfRejectedMembers' && this.role === 'GRAMPANCHAYAT') {
+      this.isApprovedListRoute = true;
+      this.closeButtonOnly = true;
+    }
 
     if (this.router.url === '/requestToRemoveFromHold' && this.role === 'DISTRICT') {
 
@@ -371,17 +371,6 @@ export class DialogViewProposalFormComponent implements OnInit {
 
 
     let action = sessionStorage.getItem('action');
-
-    // if (this.router.url === '/panchayat/approvedList' && action === 'onHoldByPanchayat') {
-
-    //   this.isNewApprovalsRoute = false;
-    //   this.isApprovedListRoute = false;
-    //   this.isApprovalsOnHoldForDistrict = false;
-    //   this.reqToPutOnHoldByDistrict = false;
-    //   this.reqToRemoveFromHoldByDistrict = false;
-    //   this.ReqputToPutOnHold = true;
-    // }
-
     console.log(this.router.url);
 
     this.emitterService.isApproved.subscribe(val => {
@@ -450,12 +439,7 @@ export class DialogViewProposalFormComponent implements OnInit {
     this.personalDetails.middleName = this.personalDetailsData.MiddleName;
     this.personalDetails.lastName = this.personalDetailsData.LastName;
     this.personalDetails.dob = new Date(this.personalDetailsData.DOB);
-    // let appcltnDate = new Date(this.personalDetailsData.ApplicationDate);
-    // console.log('appcltn date', appcltnDate);
-    // this.savePersonalDetailsForm.controls.applicationDate.setValue(appcltnDate);
     this.personalDetails.applicationDate = new Date(this.personalDetailsData.ApplicationDate);
-
-    console.log('personalDetails.applicationDate', this.personalDetails.applicationDate);
     this.personalDetails.annualIncome = this.personalDetailsData.AnnualIncome;
     this.personalDetails.artType = this.personalDetailsData.ArtType;
     this.personalDetails.periodOfWork = this.personalDetailsData.PeriodOfWork;
@@ -481,7 +465,6 @@ export class DialogViewProposalFormComponent implements OnInit {
     this.personalDetails.dependentFamilyMemberCount = this.personalDetailsData.DependentFamilyMemberCount;
     this.personalDetails.artLocations = this.personalDetailsData.ArtLocations;
     this.personalDetails.workDetails = this.personalDetailsData.WorkDetails;;
-    // this.personalDetails.applicationDate = new Date(this.personalDetailsData.ApplicationDate);
     this.personalDetails.fullname = this.personalDetailsData.FullName;
     this.personalDetails.gender = this.personalDetailsData.Gender;
     this.personalDetails.pinCode = this.personalDetailsData.PinCode;
@@ -564,7 +547,6 @@ export class DialogViewProposalFormComponent implements OnInit {
       this.dobFiles.push(e.target.files[i]);
       this.toastr.success('Date Of Birth Proof Uploaded');
       this.isDateOfBirthProof = true;
-      // console.log('dob', e.target.files[i].name);
     }
     console.log(this.dobFiles);
   }
@@ -574,7 +556,7 @@ export class DialogViewProposalFormComponent implements OnInit {
       this.maharashtraResidentFiles.push(e.target.files[i]);
       this.toastr.success('Maharashtra Residence Proof Uploaded');
       this.isMaharashtraResidentProof = true;
-      // console.log('Mahrashtra Residence', e.target.files[i].name);
+
     }
   }
   getannualIncomeFileDetails(e) {
@@ -583,7 +565,6 @@ export class DialogViewProposalFormComponent implements OnInit {
       this.toastr.success('Annual Income Proof Uploaded');
       this.isAnnualIncomeProof = true;
     }
-    console.log(this.annualIncomeFiles);
   }
 
   getIllHandicapedFileDetails(e) {
@@ -592,7 +573,6 @@ export class DialogViewProposalFormComponent implements OnInit {
       this.toastr.success('Ill Handicaped Proof Uploaded');
       this.isIllnessHandicapedProof = true;
     }
-    console.log(this.IllnessFiles);
   }
 
   getGovtRecognisitionFileDetails(e) {
@@ -766,34 +746,13 @@ export class DialogViewProposalFormComponent implements OnInit {
     });
   }
 
-  // openModal(template: TemplateRef<any>) {
-  //   this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
-  // }
-
-  // confirm(): void {
-  //   this.message = 'Confirmed!';
-  //   this.newProposal.grade = "";
-  //   this.newProposal.status = "REJECTED";
-  //   this.employeeService.updateNewProposalFormData(this.newProposal).subscribe(res => {
-  //     this.toastr.error('Rejected Successfully');
-  //     this.emitterService.isApproved.emit(true);
-  //     this.dialogRef.close();
-  //   });
-  //   this.modalRef.hide();
-  // }
-
-  // decline(): void {
-  //   this.message = 'Declined!';
-  //   this.modalRef.hide();
-  // }
-
 
 
   releaseHold() {
     this.onApprovArtistByDistrict.id = Number(this.personalDetailsData.id);
     this.onApprovArtistByDistrict.userId = Number(this.userId);
     this.onApprovArtistByDistrict.statusId = this.approvedByDistrict;
-    console.log('final obj **', this.onApprovArtistByDistrict);
+   
     this.employeeService.postArtistToApprovByDistrict(this.onApprovArtistByDistrict).subscribe(res => {
       this.toastr.success('On Approved Successfully');
       this.emitterService.isApproved.emit(true);
@@ -807,8 +766,6 @@ export class DialogViewProposalFormComponent implements OnInit {
     this.reqToRemoveFromHoldToApproved.userId = Number(this.userId);
 
     this.reqToRemoveFromHoldToApproved.ReasonForApprovedForGetReqToReleaseActionByDistrict = this.personalDetails.reasonToRemoveFromHoldByDistrict;
-
-    console.log('reqToRemoveFromHoldToApproved', this.reqToRemoveFromHoldToApproved);
     this.employeeService.postArtistToReqToHoldToApprovByDistrict(this.reqToRemoveFromHoldToApproved).subscribe(res => {
       this.toastr.success('On Approved Successfully');
       this.emitterService.isApproved.emit(true);
@@ -821,9 +778,6 @@ export class DialogViewProposalFormComponent implements OnInit {
     this.reqToRemoveFromHoldToholdByDistrict.statusId = this.holdByDistrict;
     this.reqToRemoveFromHoldToholdByDistrict.userId = Number(this.userId);
 
-    console.log(this.reqToRemoveFromHoldToholdByDistrict);
-
-
     this.employeeService.postArtistToReqToHoldToHoldByDistrict(this.reqToRemoveFromHoldToholdByDistrict).subscribe(res => {
       this.toastr.success('On Holded Successfully');
       this.emitterService.isApproved.emit(true);
@@ -833,7 +787,6 @@ export class DialogViewProposalFormComponent implements OnInit {
 
   openModalForReqToPutOnHold(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
-    console.log('req to hold this artist', this.personalDetailsData);
   }
 
   confirmForReqToPutOnHold(): void {
@@ -842,8 +795,6 @@ export class DialogViewProposalFormComponent implements OnInit {
     this.onHoldProposalForm.userId = this.userId;
     this.onHoldProposalForm.statusId = this.requestForHoldByPanchayatStatusId;
     this.onHoldProposalForm.ReasonForRequestToPutOnHold = this.personalDetails.reasonForRequestToPutOnHold;
-    console.log('req', this.onHoldProposalForm);
-
 
     this.employeeService.postOnHoldByPanchayat(this.onHoldProposalForm).subscribe(res => {
       this.toastr.success('Artist OnHolded Successfully');
@@ -858,14 +809,13 @@ export class DialogViewProposalFormComponent implements OnInit {
     this.modalRef.hide();
   }
 
-  // FOR EDIT
   openModalForApprovForEditByDistricT(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
     console.log('req to hold this artist', this.personalDetailsData);
   }
 
   confirmForEditByDistrict(): void {
-    // postApprovToEditByDistrict
+
     this.approvalForEditByDistrict.id = Number(this.personalDetailsData.id);
     this.approvalForEditByDistrict.statusId = Number(this.approvedByDistrict);
     this.approvalForEditByDistrict.userId = Number(this.userId);
@@ -912,7 +862,6 @@ export class DialogViewProposalFormComponent implements OnInit {
     this.reqToPutOnHoldByPanchayat.userId = this.userId;
     this.reqToPutOnHoldByPanchayat.ReasonForReqToPutOnHoldByPanchayat = this.personalDetails.reasonForRequestToRemoveFromHoldByPanchayat;
     this.employeeService.postReqToPutOnHoldByPanchayat(this.reqToPutOnHoldByPanchayat).subscribe(res => {
-      console.log(res, 'res');
       this.toastr.success('Requested Successfully');
       this.emitterService.isApproved.emit(true);
       this.emitterService.isPanchyatArtistPuttedOnHold.emit(true);

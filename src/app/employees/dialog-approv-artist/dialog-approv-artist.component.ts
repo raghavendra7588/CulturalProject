@@ -16,7 +16,6 @@ export class DialogApprovArtistComponent implements OnInit {
   modalRef: BsModalRef;
   message: string;
   artistResponse: any;
-  // newProposal: NewProposal = new NewProposal();
   newProposal: NewProposalBL = new NewProposalBL();
   userId: string;
   gradeArray: any = [];
@@ -97,54 +96,6 @@ export class DialogApprovArtistComponent implements OnInit {
       this.newProposal.yearlyPension = '12000';
     }
   }
-  // assignData() {
-  //   if (this.artistResponse) {
-  //     this.newProposal.aadharNo = this.artistResponse.AadharNo;
-  //     this.newProposal.accountName = this.artistResponse.AccountName;
-  //     this.newProposal.accountNumber = this.artistResponse.AccountNumber;
-  //     this.newProposal.annualIncome = this.artistResponse.AnnualIncome;
-  //     this.newProposal.applicationDate = this.artistResponse.ApplicationDate;
-
-  //     this.newProposal.artLocations = this.artistResponse.ArtLocations;
-  //     this.newProposal.artType = this.artistResponse.ArtType;
-  //     this.newProposal.artistSystemCode = this.artistResponse.ArtistSystemCode;
-  //     this.newProposal.BankIFSCCode = this.artistResponse.BankIFSCCode;
-  //     this.newProposal.bankName = this.artistResponse.BankName;
-
-  //     this.newProposal.caste = this.artistResponse.Caste;
-  //     this.newProposal.city = this.artistResponse.City;
-  //     this.newProposal.contactNo1 = this.artistResponse.ContactNo1;
-  //     this.newProposal.contactNo2 = this.artistResponse.ContactNo2;
-  //     this.newProposal.dob = this.artistResponse.DOB;
-
-  //     this.newProposal.dependentFamilyMemberCount = this.artistResponse.DependentFamilyMemberCount;
-  //     this.newProposal.district = this.artistResponse.District;
-  //     this.newProposal.familyMemberCount = this.artistResponse.FamilyMemberCount;
-  //     this.newProposal.fullname = this.artistResponse.FullName;
-  //     this.newProposal.gender = this.artistResponse.Gender;
-
-  //     this.newProposal.lastName = this.artistResponse.LastName;
-  //     this.newProposal.middleName = this.artistResponse.MiddleName;
-  //     this.newProposal.panNo = this.artistResponse.PanNo;
-  //     this.newProposal.periodOfWork = this.artistResponse.PeriodOfWork;
-  //     this.newProposal.pinCode = this.artistResponse.PinCode;
-
-
-
-  //     this.newProposal.place = this.artistResponse.Place;
-  //     this.newProposal.religion = this.artistResponse.Religion;
-  //     this.newProposal.spouseName = this.artistResponse.SpouseName;
-  //     this.newProposal.status = this.artistResponse.Status;
-  //     this.newProposal.taluka = this.artistResponse.Taluka;
-
-  //     // this.newProposal.aadharNo = this.artistResponse.UserId;
-  //     this.newProposal.workDetails = this.artistResponse.WorkDetails;
-  //     // this.newProposal.aadharNo = this.artistResponse.createdAt;
-  //   }
-  //   else {
-  //     return;
-  //   }
-  // }
 
   getStatusMaster() {
     this.employeeService.getStatusMasterData().subscribe(res => {

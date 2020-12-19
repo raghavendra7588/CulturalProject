@@ -27,7 +27,6 @@ export class EmployeesService {
   private GET_DISTRICT_MASTER_DATA_BY_DISTRICT_ID = environment.BASE_URL + 'api/districtById';
   private GET_EXISTING_MEMBER_ALTERATION_DATA = environment.BASE_URL + 'api/ExisitingMemberAlteration';
   private GET_LIST_OF_REJECTED_MEMBERS_BY_DISTRICT = environment.BASE_URL + 'api/RejectedMembers/RejectedMembersByDistrict';
-  // private GET_LIST_OF_REJECTED_MEMBERS_BY_STATE = environment.BASE_URL + 'api/RejectedMembers/RejectedMembersByState';
   private GET_LIST_OF_REJECTED_MEMBERS_BY_STATE = environment.BASE_URL + 'api/RejectedMembers/GetAllRejectedMembersByState';
   private POST_DYNAMIC_STATE_APPROVED_LIST = environment.BASE_URL + 'api/DynamicStateApprovedList';
   private POST_DYNAMIC_STATE_REJECTED_LIST = environment.BASE_URL + 'api/DynamicStateRejectedList';
@@ -66,8 +65,15 @@ export class EmployeesService {
   private GET_USER_MASTER_DATA_FOR_PANCHAYAT = environment.BASE_URL + 'api/RoleManegement/UserMasterDataForPanchayat';
 
   private POST_ACTIVE_STATUS_USER_MASTER = environment.BASE_URL + 'api/RoleManagement';
+  private GET_REQ_TO_PUT_ON_HOLD_AT_STATE = environment.BASE_URL + 'api/ReqToPutOnHoldByState';
+  private GET_NEW_APPROVALS_AT_STATE = environment.BASE_URL + 'api/state/newApprovals';
 
-  
+  private POST_DYNAMIC_NEW_PROPOSAL_BY_STATE = environment.BASE_URL + 'api/DynamicActionByState/DynamicStateNewProposalByState';
+  private POST_DYNAMIC_REQ_TO_PUT_ON_HOLD_BY_STATE = environment.BASE_URL + 'api/DynamicActionByState/DynamicStateReqToPutOnHoldByState';
+
+  private POST_DYNAMIC_ROLE_DISTRICT = environment.BASE_URL + 'api/DynamicActionByState/DynamicStateRoleDistrictData';
+  private POST_DYNAMIC_ROLE_PANCHAYAT = environment.BASE_URL + 'api/DynamicActionByState/DynamicStateRolePanchayatData';
+
   constructor(
     public http: HttpClient
   ) { }
@@ -277,4 +283,29 @@ export class EmployeesService {
   postActiveStatus(activeStatus) {
     return this.http.post(this.POST_ACTIVE_STATUS_USER_MASTER, activeStatus);
   }
+
+  getRequestToPutOnHoldByState() {
+    return this.http.get(this.GET_REQ_TO_PUT_ON_HOLD_AT_STATE);
+  }
+
+  getNewApprovalsByState() {
+    return this.http.get(this.GET_NEW_APPROVALS_AT_STATE);
+  }
+
+  postDynamicNewProposalByState(newProposal) {
+    return this.http.post(this.POST_DYNAMIC_NEW_PROPOSAL_BY_STATE, newProposal);
+  }
+
+  postDynamicReqToPutOnHoldByState(reqToPutOnHold) {
+    return this.http.post(this.POST_DYNAMIC_REQ_TO_PUT_ON_HOLD_BY_STATE, reqToPutOnHold);
+  }
+
+  postDynamicDistrictDataByState(district) {
+    return this.http.post(this.POST_DYNAMIC_ROLE_DISTRICT, district);
+  }
+
+  postDynamicDistrictDataByPanchayat(panchayat) {
+    return this.http.post(this.POST_DYNAMIC_ROLE_PANCHAYAT, panchayat);
+  }
+
 }

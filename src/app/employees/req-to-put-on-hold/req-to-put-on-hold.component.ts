@@ -8,6 +8,7 @@ import { BasicuserService } from 'src/app/user/basicuser.service';
 import { DialogViewProposalFormComponent } from '../dialog-view-proposal-form/dialog-view-proposal-form.component';
 import { EmployeesService } from '../employees.service';
 import * as _ from 'lodash';
+import { DynamicStateApproved } from '../employees.model';
 
 @Component({
   selector: 'app-req-to-put-on-hold',
@@ -18,12 +19,15 @@ export class ReqToPutOnHoldComponent implements OnInit {
 
   role: string;
   userId: number;
-  // displayedColumns: string[] = ['artistCode', 'firstName', 'lastName', 'view', 'approvalStatus'];
-  displayedColumns: string[] = ['artistCode', 'fullName', 'place','view', 'approvalStatus'];
+  displayedColumns: string[];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSource: any;
   putOnHoldData: any = [];
 
+  districtId: number;
+  districtData: any = [];
+  dynamicStateApproved: DynamicStateApproved = new DynamicStateApproved();
+  panchayatData: any = [];
 
   constructor(
     public dialog: MatDialog,
@@ -41,8 +45,12 @@ export class ReqToPutOnHoldComponent implements OnInit {
         if (this.role === 'DISTRICT') {
           this.getRequestToPutOnHoldDataByDistrict(this.userId);
         }
-        else {
+        if (this.role === 'GRAMPANCHAYAT') {
           this.getRequestToPutOnHoldDataByPanchayat(this.userId);
+        }
+        if (this.role === 'STATE') {
+          this.getRequestToPutOnHoldByState();
+          this.getDistrictMasterData();
         }
       }
 
@@ -55,10 +63,17 @@ export class ReqToPutOnHoldComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.role === 'DISTRICT') {
+      this.displayedColumns = ['artistCode', 'fullName', 'place','approvalStatus', 'view' ];
       this.getRequestToPutOnHoldDataByDistrict(this.userId);
     }
-    else {
+    if (this.role === 'GRAMPANCHAYAT') {
+      this.displayedColumns = ['artistCode', 'fullName', 'place','approvalStatus' ,'view' ];
       this.getRequestToPutOnHoldDataByPanchayat(this.userId);
+    }
+    if (this.role === 'STATE') {
+      this.displayedColumns = ['artistCode', 'fullName', 'district', 'place', 'approvalStatus','view'];
+      this.getRequestToPutOnHoldByState();
+      this.getDistrictMasterData();
     }
 
   }
@@ -88,6 +103,17 @@ export class ReqToPutOnHoldComponent implements OnInit {
     });
   }
 
+  getRequestToPutOnHoldByState() {
+    this.employeeService.getRequestToPutOnHoldByState().subscribe(res => {
+      console.log(res);
+      this.putOnHoldData = res;
+      let uniquePersonalDetailsData = _.uniqBy(this.putOnHoldData, 'id');
+      this.putOnHoldData = uniquePersonalDetailsData;
+      this.dataSource = new MatTableDataSource(this.putOnHoldData);
+      setTimeout(() => this.dataSource.paginator = this.paginator);
+    });
+  }
+
   viewEmployee(employee) {
 
     this.dialog.open(DialogViewProposalFormComponent, {
@@ -103,4 +129,50 @@ export class ReqToPutOnHoldComponent implements OnInit {
     this.dataSource.filter = filter.trim().toLowerCase();
   }
 
+
+
+  selectedPanchyatFromList(panchayat) {
+    console.log('panchayat', panchayat);
+    this.dynamicStateApproved.panchayatName = panchayat.PanchyatId;
+
+  }
+
+  selectedDistrictFromList(district) {
+    this.dynamicStateApproved.districtId = district.DistrictId;
+    this.employeeService.getPanchayatBasedOnDistrictId(this.dynamicStateApproved.districtId).subscribe(res => {
+      this.panchayatData = res;
+    });
+    this.dynamicStateApproved.panchayatName = '';
+
+  }
+
+  getDistrictMasterData() {
+    this.employeeService.getDistrictMasterData().subscribe(res => {
+      this.districtData = res;
+    });
+  }
+
+  searchRecord() {
+    console.log('search records ', this.dynamicStateApproved);
+    this.dynamicStateApproved.roleName = sessionStorage.getItem('role');
+    if (this.dynamicStateApproved.districtId === null || this.dynamicStateApproved.districtId === undefined) {
+      this.dynamicStateApproved.districtId = 0;
+    }
+    if (this.dynamicStateApproved.panchayatName === null || this.dynamicStateApproved.panchayatName === undefined || this.dynamicStateApproved.panchayatName === '') {
+      this.dynamicStateApproved.panchayatName = 'ALL';
+
+    }
+
+
+
+
+    this.employeeService.postDynamicReqToPutOnHoldByState(this.dynamicStateApproved).subscribe(res => {
+
+      this.putOnHoldData = res;
+      let uniquePersonalDetailsData = _.uniqBy(this.putOnHoldData, 'id');
+      this.putOnHoldData = uniquePersonalDetailsData;
+      this.dataSource = new MatTableDataSource(this.putOnHoldData);
+      setTimeout(() => this.dataSource.paginator = this.paginator);
+    });
+  }
 }

@@ -19,8 +19,7 @@ export class ApprovedListPanchayatComponent implements OnInit {
   message: string;
 
   dataSource: any;
-  // displayedColumns: string[] = ['artistCode', 'firstName', 'lastName', 'approvalStatus', 'view', 'edit', 'hold'];
-  displayedColumns: string[] = ['artistCode', 'fullName', 'place', 'approvalStatus', 'view', 'edit', 'hold'];
+  displayedColumns: string[] = ['artistCode', 'fullName', 'place', 'approvalStatus', 'approvedBy', 'approvedByAt', 'view', 'edit', 'hold'];
   approvedListData: any = [];
 
   districtId: number;
@@ -108,8 +107,6 @@ export class ApprovedListPanchayatComponent implements OnInit {
     this.employeeService.getStatusMasterData().subscribe(res => {
       this.statusMaster = res;
       this.submittedByPanchayat = this.statusMaster[12].StatusId;
-      // console.log('3', this.statusMaster[3]);
-      console.log('12', this.statusMaster[12]);
       this.onHoldProposalForm.statusId = this.submittedByPanchayat;
     });
   }
@@ -118,7 +115,6 @@ export class ApprovedListPanchayatComponent implements OnInit {
   openModal(template: TemplateRef<any>, selectedArtist) {
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
     this.selectedArtist = selectedArtist;
-    console.log('selected artist', this.selectedArtist);
   }
 
   confirm(): void {
@@ -126,7 +122,6 @@ export class ApprovedListPanchayatComponent implements OnInit {
     this.onHoldProposalForm.id = this.selectedArtist.id;
     console.log('this.onHoldProposalForm', this.onHoldProposalForm);
     this.employeeService.postOnHoldByPanchayat(this.onHoldProposalForm).subscribe(res => {
-      console.log(res, 'res');
       this.toastr.success('Artist OnHolded Successfully');
       this.emitterService.isPanchyatArtistPuttedOnHold.emit(true);
     });

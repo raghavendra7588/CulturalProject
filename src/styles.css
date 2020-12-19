@@ -1,28 +1,47 @@
-/* You can add global styles to this file, and also import other style files */
+html, body {
+    height: 100%;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-table{
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+table {
     width: 100%;
 }
-.width-100{
+
+.width-100 {
     width: 100% !important;
     min-width: unset!important;
 }
 
 @media (min-width: 576px) {
-    h2{font-size: 10px;} 
+    h2 {
+        font-size: 10px;
+    }
 }
+
 @media (min-width: 768px) {
-    h2{font-size: 18px;}
+    h2 {
+        font-size: 18px;
+    }
 }
+
 @media (min-width: 992px) {
-    h2{font-size: 18px;}
+    h2 {
+        font-size: 18px;
+    }
 }
+
 @media (min-width: 1200px) {
-    h2{font-size: 18px;}
+    h2 {
+        font-size: 18px;
+    }
 }
 
 @media (min-width: 2560px) {
-    h2{font-size: 18px;}
+    h2 {
+        font-size: 18px;
+    }
 }

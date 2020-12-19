@@ -5,7 +5,6 @@
         <div class="col-md-4 col-4 col-sm-4">
             <mat-form-field style="width: 100% !important;">
                 <mat-select placeholder="District List" [(ngModel)]="dynamicStateApproved.districtName">
-                    <!-- <mat-option value="all" (click)="districtSelectAll()">All</mat-option> -->
                     <mat-option *ngFor="let item of districtData;" [value]="item.DistrictId"
                         (click)="selectedDistrictFromList(item)">
                         {{item.DistrictName}}
@@ -40,39 +39,10 @@
     </div>
 </div>
 <mat-divider class="my-4"></mat-divider>
-<!-- <div class="container">
-    <div class="row mb-3">
-     
-        <div class="row">
-            <div class="col-md-6 col-6 col-sm-12">
-                <h3 class="text-bold mt-2">Preferred Language</h3>
-            </div>
-            <div class="col-md-6 col-6 col-sm-12">
-                <mat-form-field style="width: 100% !important;">
-                    <mat-select placeholder="Choose Language" [(ngModel)]="language">
-
-                        <mat-option *ngFor="let item of preferredLanguage;" [value]="item.title"
-                            (click)="selectedLanguageFromList(item)">
-                            {{item.title}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-        </div>
 
 
-       
-    </div>
-</div> -->
- <!-- <div class="col-md-2 col-sm-6 col-6">
-            <button mat-raised-button color="primary" class="width-100" (click)="createEmployee()">Proposal
-                Form</button>
-        </div>
-        <div class="col-md-2 col-sm-6 col-6">
-            <button mat-raised-button color="primary" class="width-100" (click)="createEmployeeMarathi()">प्रस्ताव
-                फॉर्म</button>
-        </div> -->
-<div class="col-md-12 col-12 col-sm-12 mt-4">
+<div class="col-md-12 col-12 col-sm-12 mt-4" *ngIf="role=== 'DISTRICT'">
+
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
         <ng-container matColumnDef="artistCode">
@@ -85,6 +55,59 @@
             <td mat-cell *matCellDef="let element"> {{element.FullName}} </td>
         </ng-container>
 
+
+        <ng-container matColumnDef="place">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Place</th>
+            <td mat-cell *matCellDef="let element"> {{element.Place}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="approvalStatus">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+            <td mat-cell *matCellDef="let element"> {{element.StatusName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="approvedBy">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Approved By</th>
+            <td mat-cell *matCellDef="let element"> {{element.UserName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="approvedByAt">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Approved At</th>
+            <td mat-cell *matCellDef="let element"> {{element.ApprovedByDistrictAt}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="view">
+            <th mat-header-cell *matHeaderCellDef [hidden]="show">view</th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button (click)="viewEmployee(element)">
+                    <mat-icon class="mat-18">remove_red_eye</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[10, 50, 100]" showFirstLastButtons></mat-paginator>
+</div>
+
+<div class="col-md-12 col-12 col-sm-12 mt-4" *ngIf="role=== 'STATE'">
+
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+        <ng-container matColumnDef="artistCode">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Code</th>
+            <td mat-cell *matCellDef="let element"> {{element.ArtistSystemCode}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fullName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Full Name</th>
+            <td mat-cell *matCellDef="let element"> {{element.FullName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="district">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>District</th>
+            <td mat-cell *matCellDef="let element"> {{element.DistrictName}} </td>
+        </ng-container>
 
         <ng-container matColumnDef="place">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Place</th>

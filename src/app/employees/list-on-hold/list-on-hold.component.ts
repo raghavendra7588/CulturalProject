@@ -52,18 +52,16 @@ export class ListOnHoldComponent implements OnInit {
 
     this.userId = Number(sessionStorage.getItem('userId'));
     this.role = sessionStorage.getItem('role');
-    console.log('role', this.role);
     if (this.role === 'GRAMPANCHAYAT') {
-      this.displayedColumns = ['artistCode', 'fullName', 'place', 'view', 'approvalStatus', 'action'];
+      this.displayedColumns = ['artistCode', 'fullName', 'place', 'approvalStatus', 'holdBy', 'holdAt', 'view', 'action'];
       this.getListOnHoldDataByPachayat(this.userId);
     }
     if (this.role === 'DISTRICT') {
-      this.displayedColumns = ['artistCode', 'fullName', 'place', 'view', 'approvalStatus'];
+      this.displayedColumns = ['artistCode', 'fullName', 'place', 'approvalStatus', 'holdBy', 'holdAt','view'];
       this.getListOnHoldDataByDistrict(this.userId);
     }
     if (this.role === 'STATE') {
-      //state
-      this.displayedColumns = ['artistCode', 'fullName', 'place', 'view', 'approvalStatus'];
+      this.displayedColumns = ['artistCode', 'fullName', 'district', 'place', 'approvalStatus', 'view',];
       this.getDistrictMasterData();
       this.getOnHoldArtistDataByState();
     }
@@ -77,7 +75,6 @@ export class ListOnHoldComponent implements OnInit {
           this.getListOnHoldDataByDistrict(this.userId);
         }
         else {
-          //state
           this.getDistrictMasterData();
           this.getOnHoldArtistDataByState();
         }
@@ -137,7 +134,6 @@ export class ListOnHoldComponent implements OnInit {
   openModal(template: TemplateRef<any>, artist) {
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
     this.artistResponse = artist;
-    console.log('artistResponse', this.artistResponse);
   }
 
   confirm(): void {
@@ -145,10 +141,8 @@ export class ListOnHoldComponent implements OnInit {
     this.reqToPutOnHoldByPanchayat.id = Number(this.artistResponse.id);
     this.reqToPutOnHoldByPanchayat.statusId = Number(this.reqToRemoveFromHoldByPanchayat);
     this.reqToPutOnHoldByPanchayat.userId = this.userId;
-    console.log(this.reqToPutOnHoldByPanchayat);
 
     this.employeeService.postReqToPutOnHoldByPanchayat(this.reqToPutOnHoldByPanchayat).subscribe(res => {
-      console.log(res, 'res');
       this.toastr.success('Requested Successfully');
       this.emitterService.isPanchyatArtistPuttedOnHold.emit(true);
     });
@@ -164,17 +158,12 @@ export class ListOnHoldComponent implements OnInit {
     this.employeeService.getStatusMasterData().subscribe(res => {
       this.statusMaster = res;
       this.reqToRemoveFromHoldByPanchayat = this.statusMaster[13].StatusId;
-      // this.submittedByPanchayat = this.statusMaster[12].StatusId;
-      // console.log('3', this.statusMaster[3]);
-      console.log('13', this.statusMaster[13]);
-
     });
   }
 
   getDistrictMasterData() {
     this.employeeService.getDistrictMasterData().subscribe(res => {
       this.districtData = res;
-      console.log('district data', this.districtData);
     });
   }
 
@@ -183,14 +172,11 @@ export class ListOnHoldComponent implements OnInit {
     this.employeeService.getPanchayatBasedOnDistrictId(this.dynamicOnHoldArtistByState.DistrictId).subscribe(res => {
       this.panchayatData = res;
     });
-    //   this.dynamicStateApproved.panchayatName = '';
-    // }
   }
 
 
 
   searchRecord() {
-      console.log(this.dynamicOnHoldArtistByState);
     if (this.dynamicOnHoldArtistByState.DistrictId === null || this.dynamicOnHoldArtistByState.DistrictId === undefined) {
       this.dynamicOnHoldArtistByState.DistrictId = 0;
     }

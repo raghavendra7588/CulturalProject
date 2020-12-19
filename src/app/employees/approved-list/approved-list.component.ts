@@ -17,9 +17,9 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./approved-list.component.css']
 })
 export class ApprovedListComponent implements OnInit {
-  // displayedColumns: string[] = ['artistCode', 'firstName', 'lastName', 'view', 'approvalStatus'];
 
-  displayedColumns: string[] = ['artistCode', 'fullName', 'place', 'view', 'approvalStatus'];
+
+  displayedColumns: string[];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSource: any;
@@ -46,8 +46,11 @@ export class ApprovedListComponent implements OnInit {
     this.userId = Number(sessionStorage.getItem('userId'));
     if (this.roleName === 'DISTRICT') {
       this.getApprovedListByDistrictData(this.userId);
+      this.displayedColumns = ['artistCode', 'fullName', 'place', 'approvalStatus', 'approvedBy', 'approvedByAt', 'view'];
+
     }
     else {
+      this.displayedColumns = ['artistCode', 'fullName', 'district', 'place', 'approvalStatus', 'view'];
       this.getDistrictMasterData();
       this.getApprovedListData();
     }
@@ -118,8 +121,6 @@ export class ApprovedListComponent implements OnInit {
   }
 
   searchRecord() {
-    console.log('search records ', this.dynamicStateApproved);
-
     if (this.dynamicStateApproved.districtId === null || this.dynamicStateApproved.districtId === undefined) {
       this.dynamicStateApproved.districtId = 0;
     }
@@ -127,9 +128,6 @@ export class ApprovedListComponent implements OnInit {
       this.dynamicStateApproved.panchayatName = 'ALL';
 
     }
-
-
-
 
     this.employeeService.postDynamicStateApprovedList(this.dynamicStateApproved).subscribe(res => {
       this.approvedListData = res;
@@ -143,18 +141,6 @@ export class ApprovedListComponent implements OnInit {
   districtSelectAll() {
     this.getApprovedListData();
   }
-
-  // createEmployee() {
-  //   sessionStorage.removeItem('language');
-  //   sessionStorage.setItem('language', 'true');
-  //   this.toastr.info('English Language Selected');
-  // }
-  // createEmployeeMarathi() {
-  //   sessionStorage.removeItem('language');
-  //   sessionStorage.setItem('language', 'false');
-  //   this.emitterService.isLanguageChanged.emit(false);
-  //   this.toastr.info('मराठी भाषा निवडली आहे');
-  // }
 
   selectedLanguageFromList(res) {
     if (res.title === 'ENGLISH') {
@@ -171,7 +157,6 @@ export class ApprovedListComponent implements OnInit {
   }
 
   selectedPanchyatFromList(panchayat) {
-    console.log('panchayat', panchayat);
     this.dynamicStateApproved.panchayatName = panchayat.PanchyatId;
 
   }

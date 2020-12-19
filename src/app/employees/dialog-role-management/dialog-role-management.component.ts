@@ -59,7 +59,7 @@ export class DialogRoleManagementComponent implements OnInit {
       pinCode: ['']
     });
     this.userResponse = data;
-    console.log('user res', this.userResponse);
+  
     this.userId = Number(sessionStorage.getItem('userId'));
     console.log(this.router.url);
 
@@ -78,8 +78,8 @@ export class DialogRoleManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.isActiveArray = [
-      { id: 0, title: 'YES', flag: 'Y' },
-      { id: 1, title: 'NO', flag: 'N' }
+      { id: 0, title: 'ACTIVE', flag: 'Y' },
+      { id: 1, title: 'INACTIVE', flag: 'N' }
     ];
 
     this.roleId = parseInt(sessionStorage.getItem('RoleId'));
@@ -117,7 +117,6 @@ export class DialogRoleManagementComponent implements OnInit {
 
   assignValues() {
     if (this.userResponse) {
-      console.log('user response', this.userResponse);
       this.userMaster.roleId = this.userResponse.RoleId;
       this.userMaster.name = this.userResponse.Name;
       this.userMaster.userName = this.userResponse.UserName;
@@ -139,12 +138,18 @@ export class DialogRoleManagementComponent implements OnInit {
     this.updateActiveStatusByState.IsActive = this.userMaster.isActive;
     this.updateActiveStatusByState.userId = this.userResponse.UserId;
 
+ 
+    if (this.updateActiveStatusByState.IsActive === 'Y') {
+      this.updateActiveStatusByState.ActiveStatus = 'ACTIVE';
+    }
+    else {
+      this.updateActiveStatusByState.ActiveStatus = 'INACTIVE';
+    }
+
     this.employeeService.postActiveStatus(this.updateActiveStatusByState).subscribe(res => {
       this.toastr.success('Status Updated');
       this.emitterService.isActiveStatusChanged.emit(true);
       this.dialogRef.close();
     });
-
-    console.log('status change', this.updateActiveStatusByState);
   }
 }

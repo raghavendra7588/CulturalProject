@@ -39,18 +39,7 @@
                         [(ngModel)]="userMaster.emailId">
                 </mat-form-field>
             </div>
-            <!-- <div class="col-md-4 col-4 col-sm-4">
-                <mat-form-field style="width: 100% !important;">
-                    <mat-select placeholder="Is Active" formControlName="isActive" [(ngModel)]="userMaster.isActive">
-                        <mat-option *ngFor="let item of isActiveArray;" [value]="item.flag"
-                            (click)="selectedIsActiveFromList(item)">
-                            {{item.title}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div> -->
-
-
+   
             <div class="col-md-4 col-4 col-sm-4">
                 <mat-form-field style="width: 100% !important;">
 
@@ -140,25 +129,13 @@
                         [(ngModel)]="userMaster.emailId">
                 </mat-form-field>
             </div>
-            <!-- <div class="col-md-4 col-4 col-sm-4">
-                <mat-form-field style="width: 100% !important;">
-                    <mat-select placeholder="Is Active" formControlName="isActive" [(ngModel)]="userMaster.isActive">
-                        <mat-option *ngFor="let item of isActiveArray;" [value]="item.flag"
-                            (click)="selectedIsActiveFromList(item)">
-                            {{item.title}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div> -->
         </div>
 
         <div class="row mt-4">
             <div class="col-md-2 col-6 col-sm-6">
                 <button mat-raised-button class="width-100" color="primary" (click)="addNewUser()">Submit</button>
-
             </div>
             <div class="col-md-2 col-6 col-sm-6">
-
                 <button mat-raised-button class="width-100" color="warn" mat-dialog-close>Cancel</button>
             </div>
         </div>

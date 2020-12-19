@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   userId: string;
   districtId: number;
   panchyatName: string;
-  
+
 
   constructor(
     private fb: FormBuilder,
@@ -49,10 +49,11 @@ export class LoginComponent implements OnInit {
     this.userService.verifyLogin(this.user).subscribe(res => {
       this.loginResponse = res;
 
-      this.userName = this.loginResponse[0].Name;
+    
 
 
-      if (this.loginResponse) {
+      if (this.loginResponse && this.loginResponse[0].Column1 != 'Incorrect Login Credentials') {
+        this.userName = this.loginResponse[0].Name;
         this.roleName = this.loginResponse[0].RoleName;
         this.roleId = this.loginResponse[0].RoleId;
         this.userId = this.loginResponse[0].UserId;
@@ -70,18 +71,9 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/dashboard']);
       }
       else {
-        this.toastr.error('Invalid Credentials');
+        this.toastr.error('Login Failed Or User InActive');
       }
     });
-
-
-    // if (this.user.username === 'panchayat' && this.user.password === 'panchayat') {
-    //   this.basicUserService.setLocalCache(this.role);
-    //   // sessionStorage.setItem('role', this.role);
-    //   // this.router.navigate(['/details/personalDetails']);
-    //   sessionStorage.setItem('language', 'true');
-    //   this.router.navigate(['/dashboard']);
-    // }
 
   }
 

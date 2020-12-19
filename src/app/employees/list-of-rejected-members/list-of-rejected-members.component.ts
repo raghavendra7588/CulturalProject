@@ -17,7 +17,7 @@ import { DialogViewProposalFormComponent } from '../dialog-view-proposal-form/di
 export class ListOfRejectedMembersComponent implements OnInit {
 
   dataSource: any;
-  displayedColumns: string[] = ['artistCode', 'fullName', 'place', 'view', 'approvalStatus'];
+  displayedColumns: string[];
   rejectedMembersData: any = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   userId: number;
@@ -44,20 +44,20 @@ export class ListOfRejectedMembersComponent implements OnInit {
 
 
     if (this.roleName === 'DISTRICT') {
+      this.displayedColumns = ['artistCode', 'fullName', 'place', 'approvalStatus', 'rejectedBy', 'rejectedAt', 'view'];
       this.getRejectedMembersByDistrict(this.userId);
     }
     if (this.roleName === 'GRAMPANCHAYAT') {
+      this.displayedColumns = ['artistCode', 'fullName', 'place', 'approvalStatus', 'rejectedBy', 'rejectedAt', 'view'];
       if ("panchayatName" in sessionStorage) {
         this.dynamicPanchayatName.panchayatName = sessionStorage.getItem('panchayatName');
         this.userId = Number(sessionStorage.getItem('userId'));
-        // let removedSpacePanchyatName = this.dynamicPanchayatName.panchayatName.replace(/ /g, '');
-
-        // this.dynamicPanchayatName.panchayatName = removedSpacePanchyatName;
         this.getRejectedMembersByPanchayat(this.userId);
       }
 
     }
     if (this.roleName === 'STATE') {
+      this.displayedColumns = ['artistCode', 'fullName', 'district', 'place', 'approvalStatus', 'view'];
       this.getDistrictMasterData();
       this.getRejectedMembersByState();
     }

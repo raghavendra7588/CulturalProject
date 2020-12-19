@@ -88,18 +88,6 @@ export class UserMaster {
     holdByDistrict?: number;
 }
 
-// export class SaveUserMaster {
-//     userId?: number;
-//     name?: string;
-//     userName?: string;
-//     password?: string;
-//     mobileNumber?: number;
-//     emailId?: string;
-//     isActive?: string;
-//     role?: string;
-//     district?: string;
-// }
-
 export class NewProposal {
     id?: string;
     artistSystemCode?: string;
@@ -315,4 +303,15 @@ export class ReqToHoldArtistToHold {
 export class UpdateActiveStatusByState {
     IsActive?: string;
     userId?: number;
+    ActiveStatus?: string;
+}
+
+export class DynamicStateRoleDistrict {
+    districtId?: number;
+    roleName?: string;
+}
+
+export class DynamicStateRolePanchayat {
+    districtId?: number;
+    panchayatName?: string;
 }

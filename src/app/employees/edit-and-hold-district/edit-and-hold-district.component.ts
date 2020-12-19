@@ -48,7 +48,6 @@ export class EditAndHoldDistrictComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.getExistingMemberAlterationData(this.userId);
     this.getEditOrHoldArtistAtDistrict(this.userId);
   }
 
@@ -78,7 +77,6 @@ export class EditAndHoldDistrictComponent implements OnInit {
 
 
   viewEmployee(response) {
-
     let res: any = [];
     res = response;
     this.dialog.open(DialogViewProposalFormComponent, {

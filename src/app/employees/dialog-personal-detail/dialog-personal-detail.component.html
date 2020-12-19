@@ -30,14 +30,6 @@
                         [(ngModel)]="personalDetails.lastName">
                 </mat-form-field>
             </div>
-
-            <!-- <div class="col-md-3 col-6 col-sm-6">
-                <mat-form-field style="width: 100%;">
-                    <input matInput placeholder="Full Name" type="text" formControlName="fullname"
-                        [(ngModel)]="personalDetails.fullname">
-                </mat-form-field>
-            </div> -->
-
         </div>
         <div class="row">
             <div class="col-md-3 col-6 col-sm-6">
@@ -195,17 +187,6 @@
         <h4 class="font-weight-bold">Work Information</h4>
 
         <div class="row">
-            <!-- <div class="col-md-3 col-6 col-sm-6">
-
-                <mat-form-field style="width: 100% !important;">
-                    <mat-select placeholder="Grade" [(ngModel)]="personalDetails.grade" formControlName="grade">
-                        <mat-option *ngFor="let item of gradeArray;" [value]="item.title"
-                            (click)="selectedGradefromList(item)">
-                            {{item.title}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div> -->
 
             <div class="col-md-3 col-6 col-sm-6">
                 <mat-form-field style="width: 100%;">
@@ -235,11 +216,6 @@
             </div>
         </div>
         <div class="row">
-
-
-
-
-
 
             <div class="col-md-3 col-6 col-sm-6">
                 <mat-form-field style="width: 100%;">
@@ -278,39 +254,8 @@
                         [(ngModel)]="personalDetails.financialBenefitReceived" appNumber>
                 </mat-form-field>
             </div>
-
-
-
-            <!-- <div class="col-md-3 col-6 col-sm-6">
-                <mat-form-field style="width: 100%;">
-                    <input matInput placeholder="Pension Amount Monthly Basis" type="text"
-                        formControlName="pensionAmountMonthlyBasis"
-                        [(ngModel)]="personalDetails.pensionAmountMonthlyBasis" readonly>
-                </mat-form-field>
-            </div>
-
-
-
-            <div class="col-md-3 col-6 col-sm-6">
-                <mat-form-field style="width: 100%;">
-                    <input matInput placeholder="Pension Amount Yearly Basis" type="text"
-                        formControlName="pensionAmountYearlyBasis" readonly
-                        [(ngModel)]="personalDetails.pensionAmountYearlyBasis">
-                </mat-form-field>
-            </div> -->
-
         </div>
     </div>
-
-
-
-
-
-
-
-
-
-
 
     <mat-divider class="my-2"></mat-divider>
 
@@ -592,17 +537,6 @@
 
     </div>
 
-
-    <!-- <button mat-raised-button color="primary" (click)="saveEmployee()"
-                [disabled]="!isManualFormProof">Save</button> -->
-    <!-- <span *ngIf="!isViewSelected"><button mat-raised-button color="primary" (click)="saveEmployee()">Save</button></span> -->
-    <!-- <div mat-dialog-actions align="end">
-           
-            <span class="mr-2"><button mat-raised-button color="primary"
-                    [disabled]="personalDetails.reasonForEdit === ''" (click)="saveEmployee()">Submit</button></span>
-            <button mat-raised-button mat-dialog-close>Close</button>
-        </div> -->
-
         <div mat-dialog-actions align="end" *ngIf="!isExisitingEdit">
          
 
@@ -657,14 +591,6 @@
                         [(ngModel)]="personalDetails.lastName">
                 </mat-form-field>
             </div>
-
-            <!-- <div class="col-md-3 col-6 col-sm-6">
-                <mat-form-field style="width: 100%;">
-                    <input matInput placeholder="पुर्ण नाव" type="text" formControlName="fullname"
-                        [(ngModel)]="personalDetails.fullname">
-                </mat-form-field>
-            </div> -->
-
 
         </div>
         <div class="row">
@@ -721,11 +647,6 @@
                 </mat-form-field>
             </div>
             <div class="col-md-3 col-6 col-sm-6">
-                <!-- <mat-form-field style="width: 100%;">
-                    <input matInput placeholder="जिल्हा" type="text" formControlName="district"
-                        [(ngModel)]="personalDetails.district">
-                </mat-form-field> -->
-
                 <mat-form-field style="width: 100% !important;">
                     <mat-select placeholder="जिल्हा" formControlName="district" [(ngModel)]="personalDetails.district">
                         <mat-option *ngFor="let item of districtMasterData;" [value]="item.DistrictId"
@@ -775,11 +696,6 @@
                         [maxLength]="maxLengthPanCard" [(ngModel)]="personalDetails.panNo">
                 </mat-form-field>
             </div>
-            <!-- </div> -->
-
-
-
-
 
         </div>
 
@@ -816,9 +732,6 @@
                 </mat-radio-group>
             </div>
 
-
-            <!-- </div> -->
-
         </div>
 
     </div>
@@ -833,17 +746,7 @@
         <h4 class="font-weight-bold">कामाची माहिती</h4>
 
         <div class="row">
-            <!-- <div class="col-md-3 col-6 col-sm-6">
 
-                <mat-form-field style="width: 100% !important;">
-                    <mat-select placeholder="ग्रेड" [(ngModel)]="personalDetails.grade" formControlName="grade">
-                        <mat-option *ngFor="let item of gradeArray;" [value]="item.title"
-                            (click)="selectedGradefromList(item)">
-                            {{item.title}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div> -->
             <div class="col-md-3 col-6 col-sm-6">
                 <mat-form-field style="width: 100%;">
                     <input matInput placeholder="कामाचा तपशील" type="text" formControlName="workDetails"

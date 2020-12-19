@@ -18,7 +18,7 @@ import { ToastrService } from 'ngx-toastr';
 export class PersonalDetailsComponent implements OnInit {
 
   dataSource: any;
-  displayedColumns: string[] = ['artistCode', 'fullName', 'place', 'view', 'approvalStatus'];
+  displayedColumns: string[] = ['artistCode', 'fullName', 'place', 'approvalStatus', 'actionTakenBy', 'createdDate', 'view'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   personalDetailsData: any = [];
@@ -30,7 +30,7 @@ export class PersonalDetailsComponent implements OnInit {
   role: string;
   userId: number;
 
-  
+
   constructor(
     public dialog: MatDialog,
     public employeeService: EmployeesService,

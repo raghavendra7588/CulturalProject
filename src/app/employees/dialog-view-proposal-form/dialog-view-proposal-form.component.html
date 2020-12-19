@@ -52,26 +52,6 @@
                 </mat-form-field>
             </div>
 
-
-            <!-- <div class="col-md-3 col-6 col-sm-6">
-                <mat-form-field style="width: 100%;">
-                    <input matInput placeholder="Annual Income" type="text" formControlName="annualincome" appNumber
-                        [(ngModel)]="personalDetails.annualIncome">
-                </mat-form-field>
-            </div> -->
-            <!-- <div class="col-md-3 col-6 col-sm-6">
-                <mat-form-field style="width: 100%;">
-                    <input matInput placeholder="Art Type" type="text" formControlName="arttype"
-                        [(ngModel)]="personalDetails.artType">
-                </mat-form-field>
-            </div> -->
-            <!-- <div class="col-md-3 col-6 col-sm-6">
-                <mat-form-field style="width: 100%;">
-                    <input matInput placeholder="Period Of Works / Years" type="text" formControlName="periodofworks"
-                        [(ngModel)]="personalDetails.periodOfWork" appNumber>
-                </mat-form-field>
-            </div> -->
-
             <div class="col-md-3 col-6 col-sm-6">
                 <mat-form-field style="width: 100%;">
                     <input matInput placeholder="Current Age" type="text" formControlName="currentAge"
@@ -111,10 +91,6 @@
                 </mat-form-field>
             </div>
             <div class="col-md-3 col-6 col-sm-6">
-                <!-- <mat-form-field style="width: 100%;">
-                    <input matInput placeholder="District" type="text" formControlName="district"
-                        [(ngModel)]="personalDetails.district">
-                </mat-form-field> -->
 
                 <mat-form-field style="width: 100% !important;">
                     <mat-select placeholder="District" formControlName="district" [(ngModel)]="personalDetails.district"
@@ -219,17 +195,7 @@
         <h4 class="font-weight-bold">Work Information</h4>
 
         <div class="row">
-            <!-- <div class="col-md-3 col-6 col-sm-6">
 
-                <mat-form-field style="width: 100% !important;">
-                    <mat-select placeholder="Grade" [(ngModel)]="personalDetails.grade" formControlName="grade">
-                        <mat-option *ngFor="let item of gradeArray;" [value]="item.title"
-                            (click)="selectedGradefromList(item)">
-                            {{item.title}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div> -->
 
             <div class="col-md-3 col-6 col-sm-6">
                 <mat-form-field style="width: 100%;">
@@ -259,10 +225,6 @@
             </div>
         </div>
         <div class="row">
-
-
-
-
 
 
             <div class="col-md-3 col-6 col-sm-6">
@@ -303,39 +265,8 @@
                         [(ngModel)]="personalDetails.financialBenefitReceived" appNumber readonly>
                 </mat-form-field>
             </div>
-
-
-
-            <!-- <div class="col-md-3 col-6 col-sm-6">
-                <mat-form-field style="width: 100%;">
-                    <input matInput placeholder="Pension Amount Monthly Basis" type="text"
-                        formControlName="pensionAmountMonthlyBasis"
-                        [(ngModel)]="personalDetails.pensionAmountMonthlyBasis" readonly>
-                </mat-form-field>
-            </div>
-
-
-
-            <div class="col-md-3 col-6 col-sm-6">
-                <mat-form-field style="width: 100%;">
-                    <input matInput placeholder="Pension Amount Yearly Basis" type="text"
-                        formControlName="pensionAmountYearlyBasis" readonly
-                        [(ngModel)]="personalDetails.pensionAmountYearlyBasis">
-                </mat-form-field>
-            </div> -->
-
         </div>
     </div>
-
-
-
-
-
-
-
-
-
-
 
     <mat-divider class="my-2"></mat-divider>
 
@@ -630,7 +561,7 @@
         <div class="row" *ngIf="currentStatusName === 'REQ TO REMOVE FROM HOLD BY PANCHAYAT'">
             <div class="col-md-3 col-6 col-sm-6">
                 <mat-form-field style="width: 100%;">
-                    <input matInput placeholder="Reason For Remove From Hold By District" type="text"
+                    <input matInput placeholder="Reason To Remove From Hold By District" type="text"
                         formControlName="reasonToRemoveFromHoldByDistrict"
                         [(ngModel)]="personalDetails.reasonToRemoveFromHoldByDistrict">
                 </mat-form-field>
@@ -640,7 +571,7 @@
         <div class="row" *ngIf="currentStatusName === 'REQ FOR HOLD BY PANCHAYAT'">
             <div class="col-md-3 col-6 col-sm-6">
                 <mat-form-field style="width: 100%;">
-                    <input matInput placeholder="Request For Hold By Panchayat" type="text"
+                    <input matInput placeholder="Reason To Hold By District" type="text"
                         formControlName="reasonToHoldByDistrict" [(ngModel)]="personalDetails.reasonToHoldByDistrict">
                 </mat-form-field>
             </div>
@@ -649,7 +580,7 @@
         <div class="row" *ngIf="currentStatusName === 'HOLD BY DISTRICT'">
             <div class="col-md-3 col-6 col-sm-6">
                 <mat-form-field style="width: 100%;">
-                    <input matInput placeholder="Request For Hold By Panchayat" type="text"
+                    <input matInput placeholder="Reason To Remove From Hold By Panchayat" type="text"
                         formControlName="reasonForRequestToRemoveFromHoldByPanchayat"
                         [(ngModel)]="personalDetails.reasonForRequestToRemoveFromHoldByPanchayat">
                 </mat-form-field>
@@ -660,34 +591,12 @@
 
     </div>
 
-    <!-- <div mat-dialog-actions align="end" *ngIf="closeButtonOnly">
-        <button mat-raised-button mat-dialog-close>Close</button>
-    </div> -->
-
 
     <div mat-dialog-actions align="end" *ngIf="isNewApprovalsRoute">
         <button mat-raised-button color="primary" (click)="approvArtist()">Approv</button>
         <button mat-raised-button (click)="rejectArtist()" color="warn">Reject</button>
         <button mat-raised-button mat-dialog-close>Close</button>
     </div>
-
-
-    <!-- <div mat-dialog-actions align="end" *ngIf="isApprovalsOnHoldForDistrict">
-        <button mat-raised-button color="primary" (click)="holdArtist()">Hold</button>
-        <button mat-raised-button mat-dialog-close>Close</button>
-    </div> -->
-
-    <!-- <div mat-dialog-actions align="end" *ngIf="currentStatusName === 'REQ FOR EDIT BY PANCHAYAT'">
-        <button mat-raised-button color="primary" (click)="confirmHold()">Confirm Hold</button>
-        <button mat-raised-button color="warn" (click)="releaseHold()">Reject Hold Req</button>
-        <button mat-raised-button mat-dialog-close>Close</button>
-    </div> -->
-
-    <!-- <div mat-dialog-actions align="end" *ngIf="reqToRemoveFromHoldByDistrict">
-        <button mat-raised-button color="primary" (click)="removeHold()">Remove Hold</button>
-        <button mat-raised-button color="warn" (click)="putOnHold()">Add to Hold</button>
-        <button mat-raised-button mat-dialog-close>Close</button>
-    </div> -->
 
 
     <div mat-dialog-actions align="end" *ngIf="ReqputToPutOnHold">
@@ -722,9 +631,15 @@
         <button mat-raised-button mat-dialog-close>Close</button>
     </div>
 
-    <div mat-dialog-actions align="end" *ngIf="currentStatusName === 'HOLD BY DISTRICT'">
+    <!-- <div mat-dialog-actions align="end" *ngIf="currentStatusName === 'HOLD BY DISTRICT' && ">
         <button mat-raised-button color="primary" (click)="ReqToRemoveFromHoldByPanchayat()"
             [disabled]="!personalDetails.reasonForRequestToRemoveFromHoldByPanchayat">Req To Hold Artist</button>
+
+        <button mat-raised-button mat-dialog-close>Close</button>
+    </div> -->
+    <div mat-dialog-actions align="end" *ngIf="currentStatusName === 'HOLD BY DISTRICT' && role ==='GRAMPANCHAYAT'">
+        <button mat-raised-button color="primary" (click)="ReqToRemoveFromHoldByPanchayat()"
+            [disabled]="!personalDetails.reasonForRequestToRemoveFromHoldByPanchayat">Req To Remove Hold</button>
 
         <button mat-raised-button mat-dialog-close>Close</button>
     </div>
@@ -926,17 +841,7 @@
         <h4 class="font-weight-bold">कामाची माहिती</h4>
 
         <div class="row">
-            <!-- <div class="col-md-3 col-6 col-sm-6">
 
-                <mat-form-field style="width: 100% !important;">
-                    <mat-select placeholder="ग्रेड" [(ngModel)]="personalDetails.grade" formControlName="grade">
-                        <mat-option *ngFor="let item of gradeArray;" [value]="item.title"
-                            (click)="selectedGradefromList(item)">
-                            {{item.title}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div> -->
             <div class="col-md-3 col-6 col-sm-6">
                 <mat-form-field style="width: 100%;">
                     <input matInput placeholder="कामाचा तपशील" type="text" formControlName="workDetails"
@@ -1291,10 +1196,6 @@
 
     </div>
 
-
-    <!-- <div mat-dialog-actions align="end" *ngIf="isApprovedListRoute">
-        <button mat-raised-button mat-dialog-close>Close</button>
-    </div> -->
     <div mat-dialog-actions align="end" *ngIf="isNewApprovalsRoute">
         <button mat-raised-button color="primary" (click)="approvArtist()">Approv</button>
         <button mat-raised-button (click)="rejectArtist()" color="warn">Reject</button>
@@ -1311,14 +1212,6 @@
         <button mat-raised-button mat-dialog-close>Close</button>
     </div>
 
-
-    <!-- <div mat-dialog-actions align="end" *ngIf="ReqputToPutOnHold">
-        <button mat-raised-button color="primary" (click)="openModalForReqToPutOnHold(templateReqToPutOnHold)">Req To
-            Hold</button>
-        <button mat-raised-button mat-dialog-close>Close</button>
-    </div> -->
-
-
 </form>
 
 
@@ -1329,15 +1222,6 @@
         <button type="button" class="btn btn-danger" (click)="decline()">No</button>
     </div>
 </ng-template>
-
-
-<!-- <ng-template #templatee>
-    <div class="modal-body text-center">
-        <p>Are You Sure You Want To Hold this Artist ?</p>
-        <button type="button" class="btn btn-primary mr-1" (click)="confirm()">Yes</button>
-        <button type="button" class="btn btn-danger" (click)="decline()">No</button>
-    </div>
-</ng-template> -->
 
 <ng-template #templateReqToPutOnHold>
     <div class="modal-body text-center">

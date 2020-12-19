@@ -9,6 +9,7 @@ import { DistrictRoleManagementComponent } from '../district-role-management/dis
 import { EmployeesService } from '../employees.service';
 import * as _ from 'lodash';
 import { DialogRoleManagementComponent } from '../dialog-role-management/dialog-role-management.component';
+import { DynamicStateRolePanchayat } from '../employees.model';
 
 @Component({
   selector: 'app-panchayat-role-management',
@@ -21,6 +22,10 @@ export class PanchayatRoleManagementComponent implements OnInit {
   displayedColumns: string[] = ['name', 'districtName', 'panchayatName', 'isActive', 'edit'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   userMasterData: any = [];
+  dynamicStateRolePanchayat: DynamicStateRolePanchayat = new DynamicStateRolePanchayat();
+  districtId: number;
+  districtData: any = [];
+  panchayatData: any = [];
 
   constructor(
     public dialog: MatDialog,
@@ -39,12 +44,12 @@ export class PanchayatRoleManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUserMasterDataForPanchayat();
+    this.getDistrictMasterData();
   }
 
   getUserMasterDataForPanchayat() {
     this.employeeService.getUserMasterDataForPanchayat().subscribe(res => {
       this.userMasterData = res;
-      console.log('user master', this.userMasterData);
       let uniquePersonalDetailsData = _.uniqBy(this.userMasterData, 'UserId');
       this.userMasterData = uniquePersonalDetailsData;
       this.dataSource = new MatTableDataSource(this.userMasterData);
@@ -66,5 +71,44 @@ export class PanchayatRoleManagementComponent implements OnInit {
 
   applyFilter(filter: string) {
     this.dataSource.filter = filter.trim().toLowerCase();
+  }
+
+  selectedDistrictFromList(district) {
+    this.dynamicStateRolePanchayat.districtId = district.DistrictId;
+    this.employeeService.getPanchayatBasedOnDistrictId(this.dynamicStateRolePanchayat.districtId).subscribe(res => {
+      this.panchayatData = res;
+    });
+    this.dynamicStateRolePanchayat.panchayatName = '';
+
+  }
+
+  getDistrictMasterData() {
+    this.employeeService.getDistrictMasterData().subscribe(res => {
+      this.districtData = res;
+    });
+  }
+
+
+  selectedPanchyatFromList(panchayat) {
+    this.dynamicStateRolePanchayat.panchayatName = panchayat.PanchyatId;
+  }
+
+
+  searchRecord() {
+    if (this.dynamicStateRolePanchayat.districtId === null || this.dynamicStateRolePanchayat.districtId === undefined) {
+      this.dynamicStateRolePanchayat.districtId = 0;
+    }
+    if (this.dynamicStateRolePanchayat.panchayatName === null || this.dynamicStateRolePanchayat.panchayatName === undefined || this.dynamicStateRolePanchayat.panchayatName === '') {
+      this.dynamicStateRolePanchayat.panchayatName = 'ALL';
+
+    }
+
+    this.employeeService.postDynamicDistrictDataByPanchayat(this.dynamicStateRolePanchayat).subscribe(res => {
+      this.userMasterData = res;
+      let uniquePersonalDetailsData = _.uniqBy(this.userMasterData, 'UserId');
+      this.userMasterData = uniquePersonalDetailsData;
+      this.dataSource = new MatTableDataSource(this.userMasterData);
+      setTimeout(() => this.dataSource.paginator = this.paginator);
+    });
   }
 }

@@ -1,4 +1,27 @@
 <h4 class="text-center mt-4" style="color:blue;text-align: center;">District</h4>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-4 col-4 col-sm-4">
+          <mat-form-field style="width: 100% !important;">
+              <mat-select placeholder="District List" [(ngModel)]="dynamicStateRoleDistrict.districtId">
+                  
+                  <mat-option *ngFor="let item of districtData;" [value]="item.DistrictId"
+                      (click)="selectedDistrictFromList(item)">
+                      {{item.DistrictName}}
+                  </mat-option>
+              </mat-select>
+          </mat-form-field>
+      </div>
+
+  
+
+      <div class="col-md-4 col-4 col-sm-4">
+          <button mat-raised-button class="width-100 mt-2" (click)="searchRecord()" color="primary">Search</button>
+      </div>
+  </div>
+
+</div>
 <div class="container">
     <div class="row">
         <div class="col-md-12 col-12 col-sm-12">
@@ -33,7 +56,7 @@
   
       <ng-container matColumnDef="isActive">
         <th mat-header-cell *matHeaderCellDef>IsActive</th>
-        <td mat-cell *matCellDef="let element">{{element.IsActive}}</td>
+        <td mat-cell *matCellDef="let element">{{element.ActiveStatus}}</td>
       </ng-container>
       
       <ng-container matColumnDef="edit">
@@ -48,4 +71,5 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+    <mat-paginator [pageSizeOptions]="[10, 50, 100]" showFirstLastButtons></mat-paginator>
   </div>

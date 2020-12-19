@@ -12,7 +12,6 @@ export class BasicuserService {
 
   checkLocalCache(): boolean {
     const jwtToken = sessionStorage.getItem('role');
-    // const loggedInUserId = localStorage.getItem('user');
 
     return !(
       jwtToken === undefined ||
@@ -26,15 +25,10 @@ export class BasicuserService {
     sessionStorage.setItem('role', role);
     sessionStorage.setItem('RoleId', roleId.toString());
     sessionStorage.setItem('DistrictId', districtId.toString());
-    // localStorage.setItem(this.constantService.LOCAL_STORAGE_LOGGEDINUSER_ID, basicuser.id.toString());
-    // this.basicuser = basicuser;
   }
 
   clearLocalCache() {
-    // localStorage.setItem(this.constantService.LOCAL_STORAGE_JWTTOKEN, JSON.stringify({}));
-    // localStorage.setItem(this.constantService.LOCAL_STORAGE_LOGGEDINUSER_ID, JSON.stringify({}));
     sessionStorage.clear();
-    // this.basicuser = null;
   }
 
   isLoggedIn(): boolean {

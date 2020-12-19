@@ -9,6 +9,7 @@ import { DialogViewProposalFormComponent } from '../dialog-view-proposal-form/di
 import { EmployeesService } from '../employees.service';
 import { ToastrService } from 'ngx-toastr';
 import * as _ from 'lodash';
+import { DynamicStateApproved } from '../employees.model';
 
 @Component({
   selector: 'app-new-approvals',
@@ -17,7 +18,7 @@ import * as _ from 'lodash';
 })
 export class NewApprovalsComponent implements OnInit {
 
-  displayedColumns: string[] = ['artistCode', 'fullName', 'place', 'view', 'approvalStatus'];
+  displayedColumns: string[];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   personalDetailsData: any = [];
@@ -27,6 +28,10 @@ export class NewApprovalsComponent implements OnInit {
 
   isDistrict: boolean;
   userId: number;
+  panchayatData: any = [];
+  districtId: number;
+  districtData: any = [];
+  dynamicStateApproved: DynamicStateApproved = new DynamicStateApproved();
 
   constructor(
     public dialog: MatDialog,
@@ -39,46 +44,38 @@ export class NewApprovalsComponent implements OnInit {
     this.role = sessionStorage.getItem('role');
 
     if (this.role === 'DISTRICT') {
+      this.displayedColumns = ['artistCode', 'fullName', 'place', 'approvalStatus', 'actionTakenBy', 'createdBy', 'view'];
+      // this.displayedColumns = ['artistCode', 'fullName', 'place', 'approvalStatus', 'view'];
       this.isDistrict = true;
+      this.getPersonalDetailsData();
     }
-    else {
+    if (this.role === 'STATE') {
+      this.displayedColumns = ['artistCode', 'fullName', 'district', 'place', 'approvalStatus', 'view'];
       this.isDistrict = false;
+      this.getDistrictMasterData();
+      this.getNewProposalFormDetailsAtState();
     }
 
 
     this.emitterService.isApproved.subscribe(val => {
-      this.getPersonalDetailsData();
+      if (val) {
+        if (this.role === 'DISTRICT') {
+          this.isDistrict = true;
+          this.getPersonalDetailsData();
+        }
+        if (this.role === 'STATE') {
+          this.isDistrict = false;
+          this.getNewProposalFormDetailsAtState();
+        }
+      }
+
     });
 
   }
 
   ngOnInit(): void {
 
-
-    this.getPersonalDetailsData();
-
   }
-
-  // createEmployee() {
-  //   sessionStorage.removeItem('language');
-  //   sessionStorage.setItem('language', 'true');
-  //   this.dialog.open(DialogPersonalDetailComponent, {
-  //     height: '600px',
-  //     width: '1200px',
-  //     disableClose: true
-  //   });
-  // }
-
-  // createEmployeeMarathi() {
-  //   sessionStorage.removeItem('language');
-  //   sessionStorage.setItem('language', 'false');
-  //   this.emitterService.isLanguageChanged.emit(false);
-  //   this.dialog.open(DialogPersonalDetailComponent, {
-  //     height: '600px',
-  //     width: '1200px',
-  //     disableClose: true
-  //   });
-  // }
 
   editEmployee(employee) {
     this.dialog.open(DialogPersonalDetailComponent, {
@@ -88,8 +85,6 @@ export class NewApprovalsComponent implements OnInit {
       disableClose: true
     });
   }
-
-
 
   viewEmployee(employee) {
 
@@ -104,6 +99,16 @@ export class NewApprovalsComponent implements OnInit {
 
   getPersonalDetailsData() {
     this.employeeService.getNewProposalFormData(this.userId).subscribe(res => {
+      this.personalDetailsData = res;
+      let uniqueData = _.uniqBy(this.personalDetailsData, 'id');
+      this.personalDetailsData = uniqueData;
+      this.dataSource = new MatTableDataSource(this.personalDetailsData);
+      setTimeout(() => this.dataSource.paginator = this.paginator);
+    });
+  }
+
+  getNewProposalFormDetailsAtState() {
+    this.employeeService.getNewApprovalsByState().subscribe(res => {
       this.personalDetailsData = res;
       let uniqueData = _.uniqBy(this.personalDetailsData, 'id');
       this.personalDetailsData = uniqueData;
@@ -127,4 +132,50 @@ export class NewApprovalsComponent implements OnInit {
     this.emitterService.isLanguageChanged.emit(false);
     this.toastr.info('मराठी भाषा निवडली आहे');
   }
+
+
+
+
+  searchRecord() {
+
+    this.dynamicStateApproved.roleName = sessionStorage.getItem('role');
+    if (this.dynamicStateApproved.districtId === null || this.dynamicStateApproved.districtId === undefined) {
+      this.dynamicStateApproved.districtId = 0;
+    }
+    if (this.dynamicStateApproved.panchayatName === null || this.dynamicStateApproved.panchayatName === undefined || this.dynamicStateApproved.panchayatName === '') {
+      this.dynamicStateApproved.panchayatName = 'ALL';
+
+    }
+
+
+    this.employeeService.postDynamicNewProposalByState(this.dynamicStateApproved).subscribe(res => {
+      this.personalDetailsData = res;
+      let uniqueApprovedListData = _.uniqBy(this.personalDetailsData, 'id');
+      this.personalDetailsData = uniqueApprovedListData;
+      this.dataSource = new MatTableDataSource(this.personalDetailsData);
+      this.dataSource.paginator = this.paginator;
+    });
+  }
+
+
+  selectedPanchyatFromList(panchayat) {
+    this.dynamicStateApproved.panchayatName = panchayat.PanchyatId;
+  }
+
+
+  selectedDistrictFromList(district) {
+    this.dynamicStateApproved.districtId = district.DistrictId;
+    this.employeeService.getPanchayatBasedOnDistrictId(this.dynamicStateApproved.districtId).subscribe(res => {
+      this.panchayatData = res;
+    });
+    this.dynamicStateApproved.panchayatName = '';
+
+  }
+
+  getDistrictMasterData() {
+    this.employeeService.getDistrictMasterData().subscribe(res => {
+      this.districtData = res;
+    });
+  }
+
 }

@@ -8,7 +8,6 @@ import { EmitterService } from 'src/app/shared/emitter.service';
 
 import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material/core";
 import { AppDateAdapter, APP_DATE_FORMATS } from './date.adapter';
-import { last } from 'lodash';
 import { Router } from '@angular/router';
 
 @Component({
@@ -156,23 +155,17 @@ export class DialogPersonalDetailComponent implements OnInit {
       lastname: [''],
       fullname: [''],
       dob: [''],
-
       annualincome: [''],
       arttype: [''],
       periodofworks: [''],
-
-      // grade: [''],
       address: [''],
       taluka: [''],
       district: [''],
-
       contactnoone: [''],
       contactnotwo: [''],
-
       aadharno: [''],
       panno: [''],
       spousename: [''],
-
       accountname: [''],
       accountnumber: [''],
       bankname: [''],
@@ -213,19 +206,12 @@ export class DialogPersonalDetailComponent implements OnInit {
       reasonForEdit: ['']
     });
     this.districtId = Number(sessionStorage.getItem('DistrictId'));
-
     this.personalDetailsData = data;
-
     this.maxDate = new Date();
     this.minDate = new Date();
-
     this.preferredLanguage = sessionStorage.getItem('language');
-
-
     this.emitterService.isLanguageChanged.subscribe(val => {
-
       this.preferredLanguage = sessionStorage.getItem('language');
-
     });
 
     console.log(this.router.url);
@@ -255,14 +241,12 @@ export class DialogPersonalDetailComponent implements OnInit {
       { id: 0, title: 'Date of Birth Proof' },
       { id: 1, title: 'Maharashtra Resident Proof' },
       { id: 2, title: 'Annual Income from  Tahasildar Proof' },
-      // { id: 3, title: 'Illness or Handicaped Proof' },
       { id: 4, title: 'Publications,Invetations and Govt Recognistion Proof' },
       { id: 5, title: 'Cultural Ministry Certification Proof' },
       { id: 6, title: 'Sponsered Programs Proof' },
       { id: 7, title: 'Collector Nominated Program Participation Proof' },
       { id: 8, title: 'Institution and Individual Recomendation Proof' },
       { id: 9, title: 'Goverment Beneficiary Benfit Plan Proof' },
-      // { id: 10, title: 'Notarised Certificate Of Confirmation Proof' },
       { id: 11, title: 'Upload Manual Form Proof' },
     ];
 
@@ -283,17 +267,11 @@ export class DialogPersonalDetailComponent implements OnInit {
     ];
 
     this.savePersonalDetailsForm.controls.financialBenefitReceived.disable();
-    // this.savePersonalDetailsForm.controls.fileUpload.disable();
     this.savePersonalDetailsForm.controls.illHandicapedProof.disable();
     this.savePersonalDetailsForm.controls.notarisedCertificateOfConfirmationProof.disable();
-
     this.userId = Number(sessionStorage.getItem('userId'));
-
     this.personalDetails.userId = this.userId;
-
     this.getStatusMaster();
-
-    // this.personalDetails.applicationDate = this.applicationvalueChangedData();
     this.personalDetails.applicationDate = new Date();
     this.personalDetails.place = sessionStorage.getItem('panchayatName');
   }
@@ -305,23 +283,17 @@ export class DialogPersonalDetailComponent implements OnInit {
       console.log('existing member registration');
       this.personalDetails.id = this.personalDetails.id;
       formData.append('id', this.personalDetails.id.toString());
-
       formData.append('statusId', this.reqForEditForPanchayat.toString());
-
       this.personalDetails.status = "REQ FOR EDIT BY PANCHAYAT";
       formData.append('status', this.personalDetails.status);
-
-      // formData.append('holdByDistrict', this.userId.toString());
       formData.append('editByPanchayat', this.userId.toString());
 
       formData.append('updatedBy', this.userId.toString());
     }
     else {
-      console.log('new member registration');
       this.personalDetails.id = "0"
       formData.append('id', this.personalDetails.id.toString());
       formData.append('statusId', this.submittedByPanchayat.toString());
-
       this.personalDetails.status = "PENDING";
       formData.append('status', this.personalDetails.status);
     }
@@ -405,7 +377,6 @@ export class DialogPersonalDetailComponent implements OnInit {
     }
 
     if (this.personalDetails.district === null || this.personalDetails.district === undefined) {
-      // this.personalDetails.district = 0;
       formData.append('district', '0');
     }
 
@@ -582,7 +553,6 @@ export class DialogPersonalDetailComponent implements OnInit {
       formData.append('applicationDate', '');
     }
     else {
-      // formData.append('applicationDate', this.personalDetails.applicationDate);
       let fullDate;
       fullDate = this.applicationvalueChanged();
       this.personalDetails.applicationDate = fullDate.toString();
@@ -590,21 +560,6 @@ export class DialogPersonalDetailComponent implements OnInit {
 
     }
 
-    // if (this.personalDetails.fullname === null || this.personalDetails.fullname === undefined || this.personalDetails.fullname === '') {
-    //   this.personalDetails.fullname = "";
-    //   formData.append('fullname', '');
-    // }
-    // else {
-    //   formData.append('fullname', this.personalDetails.firstName);
-    // }
-
-    // if (this.personalDetails.userId === null || this.personalDetails.userId === undefined) {
-    //   this.personalDetails.userId = 0;
-    //   formData.append('userId', this.personalDetails.userId.toString());
-    // }
-    // else {
-    //   formData.append('userId', this.personalDetails.userId.toString());
-    // }
     formData.append('userId', this.personalDetails.userId.toString());
 
     if (this.personalDetails.artLocations === null || this.personalDetails.artLocations === undefined || this.personalDetails.artLocations === '') {
@@ -622,55 +577,6 @@ export class DialogPersonalDetailComponent implements OnInit {
     else {
       formData.append('currentAge', this.personalDetails.currentAge);
     }
-
-
-
-    // for (var i = 0; i < this.dobFiles.length; i++) {
-    //   formData.append("dobFiles", this.dobFiles[i]);
-    // }
-
-
-    // for (var i = 0; i < this.maharashtraResidentFiles.length; i++) {
-    //   formData.append("maharashtraResidentFiles", this.maharashtraResidentFiles[i]);
-    // }
-
-    // for (var i = 0; i < this.annualIncomeFiles.length; i++) {
-    //   formData.append("annualIncomeFiles", this.annualIncomeFiles[i]);
-    // }
-
-
-    // for (var i = 0; i < this.IllnessFiles.length; i++) {
-    //   formData.append("IllnessFiles", this.IllnessFiles[i]);
-    // }
-
-
-    // for (var i = 0; i < this.govtRecognistionFiles.length; i++) {
-    //   formData.append("govtRecognistionFiles", this.govtRecognistionFiles[i]);
-    // }
-
-    // for (var i = 0; i < this.culturalMinistryCertificationFiles.length; i++) {
-    //   formData.append("culturalMinistryCertificationFiles", this.culturalMinistryCertificationFiles[i]);
-    // }
-
-
-    // for (var i = 0; i < this.sponseredProgramsFiles.length; i++) {
-    //   formData.append("sponseredProgramsFiles", this.sponseredProgramsFiles[i]);
-    // }
-
-    // for (var i = 0; i < this.collectorNominatedProgramParticipationFiles.length; i++) {
-    //   formData.append("collectorNominatedProgramParticipationFiles", this.collectorNominatedProgramParticipationFiles[i]);
-    // }
-
-
-    // for (var i = 0; i < this.govtBeneficiaryFiles.length; i++) {
-    //   formData.append("govtBeneficiaryFiles", this.govtBeneficiaryFiles[i]);
-    // }
-    // for (var i = 0; i < this.notarisedCertificateFiles.length; i++) {
-    //   formData.append("notarisedCertificateFiles", this.notarisedCertificateFiles[i]);
-    // }
-    // for (var i = 0; i < this.manualFormFiles.length; i++) {
-    //   formData.append("manualFormFiles", this.manualFormFiles[i]);
-    // }
 
     if (this.personalDetails.firstName === undefined || this.personalDetails.firstName === null || this.personalDetails.firstName === "") {
       this.personalDetails.fullname = this.personalDetails.firstName;
@@ -707,8 +613,6 @@ export class DialogPersonalDetailComponent implements OnInit {
 
     console.log(this.personalDetails.fullname.trim());
     formData.append('createdBy', this.userId.toString());
-    // formData.append('updatedBy', this.userId.toString());
-
 
     this.employeeService.saveProposalFormData(formData).subscribe(response => {
       this.emitterService.isPersonalDataCreated.emit(true);
@@ -719,35 +623,7 @@ export class DialogPersonalDetailComponent implements OnInit {
   }
 
   assignValues() {
-    // this.personalDetails.artistSystemCode = this.personalDetailsData.ArtistSystemCode;
-    // this.personalDetails.firstName = this.personalDetailsData.FirstName;
-    // this.personalDetails.middleName = this.personalDetailsData.MiddleName;
-    // this.personalDetails.lastName = this.personalDetailsData.LastName;
-    // this.personalDetails.dob = this.personalDetailsData.DOB;
-
-    // this.personalDetails.annualIncome = this.personalDetailsData.AnnualIncome;
-    // this.personalDetails.artType = this.personalDetailsData.ArtType;
-    // this.personalDetails.periodOfWork = this.personalDetailsData.PeriodOfWork;
-    // this.personalDetails.grade = this.personalDetailsData.Grade;
-    // this.personalDetails.address = this.personalDetailsData.Address;
-    // this.personalDetails.taluka = this.personalDetailsData.Taluka;
-    // this.personalDetails.district = this.personalDetailsData.District;
-    // this.personalDetails.contactNo1 = this.personalDetailsData.ContactNo1;
-    // this.personalDetails.contactNo2 = this.personalDetailsData.ContactNo2;
-    // this.personalDetails.aadharNo = this.personalDetailsData.AadharNo;
-    // this.personalDetails.panNo = this.personalDetailsData.PanNo;
-    // this.personalDetails.spouseName = this.personalDetailsData.SpouseName;
-    // this.personalDetails.accountName = this.personalDetailsData.AccountName;
-
-    // this.personalDetails.accountNumber = this.personalDetailsData.AccountNumber;
-    // this.personalDetails.bankName = this.personalDetailsData.BankName;
-    // this.personalDetails.BankIFSCCode = this.personalDetailsData.BankIFSCCode;
-    // this.personalDetails.city = this.personalDetailsData.City;
-
-    console.log(this.personalDetailsData);
-
     this.personalDetails.artistSystemCode = this.personalDetailsData.ArtistSystemCode;
-
     this.personalDetails.firstName = this.personalDetailsData.FirstName;
     this.personalDetails.middleName = this.personalDetailsData.MiddleName;
     this.personalDetails.lastName = this.personalDetailsData.LastName;
@@ -847,7 +723,7 @@ export class DialogPersonalDetailComponent implements OnInit {
 
   selectedHandicapedFromList(response) {
     this.isIllnessHandicapedProof = true;
-    console.log(response);
+    
     let isYesSelected = response.title;
     if (isYesSelected === 'Yes') {
       this.savePersonalDetailsForm.controls.illHandicapedProof.enable();
@@ -890,7 +766,6 @@ export class DialogPersonalDetailComponent implements OnInit {
       this.maharashtraResidentFiles.push(e.target.files[i]);
       this.toastr.success('Maharashtra Residence Proof Uploaded');
       this.isMaharashtraResidentProof = true;
-      // console.log('Mahrashtra Residence', e.target.files[i].name);
     }
   }
   getannualIncomeFileDetails(e) {
@@ -899,7 +774,7 @@ export class DialogPersonalDetailComponent implements OnInit {
       this.toastr.success('Annual Income Proof Uploaded');
       this.isAnnualIncomeProof = true;
     }
-    console.log(this.annualIncomeFiles);
+
   }
 
   getIllHandicapedFileDetails(e) {
@@ -908,7 +783,7 @@ export class DialogPersonalDetailComponent implements OnInit {
       this.toastr.success('Ill Handicaped Proof Uploaded');
       this.isIllnessHandicapedProof = true;
     }
-    console.log(this.IllnessFiles);
+  
   }
 
   getGovtRecognisitionFileDetails(e) {
@@ -1009,7 +884,6 @@ export class DialogPersonalDetailComponent implements OnInit {
     let districtObj = response;
     let filteredString = districtObj.DistrictName.substring(0, 4);
     this.personalDetails.artistSystemCode = 'MH' + filteredString + '-' + this.artistSystemCode;
-    console.log('artist code', this.personalDetails.artistSystemCode);
   }
 
   createFullName() {
@@ -1017,32 +891,21 @@ export class DialogPersonalDetailComponent implements OnInit {
       this.personalDetails.fullname = this.personalDetails.firstName.concat(" ").concat(this.personalDetails.middleName).concat(" ").concat(this.personalDetails.lastName);
     }
     if (this.personalDetails.firstName) {
-      console.log('first name ', this.personalDetails.firstName);
-      console.log('full name', this.personalDetails.fullname);
       if (this.personalDetails.fullname === undefined || this.personalDetails.fullname === null || this.personalDetails.fullname === "") {
-        console.log('inside if');
         this.personalDetails.fullname = this.personalDetails.firstName;
       }
       else {
-        console.log('inside else');
-        // this.personalDetails.fullname = this.personalDetails.fullname.concat(" ").concat(this.personalDetails.firstName);
-
         this.personalDetails.fullname = this.personalDetails.fullname + "," + this.personalDetails.firstName;
       }
 
     }
     if (this.personalDetails.middleName) {
-      console.log('m name ', this.personalDetails.middleName);
-      console.log('full name', this.personalDetails.fullname);
+  
       if (this.personalDetails.fullname === undefined || this.personalDetails.fullname === null || this.personalDetails.fullname === "") {
-        console.log('inside if');
         this.personalDetails.fullname = this.personalDetails.middleName;
       }
       else {
-        console.log('inside else');
-
         this.personalDetails.fullname = this.personalDetails.fullname + "," + this.personalDetails.middleName;
-
         let x = Array.from(new Set(this.personalDetails.fullname.split(','))).toString();
         let filtredStr = x;
         var newStr = filtredStr.replace(/,/g, ' ');
@@ -1052,22 +915,16 @@ export class DialogPersonalDetailComponent implements OnInit {
 
     }
     if (this.personalDetails.lastName) {
-      console.log('l name ', this.personalDetails.lastName);
-      console.log('full name', this.personalDetails.fullname);
       if (this.personalDetails.fullname === undefined || this.personalDetails.fullname === null || this.personalDetails.fullname === "") {
-        console.log('inside if');
         this.personalDetails.fullname = this.personalDetails.lastName;
       }
       else {
-        console.log('inside else');
         this.personalDetails.fullname = this.personalDetails.fullname + "," + this.personalDetails.lastName;
         let x = Array.from(new Set(this.personalDetails.fullname.split(' '))).toString();
         let filtredStr = x;
-        // var newStr = filtredStr.replace(/,/g, ',');
         this.personalDetails.fullname = filtredStr;
         this.personalDetails.fullname = [...new Set(this.personalDetails.fullname.split(" "))].join(" ");
         this.personalDetails.fullname = [...new Set(this.personalDetails.fullname.split(","))].join(" ");
-        console.log(this.personalDetails.fullname);
       }
 
     }
@@ -1082,9 +939,7 @@ export class DialogPersonalDetailComponent implements OnInit {
       this.statusMaster = res;
       this.submittedByPanchayat = this.statusMaster[4].StatusId;
       this.onHoldAtDistrict = this.statusMaster[7].StatusId;
-
       this.reqForEditForPanchayat = this.statusMaster[14].StatusId;
-      console.log('this.reqForEditForPanchayat', this.reqForEditForPanchayat);
     });
   }
 

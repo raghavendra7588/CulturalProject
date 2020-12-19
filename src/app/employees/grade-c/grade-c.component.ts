@@ -14,7 +14,7 @@ import { EmployeesService } from '../employees.service';
 export class GradeCComponent implements OnInit {
 
   dataSource: any;
-  displayedColumns: string[] = ['artistCode', 'firstName', 'lastName', 'view', 'approvalStatus'];
+  displayedColumns: string[] = ['artistCode', 'fullName', 'place', 'approvalStatus', 'approvedBy', 'approvedAt', 'view'];
   gradeAData: any = [];
   districtId: number;
   @ViewChild(MatPaginator) paginator: MatPaginator;

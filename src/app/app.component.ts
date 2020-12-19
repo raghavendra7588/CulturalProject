@@ -37,14 +37,13 @@ export class AppComponent {
     public router: Router,
     public employeeService: EmployeesService
   ) {
-
+    this.userName = sessionStorage.getItem('Name');
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
 
     if ("language" in sessionStorage) {
       this.preferredLanguage = sessionStorage.getItem('language');
-      // this.spinner.show();
     }
 
     if ("districtName" in sessionStorage) {
@@ -133,12 +132,11 @@ export class AppComponent {
   }
 
   changePassword() {
-    // console.log('change password click');
+
   }
 
   getData() {
     this.employeeService.getAllData().subscribe(res => {
-      // console.log(res)
     });
   }
 
