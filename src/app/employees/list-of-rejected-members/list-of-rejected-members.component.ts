@@ -57,7 +57,7 @@ export class ListOfRejectedMembersComponent implements OnInit {
 
     }
     if (this.roleName === 'STATE') {
-      this.displayedColumns = ['artistCode', 'fullName', 'district', 'place', 'approvalStatus', 'view'];
+      this.displayedColumns = ['artistCode', 'fullName', 'district', 'place', 'approvalStatus', 'rejectedBy', 'rejectedAt', 'view'];
       this.getDistrictMasterData();
       this.getRejectedMembersByState();
     }

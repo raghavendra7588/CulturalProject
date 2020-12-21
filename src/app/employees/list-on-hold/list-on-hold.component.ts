@@ -61,7 +61,7 @@ export class ListOnHoldComponent implements OnInit {
       this.getListOnHoldDataByDistrict(this.userId);
     }
     if (this.role === 'STATE') {
-      this.displayedColumns = ['artistCode', 'fullName', 'district', 'place', 'approvalStatus', 'view',];
+      this.displayedColumns = ['artistCode', 'fullName', 'district', 'place', 'approvalStatus', 'holdBy', 'holdAt', 'view',];
       this.getDistrictMasterData();
       this.getOnHoldArtistDataByState();
     }

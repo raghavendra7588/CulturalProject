@@ -28,7 +28,7 @@
         </ng-container>
         <ng-container matColumnDef="firstName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>First Name</th>
-            <td mat-cell *matCellDef="let element"> {{element.FirstName}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.FirstName| uppercase}} </td>
         </ng-container>
 
 

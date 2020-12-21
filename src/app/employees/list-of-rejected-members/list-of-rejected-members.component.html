@@ -53,7 +53,7 @@
 
     <ng-container matColumnDef="fullName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Full Name</th>
-      <td mat-cell *matCellDef="let element"> {{element.FullName}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.FullName| uppercase}} </td>
     </ng-container>
 
 
@@ -72,7 +72,7 @@
 
     <ng-container matColumnDef="rejectedBy">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Rejected By</th>
-      <td mat-cell *matCellDef="let element"> {{element.UserName}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.UserName| uppercase}} </td>
     </ng-container>
 
 
@@ -82,7 +82,7 @@
     </ng-container>
 
     <ng-container matColumnDef="view">
-      <th mat-header-cell *matHeaderCellDef [hidden]="show">view</th>
+      <th mat-header-cell *matHeaderCellDef [hidden]="show">View</th>
       <td mat-cell *matCellDef="let element">
         <button mat-icon-button (click)="viewEmployee(element)">
           <mat-icon class="mat-18">remove_red_eye</mat-icon>
@@ -106,7 +106,7 @@
 
     <ng-container matColumnDef="fullName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Full Name</th>
-      <td mat-cell *matCellDef="let element"> {{element.FullName}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.FullName| uppercase}} </td>
     </ng-container>
 
 
@@ -118,7 +118,7 @@
 
     <ng-container matColumnDef="rejectedBy">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Rejected By</th>
-      <td mat-cell *matCellDef="let element"> {{element.UserName}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.UserName| uppercase}} </td>
     </ng-container>
 
 
@@ -128,7 +128,7 @@
     </ng-container>
 
     <ng-container matColumnDef="view">
-      <th mat-header-cell *matHeaderCellDef [hidden]="show">view</th>
+      <th mat-header-cell *matHeaderCellDef [hidden]="show">View</th>
       <td mat-cell *matCellDef="let element">
         <button mat-icon-button (click)="viewEmployee(element)">
           <mat-icon class="mat-18">remove_red_eye</mat-icon>
@@ -158,7 +158,7 @@
 
     <ng-container matColumnDef="fullName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Full Name</th>
-      <td mat-cell *matCellDef="let element"> {{element.FullName}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.FullName| uppercase}} </td>
     </ng-container>
 
     <ng-container matColumnDef="district">
@@ -176,9 +176,19 @@
       <td mat-cell *matCellDef="let element"> {{element.StatusName}} </td>
     </ng-container>
 
+    <ng-container matColumnDef="rejectedBy">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Rejected By</th>
+      <td mat-cell *matCellDef="let element"> {{element.UserName| uppercase}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="rejectedAt">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Rejected At</th>
+      <td mat-cell *matCellDef="let element"> {{element.RejectedByDistrictAT}} </td>
+    </ng-container>
 
     <ng-container matColumnDef="view">
-      <th mat-header-cell *matHeaderCellDef [hidden]="show">view</th>
+      <th mat-header-cell *matHeaderCellDef [hidden]="show">View</th>
       <td mat-cell *matCellDef="let element">
         <button mat-icon-button (click)="viewEmployee(element)">
           <mat-icon class="mat-18">remove_red_eye</mat-icon>

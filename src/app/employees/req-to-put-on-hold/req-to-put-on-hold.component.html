@@ -56,7 +56,7 @@
 
         <ng-container matColumnDef="fullName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Full Name</th>
-            <td mat-cell *matCellDef="let element"> {{element.FullName}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.FullName| uppercase}} </td>
         </ng-container>
 
         <ng-container matColumnDef="place">
@@ -70,7 +70,7 @@
         </ng-container>
 
         <ng-container matColumnDef="view">
-            <th mat-header-cell *matHeaderCellDef [hidden]="show">view</th>
+            <th mat-header-cell *matHeaderCellDef [hidden]="show">View</th>
             <td mat-cell *matCellDef="let element">
                 <button mat-icon-button (click)="viewEmployee(element)">
                     <mat-icon class="mat-18">remove_red_eye</mat-icon>
@@ -95,7 +95,7 @@
 
         <ng-container matColumnDef="fullName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Full Name</th>
-            <td mat-cell *matCellDef="let element"> {{element.FullName}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.FullName| uppercase}} </td>
         </ng-container>
 
         <ng-container matColumnDef="place">
@@ -134,7 +134,7 @@
 
         <ng-container matColumnDef="fullName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Full Name</th>
-            <td mat-cell *matCellDef="let element"> {{element.FullName}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.FullName| uppercase}} </td>
         </ng-container>
 
         <ng-container matColumnDef="district">
@@ -153,7 +153,7 @@
         </ng-container>
 
         <ng-container matColumnDef="view">
-            <th mat-header-cell *matHeaderCellDef [hidden]="show">view</th>
+            <th mat-header-cell *matHeaderCellDef [hidden]="show">View</th>
             <td mat-cell *matCellDef="let element">
                 <button mat-icon-button (click)="viewEmployee(element)">
                     <mat-icon class="mat-18">remove_red_eye</mat-icon>

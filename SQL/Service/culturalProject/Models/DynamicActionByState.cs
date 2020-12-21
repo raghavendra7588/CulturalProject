@@ -46,7 +46,6 @@ namespace culturalProject.Models
             cmd.Parameters.AddWithValue("@PanchyatId", objDynamicActionByState.PanchayatName);
 
             SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-
             DataSet fileData = new DataSet();
             adapter.Fill(fileData, "fileData");
             conn.Close();

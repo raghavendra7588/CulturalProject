@@ -50,7 +50,7 @@ export class ApprovedListComponent implements OnInit {
 
     }
     else {
-      this.displayedColumns = ['artistCode', 'fullName', 'district', 'place', 'approvalStatus', 'view'];
+      this.displayedColumns = ['artistCode', 'fullName', 'district', 'place', 'approvalStatus','approvedBy', 'approvedByAt', 'view'];
       this.getDistrictMasterData();
       this.getApprovedListData();
     }

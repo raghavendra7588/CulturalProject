@@ -9,6 +9,7 @@ import { EmitterService } from 'src/app/shared/emitter.service';
 import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material/core";
 import { AppDateAdapter, APP_DATE_FORMATS } from './date.adapter';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-dialog-personal-detail',
@@ -147,7 +148,8 @@ export class DialogPersonalDetailComponent implements OnInit {
     public emitterService: EmitterService,
     private router: Router
   ) {
-
+    this.personalDetailsData = data;
+    console.log('personal details data', this.personalDetailsData);
     this.savePersonalDetailsForm = this.formBuilder.group({
       artistSystemCode: ['',],
       firstname: ['', [Validators.required]],
@@ -206,7 +208,7 @@ export class DialogPersonalDetailComponent implements OnInit {
       reasonForEdit: ['']
     });
     this.districtId = Number(sessionStorage.getItem('DistrictId'));
-    this.personalDetailsData = data;
+
     this.maxDate = new Date();
     this.minDate = new Date();
     this.preferredLanguage = sessionStorage.getItem('language');
@@ -226,7 +228,7 @@ export class DialogPersonalDetailComponent implements OnInit {
       setTimeout(() => {
         this.assignValues();
       }, 3000);
-
+      // this.assignValues();
       this.personalDetails.id = this.personalDetailsData.id;
       this.isViewSelected = true;
     }
@@ -271,7 +273,7 @@ export class DialogPersonalDetailComponent implements OnInit {
     this.userId = Number(sessionStorage.getItem('userId'));
     this.personalDetails.userId = this.userId;
     this.getStatusMaster();
-    this.personalDetails.applicationDate = new Date();
+    //  this.personalDetails.applicationDate = new Date();
     this.personalDetails.place = sessionStorage.getItem('panchayatName');
   }
 
@@ -547,14 +549,25 @@ export class DialogPersonalDetailComponent implements OnInit {
     }
 
 
+    // if (this.personalDetails.dob === null || this.personalDetails.dob === undefined || this.personalDetails.dob === '') {
+    //   this.personalDetails.dob = "";
+    //   formData.append('dob', '');
+    // }
+    // else {
+    //   let fullDate;
+    //   fullDate = this.valueChanged();
+    //   this.personalDetails.dob = fullDate.toString();
+    //   formData.append('dob', this.personalDetails.dob);
+    // }
+
     if (this.personalDetails.applicationDate === null || this.personalDetails.applicationDate === undefined || this.personalDetails.applicationDate === '') {
       this.personalDetails.applicationDate = "";
       formData.append('applicationDate', '');
     }
     else {
-      let fullDate;
-      fullDate = this.applicationvalueChanged();
-      this.personalDetails.applicationDate = fullDate.toString();
+      let applicationDate;
+      applicationDate = this.applicationvalueChanged();
+      this.personalDetails.applicationDate = applicationDate.toString();
       formData.append('applicationDate', this.personalDetails.applicationDate);
 
     }
@@ -626,7 +639,6 @@ export class DialogPersonalDetailComponent implements OnInit {
     this.personalDetails.middleName = this.personalDetailsData.MiddleName;
     this.personalDetails.lastName = this.personalDetailsData.LastName;
     this.personalDetails.dob = new Date(this.personalDetailsData.DOB);
-    this.personalDetails.applicationDate = new Date(this.personalDetailsData.ApplicationDate);
     this.personalDetails.annualIncome = this.personalDetailsData.AnnualIncome;
     this.personalDetails.artType = this.personalDetailsData.ArtType;
     this.personalDetails.periodOfWork = this.personalDetailsData.PeriodOfWork;
@@ -652,10 +664,11 @@ export class DialogPersonalDetailComponent implements OnInit {
     this.personalDetails.dependentFamilyMemberCount = this.personalDetailsData.DependentFamilyMemberCount;
     this.personalDetails.artLocations = this.personalDetailsData.ArtLocations;
     this.personalDetails.workDetails = this.personalDetailsData.WorkDetails;;
-    this.personalDetails.applicationDate = new Date(this.personalDetailsData.ApplicationDate);
+    // this.personalDetails.applicationDate = new Date(this.personalDetailsData.ApplicationDate);
     this.personalDetails.fullname = this.personalDetailsData.FullName;
     this.personalDetails.gender = this.personalDetailsData.Gender;
     this.personalDetails.pinCode = this.personalDetailsData.PinCode;
+    this.personalDetails.currentAge = this.personalDetailsData.CurrentAge;
     this.isViewSelected = true;
   }
   valueChanged() {
@@ -702,26 +715,11 @@ export class DialogPersonalDetailComponent implements OnInit {
   }
 
 
-  applicationvalueChangedData() {
-
-    let date = new Date();
-    const year = date.getFullYear()
-    const month = `${date.getMonth() + 1}`.padStart(2, "0")
-
-    const day = `${date.getDate()}`.padStart(2, "0")
-
-    const stringDate = [day, month, year].join("/");
-    let fullDate = stringDate;
-    this.personalDetails.applicationDate = fullDate
-
-    return fullDate
-  }
-
 
 
   selectedHandicapedFromList(response) {
     this.isIllnessHandicapedProof = true;
-    
+
     let isYesSelected = response.title;
     if (isYesSelected === 'Yes') {
       this.savePersonalDetailsForm.controls.illHandicapedProof.enable();
@@ -781,7 +779,7 @@ export class DialogPersonalDetailComponent implements OnInit {
       this.toastr.success('Ill Handicaped Proof Uploaded');
       this.isIllnessHandicapedProof = true;
     }
-  
+
   }
 
   getGovtRecognisitionFileDetails(e) {
@@ -898,7 +896,7 @@ export class DialogPersonalDetailComponent implements OnInit {
 
     }
     if (this.personalDetails.middleName) {
-  
+
       if (this.personalDetails.fullname === undefined || this.personalDetails.fullname === null || this.personalDetails.fullname === "") {
         this.personalDetails.fullname = this.personalDetails.middleName;
       }

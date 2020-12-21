@@ -50,7 +50,7 @@ export class NewApprovalsComponent implements OnInit {
       this.getPersonalDetailsData();
     }
     if (this.role === 'STATE') {
-      this.displayedColumns = ['artistCode', 'fullName', 'district', 'place', 'approvalStatus', 'view'];
+      this.displayedColumns = ['artistCode', 'fullName', 'district', 'place', 'approvalStatus', 'actionTakenBy', 'createdBy', 'view'];
       this.isDistrict = false;
       this.getDistrictMasterData();
       this.getNewProposalFormDetailsAtState();
