@@ -49,16 +49,10 @@
    
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
-        <ng-container matColumnDef="artistCode">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Code</th>
-            <td mat-cell *matCellDef="let element"> {{element.ArtistSystemCode}} </td>
-        </ng-container>
-
         <ng-container matColumnDef="fullName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Full Name</th>
             <td mat-cell *matCellDef="let element"> {{element.FullName| uppercase}} </td>
         </ng-container>
-
         <ng-container matColumnDef="place">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Place</th>
             <td mat-cell *matCellDef="let element"> {{element.Place}} </td>
@@ -67,6 +61,16 @@
         <ng-container matColumnDef="approvalStatus">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
             <td mat-cell *matCellDef="let element"> {{element.StatusNamee}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="userName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Action Taken By</th>
+            <td mat-cell *matCellDef="let element"> {{element.UserName| uppercase}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="timestamp">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Time Stamp</th>
+            <td mat-cell *matCellDef="let element"> {{element.TimeStamp}} </td>
         </ng-container>
 
         <ng-container matColumnDef="view">
@@ -83,6 +87,8 @@
     </table>
     <mat-paginator [pageSizeOptions]="[10, 50, 100]" showFirstLastButtons></mat-paginator>
 </div>
+
+
 
 <div class="col-md-12 col-12 col-sm-12 mt-4" *ngIf="role=== 'DISTRICT'">
 
@@ -108,6 +114,16 @@
             <td mat-cell *matCellDef="let element"> {{element.StatusNamee}} </td>
         </ng-container>
 
+        <ng-container matColumnDef="userName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Action Taken By</th>
+            <td mat-cell *matCellDef="let element"> {{element.UserName| uppercase}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="timestamp">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Time Stamp</th>
+            <td mat-cell *matCellDef="let element"> {{element.TimeStamp}} </td>
+        </ng-container>
+
         <ng-container matColumnDef="view">
             <th mat-header-cell *matHeaderCellDef [hidden]="show">Edit</th>
             <td mat-cell *matCellDef="let element">
@@ -127,10 +143,10 @@
   
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
-        <ng-container matColumnDef="artistCode">
+        <!-- <ng-container matColumnDef="artistCode">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Code</th>
             <td mat-cell *matCellDef="let element"> {{element.ArtistSystemCode}} </td>
-        </ng-container>
+        </ng-container> -->
 
         <ng-container matColumnDef="fullName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Full Name</th>
@@ -150,6 +166,16 @@
         <ng-container matColumnDef="approvalStatus">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
             <td mat-cell *matCellDef="let element"> {{element.StatusNamee}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="userName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Action Taken By</th>
+            <td mat-cell *matCellDef="let element"> {{element.UserName| uppercase}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="timestamp">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Time Stamp</th>
+            <td mat-cell *matCellDef="let element"> {{element.TimeStamp}} </td>
         </ng-container>
 
         <ng-container matColumnDef="view">

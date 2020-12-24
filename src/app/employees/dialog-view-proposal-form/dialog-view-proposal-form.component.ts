@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, TemplateRef } from '@angular/core';
+import { Component, Inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ApprovalForEditByDistrict, NewProposalBL, OnApprovArtistByDistrict, OnHoldArtistByDistrict, OnHoldProposalForm, PersonalDetails, ReqToHoldArtistToHold, ReqToPutOnHoldByPanchayat, ReqToRemoveFromHoldToApproved, ReqToRemoveFromHoldToholdByDistrict } from '../employees.model';
@@ -13,6 +13,29 @@ import { DialogApprovArtistComponent } from '../dialog-approv-artist/dialog-appr
 
 import { Router, NavigationEnd } from "@angular/router";
 import { ReasonForRejectionComponent } from '../reason-for-rejection/reason-for-rejection.component';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
+
+export interface PeriodicElement {
+  name: string;
+  position: number;
+  weight: number;
+  symbol: string;
+}
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
+  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
+  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
+  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
+  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
+  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
+  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
+  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
+  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
+  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
+];
 
 @Component({
   selector: 'app-dialog-view-proposal-form',
@@ -29,6 +52,10 @@ import { ReasonForRejectionComponent } from '../reason-for-rejection/reason-for-
     }
   ]
 })
+
+
+
+
 export class DialogViewProposalFormComponent implements OnInit {
 
   modalRef: BsModalRef;
@@ -182,6 +209,13 @@ export class DialogViewProposalFormComponent implements OnInit {
   apprvoedByDistrictStr: string = '	APPROVED BY DISTRICT';
   reqToRemoveFromHoldByPanchayat: number;
 
+  selectedProposalFormId: number;
+  uploadedDocumentsData: any = [];
+
+  dataSource: any;
+  displayedColumns: string[] = ['fileType', 'filePath'];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
   constructor(
     public dialog: MatDialog,
     public formBuilder: FormBuilder,
@@ -268,6 +302,20 @@ export class DialogViewProposalFormComponent implements OnInit {
 
     this.maxDate = new Date();
 
+    console.log('this.personalDetailsData.id', this.personalDetailsData.id);
+    this.employeeService.getUploadedDocumentsByProposalId(this.personalDetailsData.id).subscribe(res => {
+      this.uploadedDocumentsData = res;
+
+      if (this.uploadedDocumentsData.length) { 
+        this.dataSource = new MatTableDataSource(this.uploadedDocumentsData);
+        setTimeout(() => this.dataSource.paginator = this.paginator);
+        console.log(res);
+     }
+
+   
+    });
+
+
     if (this.personalDetailsData && this.role === 'DISTRICT') {
       this.currentStatusId = this.personalDetailsData.StatusId;
       this.currentStatusName = this.personalDetailsData.StatusNamee;
@@ -346,7 +394,7 @@ export class DialogViewProposalFormComponent implements OnInit {
       this.closeButtonOnly = true;
     }
 
-     if (this.router.url === '/listOfRejectedMembers' && this.role === 'DISTRICT') {
+    if (this.router.url === '/listOfRejectedMembers' && this.role === 'DISTRICT') {
       this.isApprovedListRoute = true;
       this.closeButtonOnly = true;
     }
@@ -433,13 +481,13 @@ export class DialogViewProposalFormComponent implements OnInit {
 
 
   assignValues() {
- 
+    console.log('this.personalDetailsData', this.personalDetailsData);
     this.personalDetails.artistSystemCode = this.personalDetailsData.ArtistSystemCode;
     this.personalDetails.firstName = this.personalDetailsData.FirstName;
     this.personalDetails.middleName = this.personalDetailsData.MiddleName;
     this.personalDetails.lastName = this.personalDetailsData.LastName;
     this.personalDetails.dob = new Date(this.personalDetailsData.DOB);
-    this.personalDetails.applicationDate = new Date(this.personalDetailsData.ApplicationDate);
+
     this.personalDetails.annualIncome = this.personalDetailsData.AnnualIncome;
     this.personalDetails.artType = this.personalDetailsData.ArtType;
     this.personalDetails.periodOfWork = this.personalDetailsData.PeriodOfWork;
@@ -468,6 +516,8 @@ export class DialogViewProposalFormComponent implements OnInit {
     this.personalDetails.fullname = this.personalDetailsData.FullName;
     this.personalDetails.gender = this.personalDetailsData.Gender;
     this.personalDetails.pinCode = this.personalDetailsData.PinCode;
+    this.personalDetails.currentAge = this.personalDetailsData.CurrentAge;
+    this.personalDetails.applicationDate = this.personalDetailsData.ApplicationDate;
   }
   valueChanged() {
 
@@ -750,7 +800,8 @@ export class DialogViewProposalFormComponent implements OnInit {
     this.onApprovArtistByDistrict.id = Number(this.personalDetailsData.id);
     this.onApprovArtistByDistrict.userId = Number(this.userId);
     this.onApprovArtistByDistrict.statusId = this.approvedByDistrict;
-   
+    this.onApprovArtistByDistrict.ApprovedByDistrict = Number(this.userId);
+
     this.employeeService.postArtistToApprovByDistrict(this.onApprovArtistByDistrict).subscribe(res => {
       this.toastr.success('On Approved Successfully');
       this.emitterService.isApproved.emit(true);
@@ -809,7 +860,7 @@ export class DialogViewProposalFormComponent implements OnInit {
 
   openModalForApprovForEditByDistricT(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
-  
+
   }
 
   confirmForEditByDistrict(): void {
@@ -819,7 +870,7 @@ export class DialogViewProposalFormComponent implements OnInit {
     this.approvalForEditByDistrict.userId = Number(this.userId);
     this.approvalForEditByDistrict.ReasonForApprovedForEditByDistrict = this.personalDetails.reasonForApprovedToEditByDistrict;
 
-  
+
 
     this.employeeService.postApprovToEditByDistrict(this.approvalForEditByDistrict).subscribe(res => {
       this.toastr.success('Approved For Edit Successfully');
@@ -866,5 +917,7 @@ export class DialogViewProposalFormComponent implements OnInit {
 
   }
 
-
+  applyFilter(filter: string) {
+    this.dataSource.filter = filter.trim().toLowerCase();
+  }
 }

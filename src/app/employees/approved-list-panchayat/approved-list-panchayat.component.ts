@@ -8,6 +8,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { OnHoldProposalForm } from '../employees.model';
 import { ToastrService } from 'ngx-toastr';
 import { DialogPersonalDetailComponent } from '../dialog-personal-detail/dialog-personal-detail.component';
+import { DialogPersonalDetailsEditComponent } from '../dialog-personal-details-edit/dialog-personal-details-edit.component';
 
 @Component({
   selector: 'app-approved-list-panchayat',
@@ -82,13 +83,13 @@ export class ApprovedListPanchayatComponent implements OnInit {
   editUser(res: any) {
     sessionStorage.removeItem('action');
     sessionStorage.setItem('action', 'editByPanchayat');
-    this.dialog.open(DialogPersonalDetailComponent, {
+    this.dialog.open(DialogPersonalDetailsEditComponent, {
       height: '700px',
       width: '1200px',
       data: res,
       disableClose: false
     });
-
+    
   }
 
   onHoldEmployee(res) {

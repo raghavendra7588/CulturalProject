@@ -49,6 +49,7 @@ import { StateRoleManagementComponent } from './state-role-management/state-role
 import { DistrictRoleManagementComponent } from './district-role-management/district-role-management.component';
 import { PanchayatRoleManagementComponent } from './panchayat-role-management/panchayat-role-management.component';
 import { DialogRoleManagementComponent } from './dialog-role-management/dialog-role-management.component';
+import { DialogPersonalDetailsEditComponent } from './dialog-personal-details-edit/dialog-personal-details-edit.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { DialogRoleManagementComponent } from './dialog-role-management/dialog-r
     StateRoleManagementComponent,
     DistrictRoleManagementComponent,
     PanchayatRoleManagementComponent,
-    DialogRoleManagementComponent
+    DialogRoleManagementComponent,
+    DialogPersonalDetailsEditComponent
   ],
   imports: [
     CommonModule,
@@ -112,6 +114,6 @@ import { DialogRoleManagementComponent } from './dialog-role-management/dialog-r
     ApprovalsOnHoldComponent, EditAndHoldDistrictComponent, ReqToPutOnHoldComponent, ListOnHoldComponent, ReqToRemoveFromHoldComponent,
     StateRoleManagementComponent, DistrictRoleManagementComponent, PanchayatRoleManagementComponent],
   entryComponents: [DialogPersonalDetailComponent, DialogAddUserMasterComponent, DialogViewProposalFormComponent,
-    DialogApprovArtistComponent, ReasonForRejectionComponent, DialogRoleManagementComponent]
+    DialogApprovArtistComponent, ReasonForRejectionComponent, DialogRoleManagementComponent,DialogPersonalDetailsEditComponent]
 })
 export class EmployeesModule { }

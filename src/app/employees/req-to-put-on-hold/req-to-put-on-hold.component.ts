@@ -63,15 +63,16 @@ export class ReqToPutOnHoldComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.role === 'DISTRICT') {
-      this.displayedColumns = ['artistCode', 'fullName', 'place','approvalStatus', 'view' ];
+      this.displayedColumns = ['artistCode', 'fullName', 'place', 'approvalStatus', 'userName', 'timestamp','view'];
       this.getRequestToPutOnHoldDataByDistrict(this.userId);
     }
     if (this.role === 'GRAMPANCHAYAT') {
-      this.displayedColumns = ['artistCode', 'fullName', 'place','approvalStatus' ,'view' ];
+
+      this.displayedColumns = ['fullName','place' ,'approvalStatus', 'userName', 'timestamp', 'view'];
       this.getRequestToPutOnHoldDataByPanchayat(this.userId);
     }
     if (this.role === 'STATE') {
-      this.displayedColumns = ['artistCode', 'fullName', 'district', 'place', 'approvalStatus','view'];
+      this.displayedColumns = [ 'fullName', 'district', 'place', 'approvalStatus','userName', 'timestamp', 'view'];
       this.getRequestToPutOnHoldByState();
       this.getDistrictMasterData();
     }

@@ -50,6 +50,13 @@ export class DialogPersonalDetailComponent implements OnInit {
   isDateOfBirthProof: boolean = false;
   isMaharashtraResidentProof: boolean = false;
   isAnnualIncomeProof: boolean = false;
+  isGovermentBeneficiaryProof: boolean = false;
+
+  isArtistPhotographProof: boolean = false;
+  isNomineePhotographProof: boolean = false;
+  isBankAccountConfirmationProof = false;
+  isManualFormProof: boolean = false;
+
   isIllnessHandicapedProof: boolean = false;
   isGovtRecognitionProof: boolean = false;
   isCulturalMinistryCertificationProof: boolean = false;
@@ -57,8 +64,8 @@ export class DialogPersonalDetailComponent implements OnInit {
   isCollectorNominatedProgramProof: boolean = false;
   isInstitutionRecomendationProof: boolean = false;
   isIndivudualRecommendationProof: boolean = false;
-  isGovermentBeneficiaryProof: boolean = false;
-  isManualFormProof: boolean = false;
+
+
   isNotarisedCertificateOfConfirmationProof: boolean = false;
 
   dateOfBirthProoFilename: string = null;
@@ -109,18 +116,24 @@ export class DialogPersonalDetailComponent implements OnInit {
   isHandicappedSelected: string = 'false';
 
 
-  dobFiles: string[] = [];
-  maharashtraResidentFiles: string[] = [];
-  annualIncomeFiles: string[] = [];
-  IllnessFiles: string[] = [];
-  govtRecognistionFiles: string[] = [];
-  culturalMinistryCertificationFiles: string[] = [];
-  sponseredProgramsFiles: string[] = [];
-  collectorNominatedProgramParticipationFiles: string[] = [];
-  individualRecomendationFiles: string[] = [];
-  govtBeneficiaryFiles: string[] = [];
-  notarisedCertificateFiles: string[] = [];
-  manualFormFiles: string[] = [];
+  dobFiles: any[] = [];
+  maharashtraResidentFiles: any[] = [];
+  annualIncomeFiles: any[] = [];
+  govtBeneficiaryFiles: any[] = [];
+  artistPhotographFiles: any[] = [];
+  nomineePhotographFiles: any[] = [];
+  bankAccountConfimationFiles: any[] = [];
+
+  IllnessFiles: any[] = [];
+  govtRecognistionFiles: any[] = [];
+  culturalMinistryCertificationFiles: any[] = [];
+  sponseredProgramsFiles: any[] = [];
+  collectorNominatedProgramParticipationFiles: any[] = [];
+  individualRecomendationFiles: any[] = [];
+
+  notarisedCertificateFiles: any[] = [];
+  otherDocumentsFiles: any = [] = [];
+  manualFormFiles: any[] = [];
 
   gradeArray: any = [];
 
@@ -138,6 +151,13 @@ export class DialogPersonalDetailComponent implements OnInit {
 
   isExisitingEdit: boolean = false;
   reqForEditForPanchayat: number;
+  isFormSubmitted: boolean = false;
+
+
+  submittedProposalFormId: number;
+  documentrTypeStr: string = '';
+  files: any = [];
+
 
   constructor(
     public formBuilder: FormBuilder,
@@ -228,7 +248,7 @@ export class DialogPersonalDetailComponent implements OnInit {
       setTimeout(() => {
         this.assignValues();
       }, 3000);
-      // this.assignValues();
+  
       this.personalDetails.id = this.personalDetailsData.id;
       this.isViewSelected = true;
     }
@@ -273,8 +293,13 @@ export class DialogPersonalDetailComponent implements OnInit {
     this.userId = Number(sessionStorage.getItem('userId'));
     this.personalDetails.userId = this.userId;
     this.getStatusMaster();
-    //  this.personalDetails.applicationDate = new Date();
+    let applicationDate = new Date();
+    let formattedDate = moment(applicationDate).format('DD/MM/YYYY');
+
+    this.personalDetails.applicationDate = formattedDate;
+
     this.personalDetails.place = sessionStorage.getItem('panchayatName');
+    this.disableFileUploadingControls();
   }
 
 
@@ -549,28 +574,7 @@ export class DialogPersonalDetailComponent implements OnInit {
     }
 
 
-    // if (this.personalDetails.dob === null || this.personalDetails.dob === undefined || this.personalDetails.dob === '') {
-    //   this.personalDetails.dob = "";
-    //   formData.append('dob', '');
-    // }
-    // else {
-    //   let fullDate;
-    //   fullDate = this.valueChanged();
-    //   this.personalDetails.dob = fullDate.toString();
-    //   formData.append('dob', this.personalDetails.dob);
-    // }
 
-    if (this.personalDetails.applicationDate === null || this.personalDetails.applicationDate === undefined || this.personalDetails.applicationDate === '') {
-      this.personalDetails.applicationDate = "";
-      formData.append('applicationDate', '');
-    }
-    else {
-      let applicationDate;
-      applicationDate = this.applicationvalueChanged();
-      this.personalDetails.applicationDate = applicationDate.toString();
-      formData.append('applicationDate', this.personalDetails.applicationDate);
-
-    }
 
     formData.append('userId', this.personalDetails.userId.toString());
 
@@ -624,16 +628,59 @@ export class DialogPersonalDetailComponent implements OnInit {
     formData.append('fullname', this.personalDetails.fullname);
 
     formData.append('createdBy', this.userId.toString());
+    formData.append('applicationDate', this.personalDetails.applicationDate);
+
 
     this.employeeService.saveProposalFormData(formData).subscribe(response => {
-      this.emitterService.isPersonalDataCreated.emit(true);
-      this.emitterService.isPanchyatArtistPuttedOnHold.emit(true);
+      this.submittedProposalFormId = Number(response);
+      this.isFormSubmitted = true;
       this.toastr.success('Record Submitted Successfully');
-      this.dialogRef.close();
+      this.enableFileUploadingControls();   
     });
   }
+  disableFileUploadingControls() {
+    this.savePersonalDetailsForm.controls.dobProof.disable();
+    this.savePersonalDetailsForm.controls.maharashtraResidentProof.disable();
+    this.savePersonalDetailsForm.controls.annualIncomeProof.disable();
+    this.savePersonalDetailsForm.controls.beneficiaryBenefitPlanProof.disable();
+    this.savePersonalDetailsForm.controls.artistPhotographProof.disable();
+    this.savePersonalDetailsForm.controls.nomineePhotographProof.disable();
+    this.savePersonalDetailsForm.controls.bankAccountConfirmationProof.disable();
+    this.savePersonalDetailsForm.controls.publicationsGovtRecognistionProof.disable();
+    this.savePersonalDetailsForm.controls.culturalMinsitryCertificationProof.disable();
 
+    this.savePersonalDetailsForm.controls.sponseredDocumentsProof.disable();
+    this.savePersonalDetailsForm.controls.collectorNominatedParticipationProof.disable();
+    this.savePersonalDetailsForm.controls.institutionRecomendationProof.disable();
+
+
+    this.savePersonalDetailsForm.controls.otherDocuments.disable();
+    this.savePersonalDetailsForm.controls.manualFormProof.disable();
+
+  }
+
+  enableFileUploadingControls() {
+    this.savePersonalDetailsForm.controls.dobProof.enable();
+    this.savePersonalDetailsForm.controls.maharashtraResidentProof.enable();
+    this.savePersonalDetailsForm.controls.annualIncomeProof.enable();
+    this.savePersonalDetailsForm.controls.beneficiaryBenefitPlanProof.enable();
+    this.savePersonalDetailsForm.controls.artistPhotographProof.enable();
+    this.savePersonalDetailsForm.controls.nomineePhotographProof.enable();
+    this.savePersonalDetailsForm.controls.bankAccountConfirmationProof.enable();
+    this.savePersonalDetailsForm.controls.publicationsGovtRecognistionProof.enable();
+    this.savePersonalDetailsForm.controls.culturalMinsitryCertificationProof.enable();
+
+    this.savePersonalDetailsForm.controls.sponseredDocumentsProof.enable();
+    this.savePersonalDetailsForm.controls.collectorNominatedParticipationProof.enable();
+    this.savePersonalDetailsForm.controls.institutionRecomendationProof.enable();
+
+
+    this.savePersonalDetailsForm.controls.otherDocuments.enable();
+    this.savePersonalDetailsForm.controls.manualFormProof.enable();
+
+  }
   assignValues() {
+
     this.personalDetails.artistSystemCode = this.personalDetailsData.ArtistSystemCode;
     this.personalDetails.firstName = this.personalDetailsData.FirstName;
     this.personalDetails.middleName = this.personalDetailsData.MiddleName;
@@ -664,11 +711,12 @@ export class DialogPersonalDetailComponent implements OnInit {
     this.personalDetails.dependentFamilyMemberCount = this.personalDetailsData.DependentFamilyMemberCount;
     this.personalDetails.artLocations = this.personalDetailsData.ArtLocations;
     this.personalDetails.workDetails = this.personalDetailsData.WorkDetails;;
-    // this.personalDetails.applicationDate = new Date(this.personalDetailsData.ApplicationDate);
+
     this.personalDetails.fullname = this.personalDetailsData.FullName;
     this.personalDetails.gender = this.personalDetailsData.Gender;
     this.personalDetails.pinCode = this.personalDetailsData.PinCode;
     this.personalDetails.currentAge = this.personalDetailsData.CurrentAge;
+    this.personalDetails.applicationDate = this.personalDetailsData.ApplicationDate;
     this.isViewSelected = true;
   }
   valueChanged() {
@@ -748,11 +796,18 @@ export class DialogPersonalDetailComponent implements OnInit {
 
 
   getDOBFileDetails(e) {
+
     for (var i = 0; i < e.target.files.length; i++) {
       this.dobFiles.push(e.target.files[i]);
-      this.toastr.success('Date Of Birth Proof Uploaded');
-      this.isDateOfBirthProof = true;
+    }
 
+    if (this.dobFiles || this.dobFiles.length > 0) {
+      this.isDateOfBirthProof = true;
+      this.documentrTypeStr = 'dob_proof';
+      this.insertDocuments(this.dobFiles, this.documentrTypeStr);
+    }
+    else {
+      return;
     }
 
   }
@@ -760,15 +815,96 @@ export class DialogPersonalDetailComponent implements OnInit {
   getMahrashtraResidenceFileDetails(e) {
     for (var i = 0; i < e.target.files.length; i++) {
       this.maharashtraResidentFiles.push(e.target.files[i]);
-      this.toastr.success('Maharashtra Residence Proof Uploaded');
-      this.isMaharashtraResidentProof = true;
     }
+
+    if (this.maharashtraResidentFiles || this.maharashtraResidentFiles.length > 0) {
+      this.isMaharashtraResidentProof = true;
+      this.documentrTypeStr = 'resident_proof';
+      this.insertDocuments(this.maharashtraResidentFiles, this.documentrTypeStr);
+    }
+    else {
+      return;
+    }
+
   }
-  getannualIncomeFileDetails(e) {
+
+
+  getAnnualIncomeFileDetails(e) {
     for (var i = 0; i < e.target.files.length; i++) {
       this.annualIncomeFiles.push(e.target.files[i]);
-      this.toastr.success('Annual Income Proof Uploaded');
+    }
+
+    if (this.annualIncomeFiles || this.annualIncomeFiles.length > 0) {
       this.isAnnualIncomeProof = true;
+      this.documentrTypeStr = 'annual_income_photograph';
+      this.insertDocuments(this.annualIncomeFiles, this.documentrTypeStr);
+    }
+    else {
+      return;
+    }
+
+  }
+
+
+  getGovtBeneficiaryBenefitFileDetails(e) {
+    for (var i = 0; i < e.target.files.length; i++) {
+      this.govtBeneficiaryFiles.push(e.target.files[i]);
+    }
+
+    if (this.govtBeneficiaryFiles || this.govtBeneficiaryFiles.length > 0) {
+      this.isGovermentBeneficiaryProof = true;
+      this.documentrTypeStr = 'gov_beneficiray_proof';
+      this.insertDocuments(this.govtBeneficiaryFiles, this.documentrTypeStr);
+    }
+    else {
+      return;
+    }
+
+  }
+
+  getArtistPhotographFileDetails(e) {
+    for (var i = 0; i < e.target.files.length; i++) {
+      this.artistPhotographFiles.push(e.target.files[i]);
+    }
+
+
+    if (this.artistPhotographFiles || this.artistPhotographFiles.length > 0) {
+      this.isArtistPhotographProof = true;
+      this.documentrTypeStr = 'artist_photograph';
+      this.insertDocuments(this.artistPhotographFiles, this.documentrTypeStr);
+    }
+    else {
+      return;
+    }
+
+  }
+
+  getNomineePhotographFileDetails(e) {
+    for (var i = 0; i < e.target.files.length; i++) {
+      this.nomineePhotographFiles.push(e.target.files[i]);
+    }
+    if (this.nomineePhotographFiles || this.nomineePhotographFiles.length > 0) {
+      this.isNomineePhotographProof = true;
+      this.documentrTypeStr = 'nominee_photograph';
+      this.insertDocuments(this.nomineePhotographFiles, this.documentrTypeStr);
+    }
+    else {
+      return;
+    }
+
+  }
+
+  getBankAccountConfimationFileDetails(e) {
+    for (var i = 0; i < e.target.files.length; i++) {
+      this.bankAccountConfimationFiles.push(e.target.files[i]);
+    }
+    if (this.bankAccountConfimationFiles || this.bankAccountConfimationFiles.length > 0) {
+      this.isBankAccountConfirmationProof = true;
+      this.documentrTypeStr = 'bank_account_confirmation_proof';
+      this.insertDocuments(this.bankAccountConfimationFiles, this.documentrTypeStr);
+    }
+    else {
+      return;
     }
 
   }
@@ -776,8 +912,14 @@ export class DialogPersonalDetailComponent implements OnInit {
   getIllHandicapedFileDetails(e) {
     for (var i = 0; i < e.target.files.length; i++) {
       this.IllnessFiles.push(e.target.files[i]);
-      this.toastr.success('Ill Handicaped Proof Uploaded');
+    }
+    if (this.IllnessFiles || this.IllnessFiles.length > 0) {
       this.isIllnessHandicapedProof = true;
+      this.documentrTypeStr = 'illness_handicaped_proof';
+      this.insertDocuments(this.IllnessFiles, this.documentrTypeStr);
+    }
+    else {
+      return;
     }
 
   }
@@ -785,66 +927,119 @@ export class DialogPersonalDetailComponent implements OnInit {
   getGovtRecognisitionFileDetails(e) {
     for (var i = 0; i < e.target.files.length; i++) {
       this.govtRecognistionFiles.push(e.target.files[i]);
-      this.toastr.success('Goverment Recognisition Proof Uploaded');
-      this.isGovtRecognitionProof = true;
     }
+    if (this.govtRecognistionFiles || this.govtRecognistionFiles.length > 0) {
+      this.isGovtRecognitionProof = true;
+      this.documentrTypeStr = 'govt_recognition_proof';
+      this.insertDocuments(this.govtRecognistionFiles, this.documentrTypeStr);
+    }
+    else {
+      return;
+    }
+
   }
 
-  getCulturalFileDetails(e) {
+
+  getCulturalMinistryFileDetails(e) {
     for (var i = 0; i < e.target.files.length; i++) {
       this.culturalMinistryCertificationFiles.push(e.target.files[i]);
-      this.toastr.success('Cultural Ministry Certificate Proof Uploaded');
-      this.isCulturalMinistryCertificationProof = true;
     }
+    if (this.culturalMinistryCertificationFiles || this.culturalMinistryCertificationFiles.length > 0) {
+      this.isCulturalMinistryCertificationProof = true;
+      this.documentrTypeStr = 'cultural_ministry_proof';
+      this.insertDocuments(this.culturalMinistryCertificationFiles, this.documentrTypeStr);
+    }
+    else {
+      return;
+    }
+
   }
 
   getSponseredFileDetails(e) {
     for (var i = 0; i < e.target.files.length; i++) {
       this.sponseredProgramsFiles.push(e.target.files[i]);
-      this.toastr.success('Sponsered Programs Proof Uploaded');
-      this.isSponseredProgramsProof = true;
     }
+    if (this.sponseredProgramsFiles || this.sponseredProgramsFiles.length > 0) {
+      this.isSponseredProgramsProof = true;
+      this.documentrTypeStr = 'sponsered_programs_proof';
+      this.insertDocuments(this.sponseredProgramsFiles, this.documentrTypeStr);
+    }
+    else {
+      return;
+    }
+
   }
 
   getCollectorNominatedFileDetails(e) {
     for (var i = 0; i < e.target.files.length; i++) {
       this.collectorNominatedProgramParticipationFiles.push(e.target.files[i]);
-      this.toastr.success('Collector Nominated Proof Uploaded');
-      this.isCollectorNominatedProgramProof = true;
     }
+    if (this.collectorNominatedProgramParticipationFiles || this.collectorNominatedProgramParticipationFiles.length > 0) {
+      this.documentrTypeStr = 'collector_nominated_proof';
+      this.insertDocuments(this.collectorNominatedProgramParticipationFiles, this.documentrTypeStr);
+    }
+    else {
+      return;
+    }
+
   }
 
   getIndividualInstitutionFileDetails(e) {
     for (var i = 0; i < e.target.files.length; i++) {
       this.individualRecomendationFiles.push(e.target.files[i]);
-      this.toastr.success('Individual Institution Proof Uploaded');
-      this.isIndivudualRecommendationProof = true;
     }
+    if (this.individualRecomendationFiles || this.individualRecomendationFiles.length > 0) {
+      this.documentrTypeStr = 'institution_program_proof';
+      this.insertDocuments(this.individualRecomendationFiles, this.documentrTypeStr);
+    }
+    else {
+      return;
+    }
+
   }
 
-  getGovtBeneficiaryBenefitFileDetails(e) {
-    for (var i = 0; i < e.target.files.length; i++) {
-      this.govtBeneficiaryFiles.push(e.target.files[i]);
-
-      this.toastr.success('Individual Institution Proof Uploaded');
-      this.isGovermentBeneficiaryProof = true;
-    }
-  }
 
   getNotarisedFileDetails(e) {
     for (var i = 0; i < e.target.files.length; i++) {
       this.notarisedCertificateFiles.push(e.target.files[i]);
-      this.toastr.success('Notarised Certificate Proof Uploaded');
-      this.isNotarisedCertificateOfConfirmationProof = true;
     }
+    if (this.notarisedCertificateFiles || this.notarisedCertificateFiles.length > 0) {
+      this.documentrTypeStr = 'notarised_certificate_proof';
+      this.insertDocuments(this.notarisedCertificateFiles, this.documentrTypeStr);
+    }
+    else {
+      return;
+    }
+
+  }
+
+  getOtherDocumentsFileDetails(e) {
+    for (var i = 0; i < e.target.files.length; i++) {
+      this.otherDocumentsFiles.push(e.target.files[i]);
+    }
+    if (this.otherDocumentsFiles || this.otherDocumentsFiles.length > 0) {
+      this.documentrTypeStr = 'other_documents_proof';
+      this.insertDocuments(this.otherDocumentsFiles, this.documentrTypeStr);
+    }
+    else {
+      return;
+    }
+
   }
 
   getManualFileDetails(e) {
     for (var i = 0; i < e.target.files.length; i++) {
       this.manualFormFiles.push(e.target.files[i]);
-      this.toastr.success('Manual Form Proof Uploaded');
-      this.isManualFormProof = true;
     }
+    if (this.manualFormFiles || this.manualFormFiles.length > 0) {
+      this.isManualFormProof = true;
+      this.documentrTypeStr = 'manual_form_proof';
+      this.insertDocuments(this.manualFormFiles, this.documentrTypeStr);
+    }
+    else {
+      return;
+    }
+
   }
 
   selectedGradefromList(response) {
@@ -938,6 +1133,40 @@ export class DialogPersonalDetailComponent implements OnInit {
     });
   }
 
+  insertDocuments(files: any[], fileType: string) {
 
+    this.files = files;
+    const insertDocumentsFormData = new FormData();
+
+
+    for (var i = 0; i < this.files.length; i++) {
+      insertDocumentsFormData.append("filePath", this.files[i]);
+    }
+
+    insertDocumentsFormData.append('docType', fileType);
+    insertDocumentsFormData.append('proposalFormId', (this.submittedProposalFormId).toString());
+    console.log(' this.files', this.files);
+    console.log(' docType', fileType);
+    console.log(' this.proposalFormId', this.submittedProposalFormId);
+    this.employeeService.postDocuments(insertDocumentsFormData).subscribe(res => {
+      console.log(res);
+      this.toastr.success('Successful');
+
+    });
+
+  }
+
+  saveIsDraft() {
+    const updateIsDraftFormData = new FormData();
+    updateIsDraftFormData.append('proposalFormId', this.submittedProposalFormId.toString());
+    updateIsDraftFormData.append('isDraft', 'NO');
+
+    this.employeeService.postIsDraft(updateIsDraftFormData).subscribe(res => {
+      this.toastr.success('Record Submitted Successfully !');
+      this.emitterService.isPersonalDataCreated.emit(true);
+      this.emitterService.isPanchyatArtistPuttedOnHold.emit(true);
+      this.dialogRef.close();
+    });
+  }
 
 }

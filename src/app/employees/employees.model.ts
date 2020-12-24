@@ -257,6 +257,7 @@ export class OnApprovArtistByDistrict {
     id?: number;
     userId?: number;
     statusId?: number;
+    ApprovedByDistrict?: number;
 }
 
 

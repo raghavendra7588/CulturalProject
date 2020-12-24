@@ -7,6 +7,8 @@ import { environment } from '../../environments/environment';
 })
 export class EmployeesService {
 
+  public BASE_API = 'http://localhost:54372';
+
   private SAVE_PERSONAL_DETAILS_FORM = environment.BASE_URL + 'api/ProposalForm';
   private SAVE_PROPOSAL_FORM = environment.BASE_URL + 'api/ProposalFormModified';
   private GET_PROPOSAL_FROM_PENDING_USERS = environment.BASE_URL + 'api/ProposalFormModified';
@@ -73,6 +75,11 @@ export class EmployeesService {
 
   private POST_DYNAMIC_ROLE_DISTRICT = environment.BASE_URL + 'api/DynamicActionByState/DynamicStateRoleDistrictData';
   private POST_DYNAMIC_ROLE_PANCHAYAT = environment.BASE_URL + 'api/DynamicActionByState/DynamicStateRolePanchayatData';
+
+  private POST_DOCUMENTS = environment.BASE_URL + 'api/uploadDocuments';
+
+  private POST_PROPOSAL_FORM_IS_DRAFT = environment.BASE_URL + 'api/postDraft';
+  private GET_UPLOADED_DOCUMENTS_DATA = environment.BASE_URL + 'api/panchayat/uploadedDocuments';
 
   constructor(
     public http: HttpClient
@@ -214,9 +221,11 @@ export class EmployeesService {
     return this.http.get(this.GET_ARTIST_ON_HOLD_BY_PANCHAYAT + '/' + userId);
   }
 
+
   postArtistToApprovByDistrict(approvArtist) {
-    return this.http.post(this.POST_ARTIST_TO_HOLD_BY_DISTRICT, approvArtist);
+    return this.http.post(this.POST_ARTIST_TO_APPROVED_BY_DISTRICT, approvArtist);
   }
+
 
   postReqToPutOnHoldByPanchayat(ReqToHold) {
     return this.http.post(this.POST_REQ_TO_PUT_ON_HOLD_BY_PANCHAYAT, ReqToHold);
@@ -306,6 +315,18 @@ export class EmployeesService {
 
   postDynamicDistrictDataByPanchayat(panchayat) {
     return this.http.post(this.POST_DYNAMIC_ROLE_PANCHAYAT, panchayat);
+  }
+
+  postDocuments(uploadDocuments) {
+    return this.http.post(this.POST_DOCUMENTS, uploadDocuments);
+  }
+
+  postIsDraft(isDraft) {
+    return this.http.post(this.POST_PROPOSAL_FORM_IS_DRAFT, isDraft);
+  }
+
+  getUploadedDocumentsByProposalId(proposalId) {
+    return this.http.get(this.GET_UPLOADED_DOCUMENTS_DATA + '/' + proposalId);   
   }
 
 }
