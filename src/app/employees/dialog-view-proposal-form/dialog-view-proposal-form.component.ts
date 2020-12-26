@@ -302,14 +302,14 @@ export class DialogViewProposalFormComponent implements OnInit {
 
     this.maxDate = new Date();
 
-    console.log('this.personalDetailsData.id', this.personalDetailsData.id);
+ 
     this.employeeService.getUploadedDocumentsByProposalId(this.personalDetailsData.id).subscribe(res => {
       this.uploadedDocumentsData = res;
 
       if (this.uploadedDocumentsData.length) { 
         this.dataSource = new MatTableDataSource(this.uploadedDocumentsData);
         setTimeout(() => this.dataSource.paginator = this.paginator);
-        console.log(res);
+      
      }
 
    
@@ -481,7 +481,7 @@ export class DialogViewProposalFormComponent implements OnInit {
 
 
   assignValues() {
-    console.log('this.personalDetailsData', this.personalDetailsData);
+   
     this.personalDetails.artistSystemCode = this.personalDetailsData.ArtistSystemCode;
     this.personalDetails.firstName = this.personalDetailsData.FirstName;
     this.personalDetails.middleName = this.personalDetailsData.MiddleName;

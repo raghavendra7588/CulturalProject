@@ -92,7 +92,7 @@ export class DialogAddUserMasterComponent implements OnInit {
   }
 
   selectedDistrictFromList(response) {
-    //console.log('PanchyatName', this.userMaster.PanchyatName);
+    
   }
 
   getRoleMastersData(roleId) {

@@ -93,7 +93,7 @@ export class DialogRoleManagementComponent implements OnInit {
 
 
   selectedIsActiveFromList(response) {
-    //console.log(this.userMaster.isActive);
+  
   }
 
 

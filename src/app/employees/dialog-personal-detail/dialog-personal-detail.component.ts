@@ -169,7 +169,7 @@ export class DialogPersonalDetailComponent implements OnInit {
     private router: Router
   ) {
     this.personalDetailsData = data;
-    console.log('personal details data', this.personalDetailsData);
+
     this.savePersonalDetailsForm = this.formBuilder.group({
       artistSystemCode: ['',],
       firstname: ['', [Validators.required]],
@@ -1145,11 +1145,9 @@ export class DialogPersonalDetailComponent implements OnInit {
 
     insertDocumentsFormData.append('docType', fileType);
     insertDocumentsFormData.append('proposalFormId', (this.submittedProposalFormId).toString());
-    console.log(' this.files', this.files);
-    console.log(' docType', fileType);
-    console.log(' this.proposalFormId', this.submittedProposalFormId);
+
     this.employeeService.postDocuments(insertDocumentsFormData).subscribe(res => {
-      console.log(res);
+
       this.toastr.success('Successful');
 
     });
