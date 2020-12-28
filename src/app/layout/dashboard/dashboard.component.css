@@ -21,4 +21,6 @@
     color:#fff;
     height: 130px;
   }
-  
+  *:focus {
+    outline: none;
+}

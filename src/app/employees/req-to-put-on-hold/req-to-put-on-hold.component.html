@@ -19,17 +19,19 @@
 
                     <mat-option *ngFor="let item of panchayatData;" [value]="item.PanchyatId"
                         (click)="selectedPanchyatFromList(item)">
-                        {{item.PanchyatId}}
+                        {{item.PanchyatId| uppercase}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
 
         <div class="col-md-4 col-4 col-sm-4">
-            <button mat-raised-button class="width-100 mt-2" (click)="searchRecord()" color="primary">Search</button>
+
+            <button mat-raised-button class="width-100 mt-2" (click)="searchRecord()" [disabled]="!isDistrictSelected"
+                color="primary">Search</button>
         </div>
     </div>
-    
+
 </div>
 
 <div class="container">
@@ -46,7 +48,7 @@
 <mat-divider class="my-4"></mat-divider>
 
 <div class="col-md-12 col-12 col-sm-12 mt-4" *ngIf="role==='GRAMPANCHAYAT'">
-   
+
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
         <ng-container matColumnDef="fullName">
@@ -140,7 +142,7 @@
 </div>
 
 <div class="col-md-12 col-12 col-sm-12 mt-4" *ngIf="role=== 'STATE'">
-  
+
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
         <!-- <ng-container matColumnDef="artistCode">

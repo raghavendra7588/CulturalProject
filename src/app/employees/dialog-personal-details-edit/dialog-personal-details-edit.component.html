@@ -330,21 +330,64 @@
             </div>
         </div>
 
-
-
-        <div class="row" *ngIf="isExisitingEdit">
-            <div class="col-md-3 col-6 col-sm-6">
-                <mat-form-field style="width: 230px !important;">
-                    <mat-label>Reason For Edit</mat-label>
-                    <textarea id="billingAddress" matInput formControlName="reasonForEdit"
-                        [(ngModel)]="personalDetails.reasonForEdit"></textarea>
+    </div>
+    <mat-divider class="my-2"></mat-divider>
+    <div class="container-fluid">
+        <h4 class="font-weight-bold">Uploaded Documents : </h4>
+        <div class="row">
+            <div class="col-md-12 col-12 col-sm-12">
+                <mat-form-field style="width: 100%;">
+                    <mat-label>Search</mat-label>
+                    <input matInput (keyup)="applyFilter($event.target.value)">
                 </mat-form-field>
             </div>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-12 col-sm-12">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
+                <ng-container matColumnDef="fileType">
+                    <th mat-header-cell *matHeaderCellDef> Type </th>
+                    <td mat-cell *matCellDef="let element"> {{element.FileType}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="filePath">
+                    <th mat-header-cell *matHeaderCellDef> Image </th>
+                    <td mat-cell *matCellDef="let element">
+                        <a [href]="employeeService.BASE_API+element.FilePath" target="_blank"><img
+                                [src]="employeeService.BASE_API+element.FilePath" height="20px" width="20px" /></a>
+                    </td>
+                </ng-container>
+<!-- 
+                <ng-container matColumnDef="edit">
+                    <th mat-header-cell *matHeaderCellDef [hidden]="show">Edit</th>
+                    <td mat-cell *matCellDef="let element">
+
+                        <input type="file" id="file" multiple (change)="editImages($event,element)" class="width-100"
+                            style="margin-left: 7px;">
+                    </td>
+                </ng-container> -->
+<!-- 
+                <ng-container matColumnDef="delete">
+                    <th mat-header-cell *matHeaderCellDef [hidden]="show">Delete</th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-icon-button (click)="deleteDocument(element,response)">
+                            <mat-icon class="mat-18">delete</mat-icon>
+                        </button>
+                    </td>
+                </ng-container> -->
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[10, 50, 100]" showFirstLastButtons></mat-paginator>
+        </div>
     </div>
 
-
+    <!-- <button mat-icon-button (click)="deleteDocument(element)">
+                            <mat-icon class="mat-18">delete</mat-icon>
+                        </button> -->
     <mat-divider class="my-2"></mat-divider>
     <div class="container-fluid">
         <h4 class="font-weight-bold">Mandotary Documents</h4>
@@ -354,7 +397,7 @@
                 <p class="required">Date Of Birth Proof :</p>
             </div>
             <div class="col-md-6 col-12 col-sm-4 p-2">
-                <input type="file" id="file" multiple (change)="getDOBFileDetails($event)" class="width-100" 
+                <input type="file" id="file" multiple (change)="getDOBFileDetails($event)" class="width-100"
                     style="margin-left: 7px;" formControlName="dobProof" [(ngModel)]="personalDetails.dobProof">
             </div>
         </div>
@@ -458,8 +501,8 @@
                 Cultural Ministry Certification Proof :
             </div>
             <div class="col-md-6 col-12 col-sm-4 p-2">
-                <input type="file" id="file" multiple (change)="getCulturalMinistryFileDetails($event)" class="width-100"
-                    style="margin-left: 7px;" formControlName="culturalMinsitryCertificationProof"
+                <input type="file" id="file" multiple (change)="getCulturalMinistryFileDetails($event)"
+                    class="width-100" style="margin-left: 7px;" formControlName="culturalMinsitryCertificationProof"
                     [(ngModel)]="personalDetails.culturalMinsitryCertificationProof">
             </div>
         </div>
@@ -519,8 +562,8 @@
                 Other Documents Proof :
             </div>
             <div class="col-md-6 col-12 col-sm-4 p-2">
-                <input type="file" id="file" multiple (change)="getOtherDocumentsFileDetails($event)"
-                    class="width-100" style="margin-left: 7px;" formControlName="otherDocuments"
+                <input type="file" id="file" multiple (change)="getOtherDocumentsFileDetails($event)" class="width-100"
+                    style="margin-left: 7px;" formControlName="otherDocuments"
                     [(ngModel)]="personalDetails.otherDocuments">
             </div>
         </div>
@@ -537,20 +580,28 @@
             </div>
         </div>
 
+        <div class="row" *ngIf="isExisitingEdit">
+            <div class="col-md-3 col-6 col-sm-6">
+                <mat-form-field style="width: 230px !important;">
+                    <mat-label>Reason For Edit</mat-label>
+                    <textarea id="billingAddress" matInput formControlName="reasonForEdit"
+                        [(ngModel)]="personalDetails.reasonForEdit"></textarea>
+                </mat-form-field>
+            </div>
+
+        </div>
     </div>
     <mat-divder class="my-2"></mat-divder>
     <div class="container-fluid">
 
 
         <div mat-dialog-actions class="my-2" align="end" *ngIf="!isExisitingEdit">
-
-
             <span class="mr-2"><button mat-raised-button color="primary" [disabled]="!personalDetails.firstName"
                     (click)="saveEmployee()">Submit</button></span>
             <button mat-raised-button mat-dialog-close>Close</button>
         </div>
-    
-    
+
+
         <div mat-dialog-actions align="end" *ngIf="isExisitingEdit">
             <span class="mr-2"><button mat-raised-button color="primary" [disabled]="!personalDetails.reasonForEdit"
                     (click)="saveEmployee()">Submit</button></span>
@@ -1123,15 +1174,15 @@
     <mat-divider class="my-3"></mat-divider>
 
 
-        <div class="container-fluid">
+    <div class="container-fluid">
 
-            <div mat-dialog-actions class="my-2" align="end">
-                <span class="mr-2"><button mat-raised-button color="primary" [disabled]="!isFormSubmitted"
-                        (click)="saveEmployee()">Submit Details</button></span>
-                <button mat-raised-button mat-dialog-close>Close</button>
-            </div>
-
+        <div mat-dialog-actions class="my-2" align="end">
+            <span class="mr-2"><button mat-raised-button color="primary" [disabled]="!isFormSubmitted"
+                    (click)="saveEmployee()">Submit Details</button></span>
+            <button mat-raised-button mat-dialog-close>Close</button>
         </div>
-    
+
+    </div>
+
 
 </form>

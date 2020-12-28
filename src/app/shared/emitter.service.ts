@@ -11,6 +11,7 @@ export class EmitterService {
   public isApproved: EventEmitter<boolean>;
   public isPanchyatArtistPuttedOnHold: EventEmitter<boolean>;
   public isActiveStatusChanged: EventEmitter<boolean>;
+  public isFileDeleted: EventEmitter<boolean>;
 
   constructor() {
     this.isPersonalDataCreated = new EventEmitter();
@@ -20,5 +21,6 @@ export class EmitterService {
     this.isApproved = new EventEmitter();
     this.isPanchyatArtistPuttedOnHold = new EventEmitter();
     this.isActiveStatusChanged = new EventEmitter();
+    this.isFileDeleted = new EventEmitter();
   }
 }

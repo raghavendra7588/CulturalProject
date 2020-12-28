@@ -80,6 +80,8 @@ export class EmployeesService {
 
   private POST_PROPOSAL_FORM_IS_DRAFT = environment.BASE_URL + 'api/postDraft';
   private GET_UPLOADED_DOCUMENTS_DATA = environment.BASE_URL + 'api/panchayat/uploadedDocuments';
+  private DELETE_UPLOADED_DOCUMENT = environment.BASE_URL + 'api/proposalFormModified/deleteFile';
+  private EDIT_DOCUMENTS = environment.BASE_URL + 'api/editDocuments';
 
   constructor(
     public http: HttpClient
@@ -326,7 +328,15 @@ export class EmployeesService {
   }
 
   getUploadedDocumentsByProposalId(proposalId) {
-    return this.http.get(this.GET_UPLOADED_DOCUMENTS_DATA + '/' + proposalId);   
+    return this.http.get(this.GET_UPLOADED_DOCUMENTS_DATA + '/' + proposalId);
   }
 
+  deleteUploadedFiles(deleteFiles) {
+    return this.http.post(this.DELETE_UPLOADED_DOCUMENT, deleteFiles);
+  }
+
+  editUploadedFile(editedFiles) {
+    return this.http.post(this.EDIT_DOCUMENTS, editedFiles);
+  }
+  
 }

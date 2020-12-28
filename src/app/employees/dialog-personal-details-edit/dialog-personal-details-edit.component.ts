@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { PersonalDetails } from '../employees.model';
 import { EmployeesService } from '../employees.service'
@@ -10,6 +10,9 @@ import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/mater
 import { AppDateAdapter, APP_DATE_FORMATS } from './date.adapter';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
 
 @Component({
   selector: 'app-dialog-personal-details-edit',
@@ -157,7 +160,13 @@ export class DialogPersonalDetailsEditComponent implements OnInit {
   submittedProposalFormId: number;
   documentrTypeStr: string = '';
   files: any = [];
+  uploadedDocumentsData: any = [];
 
+
+  dataSource: any;
+  displayedColumns: string[] = ['fileType', 'filePath'];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  editOperationFiles: any = [];
 
   constructor(
     public formBuilder: FormBuilder,
@@ -169,6 +178,9 @@ export class DialogPersonalDetailsEditComponent implements OnInit {
     private router: Router
   ) {
     this.personalDetailsData = data;
+    this.submittedProposalFormId = this.personalDetailsData.id;
+
+    this.getUploadedDocumentsData(this.personalDetailsData.id);
 
     this.savePersonalDetailsForm = this.formBuilder.group({
       artistSystemCode: ['',],
@@ -299,7 +311,13 @@ export class DialogPersonalDetailsEditComponent implements OnInit {
     this.personalDetails.applicationDate = formattedDate;
 
     this.personalDetails.place = sessionStorage.getItem('panchayatName');
-   
+
+
+    this.emitterService.isFileDeleted.subscribe(val => {
+      if (val) {
+        this.getUploadedDocumentsData(this.personalDetailsData.id);
+      }
+    });
   }
 
 
@@ -354,8 +372,11 @@ export class DialogPersonalDetailsEditComponent implements OnInit {
     }
     else {
       let fullDate;
+
       fullDate = this.valueChanged();
+      console.log('fullDate', fullDate);
       this.personalDetails.dob = fullDate.toString();
+      console.log(' this.personalDetails.dob',  this.personalDetails.dob);
       formData.append('dob', this.personalDetails.dob);
     }
 
@@ -683,12 +704,15 @@ export class DialogPersonalDetailsEditComponent implements OnInit {
 
   }
   assignValues() {
-
+    console.log(this.personalDetailsData)
     this.personalDetails.artistSystemCode = this.personalDetailsData.ArtistSystemCode;
     this.personalDetails.firstName = this.personalDetailsData.FirstName;
     this.personalDetails.middleName = this.personalDetailsData.MiddleName;
     this.personalDetails.lastName = this.personalDetailsData.LastName;
-    this.personalDetails.dob = new Date(this.personalDetailsData.DOB);
+    let date = moment(this.personalDetailsData.DOB, "YYYY-MM-DD").toISOString();
+    this.personalDetails.dob = date;
+    console.log('dt', date);
+    console.log('dob', this.personalDetails.dob);
     this.personalDetails.annualIncome = this.personalDetailsData.AnnualIncome;
     this.personalDetails.artType = this.personalDetailsData.ArtType;
     this.personalDetails.periodOfWork = this.personalDetailsData.PeriodOfWork;
@@ -714,7 +738,7 @@ export class DialogPersonalDetailsEditComponent implements OnInit {
     this.personalDetails.dependentFamilyMemberCount = this.personalDetailsData.DependentFamilyMemberCount;
     this.personalDetails.artLocations = this.personalDetailsData.ArtLocations;
     this.personalDetails.workDetails = this.personalDetailsData.WorkDetails;;
-  
+
     this.personalDetails.fullname = this.personalDetailsData.FullName;
     this.personalDetails.gender = this.personalDetailsData.Gender;
     this.personalDetails.pinCode = this.personalDetailsData.PinCode;
@@ -1149,9 +1173,8 @@ export class DialogPersonalDetailsEditComponent implements OnInit {
     insertDocumentsFormData.append('docType', fileType);
     insertDocumentsFormData.append('proposalFormId', (this.submittedProposalFormId).toString());
     this.employeeService.postDocuments(insertDocumentsFormData).subscribe(res => {
-
       this.toastr.success('Successful');
-
+      this.emitterService.isFileDeleted.emit(true);
     });
 
   }
@@ -1168,4 +1191,66 @@ export class DialogPersonalDetailsEditComponent implements OnInit {
       this.dialogRef.close();
     });
   }
+
+  applyFilter(filter: string) {
+    this.dataSource.filter = filter.trim().toLowerCase();
+  }
+
+  deleteDocument(element) {
+    console.log(element);
+    this.employeeService.deleteUploadedFiles(element).subscribe(res => {
+      this.toastr.success('File Is Deleted Successfully !');
+      this.emitterService.isFileDeleted.emit(true);
+    });
+  }
+
+  getUploadedDocumentsData(id) {
+    this.employeeService.getUploadedDocumentsByProposalId(id).subscribe(res => {
+      this.uploadedDocumentsData = res;
+      if (this.uploadedDocumentsData.length) {
+        this.dataSource = new MatTableDataSource(this.uploadedDocumentsData);
+        setTimeout(() => this.dataSource.paginator = this.paginator);
+      }
+    });
+  }
+
+  editImages(fileData, response) {
+    console.log(response);
+    console.log(fileData);
+
+
+    for (var i = 0; i < fileData.target.files.length; i++) {
+      this.editOperationFiles.push(fileData.target.files[i]);
+    }
+    if (this.editOperationFiles || this.editOperationFiles.length > 0) {
+      this.documentrTypeStr = response.FileType;
+      this.UpdateDocuments(this.editOperationFiles, this.documentrTypeStr, response);
+    }
+    else {
+      return;
+    }
+  }
+
+
+  UpdateDocuments(files: any[], fileType: string, response: any) {
+
+    this.files = files;
+    const updateDocumentsFormData = new FormData();
+
+
+    for (var i = 0; i < this.files.length; i++) {
+      updateDocumentsFormData.append("filePath", this.files[i]);
+    }
+
+    updateDocumentsFormData.append('docType', fileType);
+    updateDocumentsFormData.append('prevFilePath', response.FilePath);
+    updateDocumentsFormData.append('documentId', (response.DocumentId.toString()));
+
+    this.employeeService.editUploadedFile(updateDocumentsFormData).subscribe(res => {
+      this.toastr.success('Edited Successfully');
+      this.emitterService.isFileDeleted.emit(true);
+    });
+
+  }
+
 }

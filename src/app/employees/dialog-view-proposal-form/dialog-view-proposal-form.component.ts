@@ -17,25 +17,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-];
 
 @Component({
   selector: 'app-dialog-view-proposal-form',
@@ -205,7 +186,7 @@ export class DialogViewProposalFormComponent implements OnInit {
   closeButtonOnly: boolean = false;
 
   onHoldByDistrict: number;
-
+  currentAction: string;
   apprvoedByDistrictStr: string = '	APPROVED BY DISTRICT';
   reqToRemoveFromHoldByPanchayat: number;
 
@@ -215,6 +196,7 @@ export class DialogViewProposalFormComponent implements OnInit {
   dataSource: any;
   displayedColumns: string[] = ['fileType', 'filePath'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
+
 
   constructor(
     public dialog: MatDialog,
@@ -302,17 +284,17 @@ export class DialogViewProposalFormComponent implements OnInit {
 
     this.maxDate = new Date();
 
- 
+    this.currentAction = sessionStorage.getItem('action');
     this.employeeService.getUploadedDocumentsByProposalId(this.personalDetailsData.id).subscribe(res => {
       this.uploadedDocumentsData = res;
 
-      if (this.uploadedDocumentsData.length) { 
+      if (this.uploadedDocumentsData.length) {
         this.dataSource = new MatTableDataSource(this.uploadedDocumentsData);
         setTimeout(() => this.dataSource.paginator = this.paginator);
-      
-     }
 
-   
+      }
+
+
     });
 
 
@@ -348,8 +330,7 @@ export class DialogViewProposalFormComponent implements OnInit {
     this.role = sessionStorage.getItem('role');
 
 
-    if (this.router.url === '/district/approvedList' || this.router.url === '/panchayat/gradeA' || this.router.url === '/panchayat/gradeB' ||
-      this.router.url === '/panchayat/gradeC' || this.router.url === '/panchayat/existingMemberAlteration'
+    if (this.router.url === '/district/approvedList' || this.router.url === '/panchayat/existingMemberAlteration'
       || this.router.url === '/details/personalDetails') {
       this.isApprovedListRoute = true;
       this.closeButtonOnly = true;
@@ -413,12 +394,15 @@ export class DialogViewProposalFormComponent implements OnInit {
       this.reqToRemoveFromHoldByDistrict = true;
 
     }
-    if (this.personalDetailsData.StatusName === 'APPROVED BY DISTRICT' && this.role === 'GRAMPANCHAYAT') {
+    if (this.personalDetailsData.StatusName === 'APPROVED BY DISTRICT' && this.role === 'GRAMPANCHAYAT' && this.currentAction != 'viewByPanchayat') {
       this.ReqputToPutOnHold = true;
     }
 
+    if (this.currentAction === 'viewByPanchayat' || this.router.url === '/panchayat/gradeA' || this.router.url === '/panchayat/gradeB' ||
+      this.router.url === '/panchayat/gradeC') {
+      this.isApprovedListRoute = true;
+    }
 
-    let action = sessionStorage.getItem('action');
 
 
     this.emitterService.isApproved.subscribe(val => {
@@ -481,7 +465,7 @@ export class DialogViewProposalFormComponent implements OnInit {
 
 
   assignValues() {
-   
+
     this.personalDetails.artistSystemCode = this.personalDetailsData.ArtistSystemCode;
     this.personalDetails.firstName = this.personalDetailsData.FirstName;
     this.personalDetails.middleName = this.personalDetailsData.MiddleName;

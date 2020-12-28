@@ -57,7 +57,7 @@ export class ListOnHoldComponent implements OnInit {
       this.getListOnHoldDataByPachayat(this.userId);
     }
     if (this.role === 'DISTRICT') {
-      this.displayedColumns = ['artistCode', 'fullName', 'place', 'approvalStatus', 'holdBy', 'holdAt','view'];
+      this.displayedColumns = ['artistCode', 'fullName', 'place', 'approvalStatus', 'holdBy', 'holdAt', 'view'];
       this.getListOnHoldDataByDistrict(this.userId);
     }
     if (this.role === 'STATE') {
@@ -123,6 +123,8 @@ export class ListOnHoldComponent implements OnInit {
 
 
   viewEmployee(employee) {
+    sessionStorage.removeItem('action');
+    sessionStorage.setItem('action', 'viewByPanchayat');
     this.dialog.open(DialogViewProposalFormComponent, {
       height: '600px',
       width: '1200px',

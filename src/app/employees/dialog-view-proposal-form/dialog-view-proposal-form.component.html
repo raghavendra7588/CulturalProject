@@ -472,7 +472,7 @@
     </div>
 
 
-    <div mat-dialog-actions align="end" *ngIf="currentStatusName === 'HOLD BY DISTRICT' && role ==='GRAMPANCHAYAT'">
+    <div mat-dialog-actions align="end" *ngIf="currentStatusName === 'HOLD BY DISTRICT' && role ==='GRAMPANCHAYAT' && currentAction != 'viewByPanchayat'">
         <button mat-raised-button color="primary" (click)="ReqToRemoveFromHoldByPanchayat()"
             [disabled]="!personalDetails.reasonForRequestToRemoveFromHoldByPanchayat">Req To Remove Hold</button>
 
@@ -810,197 +810,39 @@
         </div>
     </div>
     <mat-divider class="my-2"></mat-divider>
+
     <div class="container-fluid">
-        <h4 class="font-weight-bold">अनिवार्य दस्तऐवज</h4>
-
-        <div class="row mt-1">
-            <div class="col-md-6 col-12 col-sm-12">
-                जन्म तारीख पुरावा :
-            </div>
-            <div class="col-md-6 col-12 col-sm-4 p-2">
-                <input type="file" id="file" multiple (change)="getDOBFileDetails($event)" class="width-100"
-                    style="margin-left: 7px;" formControlName="dobProof" [(ngModel)]="personalDetails.dobProof">
+        <div class="row">
+            <div class="col-md-12 col-12 col-sm-12">
+                <mat-form-field style="width: 100%;">
+                    <mat-label>Search</mat-label>
+                    <input matInput (keyup)="applyFilter($event.target.value)">
+                </mat-form-field>
             </div>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-12 col-sm-12">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-        <div class="row mt-1">
-            <div class="col-md-6 col-12 col-sm-12">
-                रहिवासी पुरावा (महाराष्ट्र राज्य) :
-            </div>
-            <div class="col-md-6 col-12 col-sm-4 p-2">
-                <input type="file" id="file" multiple (change)="getMahrashtraResidenceFileDetails($event)"
-                    class="width-100" style="margin-left: 7px;" formControlName="maharashtraResidentProof"
-                    [(ngModel)]="personalDetails.maharashtraResidentProof">
-            </div>
+                <ng-container matColumnDef="fileType">
+                    <th mat-header-cell *matHeaderCellDef> Type </th>
+                    <td mat-cell *matCellDef="let element"> {{element.FileType}} </td>
+                </ng-container>
+        
+                <ng-container matColumnDef="filePath">
+                    <th mat-header-cell *matHeaderCellDef> Image </th>
+                    <td mat-cell *matCellDef="let element">
+                        <a [href]="employeeService.BASE_API+element.FilePath" target="_blank"><img
+                                [src]="employeeService.BASE_API+element.FilePath" height="20px" width="20px" /></a>
+                    </td>
+                </ng-container>
+        
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[10, 50, 100]" showFirstLastButtons></mat-paginator>
         </div>
-
-        <div class="row mt-1">
-            <div class="col-md-6 col-12 col-sm-12">
-                वार्षिक उत्पन्न पुरावा (तहसीलदार) :
-            </div>
-            <div class="col-md-6 col-12 col-sm-4 p-2">
-                <input type="file" id="file" multiple (change)="getannualIncomeFileDetails($event)" class="width-100"
-                    style="margin-left: 7px;" formControlName="annualIncomeProof"
-                    [(ngModel)]="personalDetails.annualIncomeProof">
-            </div>
-        </div>
-
-        <div class="row mt-1">
-            <div class="col-md-6 col-12 col-sm-12">
-                सरकार लाभार्थी बेनिफिट योजनेचा पुरावा :
-            </div>
-            <div class="col-md-6 col-12 col-sm-4 p-2">
-                <input type="file" id="file" multiple (change)="getGovtBeneficiaryBenefitFileDetails($event)"
-                    class="width-100" style="margin-left: 7px;" formControlName="beneficiaryBenefitPlanProof"
-                    [(ngModel)]="personalDetails.beneficiaryBenefitPlanProof">
-            </div>
-        </div>
-
-        <div class="row mt-1">
-            <div class="col-md-6 col-12 col-sm-12">
-                कलाकार छायाचित्र :
-            </div>
-            <div class="col-md-6 col-12 col-sm-4 p-2">
-                <input type="file" id="file" multiple (change)="getGovtBeneficiaryBenefitFileDetails($event)"
-                    class="width-100" style="margin-left: 7px;" formControlName="beneficiaryBenefitPlanProof"
-                    [(ngModel)]="personalDetails.beneficiaryBenefitPlanProof">
-            </div>
-        </div>
-
-        <div class="row mt-1">
-            <div class="col-md-6 col-12 col-sm-12">
-                नामित छायाचित्र :
-            </div>
-            <div class="col-md-6 col-12 col-sm-4 p-2">
-                <input type="file" id="file" multiple (change)="getGovtBeneficiaryBenefitFileDetails($event)"
-                    class="width-100" style="margin-left: 7px;" formControlName="beneficiaryBenefitPlanProof"
-                    [(ngModel)]="personalDetails.beneficiaryBenefitPlanProof">
-            </div>
-        </div>
-
-
-        <div class="row mt-1">
-            <div class="col-md-6 col-12 col-sm-12">
-                बँक खाते पुष्टीकरण पुरावा :
-            </div>
-            <div class="col-md-6 col-12 col-sm-4 p-2">
-                <input type="file" id="file" multiple (change)="getGovtBeneficiaryBenefitFileDetails($event)"
-                    class="width-100" style="margin-left: 7px;" formControlName="beneficiaryBenefitPlanProof"
-                    [(ngModel)]="personalDetails.beneficiaryBenefitPlanProof">
-            </div>
-        </div>
-
-        <h4 class="font-weight-bold">पर्यायी कागदपत्रे</h4>
-        <div class="row mt-1">
-            <div class="col-md-6 col-12 col-sm-12">
-                आजारी किंवा अपंग असल्याचा पुरावा :
-            </div>
-            <div class="col-md-6 col-12 col-sm-4 p-2">
-                <input type="file" id="file" multiple (change)="getIllHandicapedFileDetails($event)" class="width-100"
-                    style="margin-left: 7px;" formControlName="illHandicapedProof"
-                    [(ngModel)]="personalDetails.illHandicapedProof">
-            </div>
-        </div>
-
-        <div class="row mt-1">
-
-
-            <div class="col-md-6 col-12 col-sm-12">
-                प्रकाशने, गुंतवणूकी अथवा सरकारी मान्यता पुरावा :
-            </div>
-            <div class="col-md-6 col-12 col-sm-4 p-2">
-                <input type="file" id="file" multiple (change)="getGovtRecognisitionFileDetails($event)"
-                    class="width-100" style="margin-left: 7px;" formControlName="publicationsGovtRecognistionProof"
-                    [(ngModel)]="personalDetails.publicationsGovtRecognistionProof">
-            </div>
-        </div>
-
-        <div class="row mt-1">
-
-
-            <div class="col-md-6 col-12 col-sm-12">
-                सांस्कृतिक प्रमाणपत्र पुरावा :
-            </div>
-            <div class="col-md-6 col-12 col-sm-4 p-2">
-                <input type="file" id="file" multiple (change)="getCulturalFileDetails($event)" class="width-100"
-                    style="margin-left: 7px;" formControlName="culturalMinsitryCertificationProof"
-                    [(ngModel)]="personalDetails.culturalMinsitryCertificationProof">
-            </div>
-        </div>
-
-        <div class="row mt-1">
-
-
-            <div class="col-md-6 col-12 col-sm-12">
-                प्रायोजित कार्यक्रम पुरावा :
-            </div>
-            <div class="col-md-6 col-12 col-sm-4 p-2">
-                <input type="file" id="file" multiple (change)="getSponseredFileDetails($event)" class="width-100"
-                    style="margin-left: 7px;" formControlName="sponseredDocumentsProof"
-                    [(ngModel)]="personalDetails.sponseredDocumentsProof">
-            </div>
-        </div>
-
-
-        <div class="row mt-1">
-
-            <div class="col-md-6 col-12 col-sm-12">
-                जिल्हाधिकारी नामनिर्देशित कार्यक्रम सहभागाचा पुरावा :
-            </div>
-            <div class="col-md-6 col-12 col-sm-4 p-2">
-                <input type="file" id="file" multiple (change)="getCollectorNominatedFileDetails($event)"
-                    class="width-100" style="margin-left: 7px;" formControlName="collectorNominatedParticipationProof"
-                    [(ngModel)]="personalDetails.collectorNominatedParticipationProof">
-            </div>
-        </div>
-
-        <div class="row mt-1">
-
-
-            <div class="col-md-6 col-12 col-sm-12">
-                संस्था आणि वैयक्तिक पुनर्प्राप्तीचा पुरावा :
-            </div>
-            <div class="col-md-6 col-12 col-sm-4 p-2">
-                <input type="file" id="file" multiple (change)="getIndividualInstitutionFileDetails($event)"
-                    class="width-100" style="margin-left: 7px;" formControlName="institutionRecomendationProof"
-                    [(ngModel)]="personalDetails.institutionandIndividualRecomendationProof">
-            </div>
-        </div>
-        <div class="row mt-1">
-
-
-            <div class="col-md-6 col-12 col-sm-12">
-                पुष्टीकरण पुराव्याचे प्रमाणित प्रमाणपत्र :
-            </div>
-            <div class="col-md-6 col-12 col-sm-4 p-2">
-                <input type="file" id="file" multiple (change)="getNotarisedFileDetails($event)" class="width-100"
-                    style="margin-left: 7px;" formControlName="notarisedCertificateOfConfirmationProof"
-                    [(ngModel)]="personalDetails.notarisedCertificateOfConfirmationProof">
-            </div>
-        </div>
-        <div class="row mt-1">
-            <div class="col-md-6 col-12 col-sm-12">
-                इतर दस्तऐवज :
-            </div>
-            <div class="col-md-6 col-12 col-sm-4 p-2">
-                <input type="file" id="file" multiple (change)="getIndividualInstitutionFileDetails($event)"
-                    class="width-100" style="margin-left: 7px;" formControlName="institutionRecomendationProof"
-                    [(ngModel)]="personalDetails.institutionandIndividualRecomendationProof">
-            </div>
-        </div>
-        <mat-divider class="my-3"></mat-divider>
-
-        <div class="row mt-1">
-            <div class="col-md-6 col-12 col-sm-12">
-                अपलोड मॅन्युअल फॉर्म :
-            </div>
-            <div class="col-md-6 col-12 col-sm-4 p-2">
-                <input type="file" id="file" multiple (change)="getManualFileDetails($event)" class="width-100"
-                    style="margin-left: 7px;" formControlName="manualFormProof"
-                    [(ngModel)]="personalDetails.manualFormProof">
-            </div>
-        </div>
-
     </div>
 
     <mat-divider class="my-3"></mat-divider>

@@ -28,6 +28,7 @@ export class ReqToPutOnHoldComponent implements OnInit {
   districtData: any = [];
   dynamicStateApproved: DynamicStateApproved = new DynamicStateApproved();
   panchayatData: any = [];
+  isDistrictSelected: boolean = false;
 
   constructor(
     public dialog: MatDialog,
@@ -63,16 +64,16 @@ export class ReqToPutOnHoldComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.role === 'DISTRICT') {
-      this.displayedColumns = ['artistCode', 'fullName', 'place', 'approvalStatus', 'userName', 'timestamp','view'];
+      this.displayedColumns = ['artistCode', 'fullName', 'place', 'approvalStatus', 'userName', 'timestamp', 'view'];
       this.getRequestToPutOnHoldDataByDistrict(this.userId);
     }
     if (this.role === 'GRAMPANCHAYAT') {
 
-      this.displayedColumns = ['fullName','place' ,'approvalStatus', 'userName', 'timestamp', 'view'];
+      this.displayedColumns = ['fullName', 'place', 'approvalStatus', 'userName', 'timestamp', 'view'];
       this.getRequestToPutOnHoldDataByPanchayat(this.userId);
     }
     if (this.role === 'STATE') {
-      this.displayedColumns = [ 'fullName', 'district', 'place', 'approvalStatus','userName', 'timestamp', 'view'];
+      this.displayedColumns = ['fullName', 'district', 'place', 'approvalStatus', 'userName', 'timestamp', 'view'];
       this.getRequestToPutOnHoldByState();
       this.getDistrictMasterData();
     }
@@ -135,6 +136,7 @@ export class ReqToPutOnHoldComponent implements OnInit {
   }
 
   selectedDistrictFromList(district) {
+    this.isDistrictSelected = true;
     this.dynamicStateApproved.districtId = district.DistrictId;
     this.employeeService.getPanchayatBasedOnDistrictId(this.dynamicStateApproved.districtId).subscribe(res => {
       this.panchayatData = res;

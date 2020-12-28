@@ -2,3 +2,7 @@
     flex: none;
     padding: 5px;
  } 
+
+ *:focus {
+    outline: none;
+}

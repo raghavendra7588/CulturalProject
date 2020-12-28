@@ -50,7 +50,8 @@ export class GradeBComponent implements OnInit {
   }
 
   viewEmployee(response) {
-
+    sessionStorage.removeItem('action');
+    sessionStorage.setItem('action', 'viewByPanchayat');
     let res: any = [];
     res = response;
     this.dialog.open(DialogViewProposalFormComponent, {
