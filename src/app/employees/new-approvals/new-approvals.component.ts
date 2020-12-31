@@ -57,7 +57,7 @@ export class NewApprovalsComponent implements OnInit {
       this.getNewProposalFormDetailsAtState();
     }
     if (this.role === 'ADMIN') {
-      this.displayedColumns = ['artistCode', 'fullName','district', 'place', 'approvalStatus', 'actionTakenBy', 'createdBy', 'view'];
+      this.displayedColumns = ['artistCode', 'fullName', 'district', 'place', 'approvalStatus', 'actionTakenBy', 'createdBy', 'view'];
       this.isDistrict = false;
       this.getDistrictMasterData();
       this.getNewProposalFormByAdmin();
@@ -170,6 +170,24 @@ export class NewApprovalsComponent implements OnInit {
 
 
     this.employeeService.postDynamicNewProposalByState(this.dynamicStateApproved).subscribe(res => {
+      this.personalDetailsData = res;
+      let uniqueApprovedListData = _.uniqBy(this.personalDetailsData, 'id');
+      this.personalDetailsData = uniqueApprovedListData;
+      this.dataSource = new MatTableDataSource(this.personalDetailsData);
+      this.dataSource.paginator = this.paginator;
+    });
+  }
+
+  searchRecordByAdmin() {
+    this.dynamicStateApproved.roleName = sessionStorage.getItem('role');
+    if (this.dynamicStateApproved.districtId === null || this.dynamicStateApproved.districtId === undefined) {
+      this.dynamicStateApproved.districtId = 0;
+    }
+    if (this.dynamicStateApproved.panchayatName === null || this.dynamicStateApproved.panchayatName === undefined || this.dynamicStateApproved.panchayatName === '') {
+      this.dynamicStateApproved.panchayatName = 'ALL';
+
+    }
+    this.employeeService.postDynamicNewApprovalsByAdmin(this.dynamicStateApproved).subscribe(res => {
       this.personalDetailsData = res;
       let uniqueApprovedListData = _.uniqBy(this.personalDetailsData, 'id');
       this.personalDetailsData = uniqueApprovedListData;

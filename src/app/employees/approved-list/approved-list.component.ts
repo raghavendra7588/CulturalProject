@@ -156,6 +156,24 @@ export class ApprovedListComponent implements OnInit {
     });
   }
 
+  searchRecordByAdmin(){
+    if (this.dynamicStateApproved.districtId === null || this.dynamicStateApproved.districtId === undefined) {
+      this.dynamicStateApproved.districtId = 0;
+    }
+    if (this.dynamicStateApproved.panchayatName === null || this.dynamicStateApproved.panchayatName === undefined || this.dynamicStateApproved.panchayatName === '') {
+      this.dynamicStateApproved.panchayatName = 'ALL';
+
+    }
+
+    this.employeeService.postDynamicApprovedListByAdmin(this.dynamicStateApproved).subscribe(res => {
+      this.approvedListData = res;
+      let uniqueApprovedListData = _.uniqBy(this.approvedListData, 'id');
+      this.approvedListData = uniqueApprovedListData;
+      this.dataSource = new MatTableDataSource(this.approvedListData);
+      this.dataSource.paginator = this.paginator;
+    });
+  }
+
   districtSelectAll() {
     this.getApprovedListData();
   }

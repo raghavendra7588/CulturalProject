@@ -133,7 +133,7 @@ export class ReqToPutOnHoldComponent implements OnInit {
       setTimeout(() => this.dataSource.paginator = this.paginator);
     });
   }
-  
+
 
   viewEmployee(employee) {
 
@@ -183,10 +183,27 @@ export class ReqToPutOnHoldComponent implements OnInit {
 
     }
 
-
-
-
     this.employeeService.postDynamicReqToPutOnHoldByState(this.dynamicStateApproved).subscribe(res => {
+
+      this.putOnHoldData = res;
+      let uniquePersonalDetailsData = _.uniqBy(this.putOnHoldData, 'id');
+      this.putOnHoldData = uniquePersonalDetailsData;
+      this.dataSource = new MatTableDataSource(this.putOnHoldData);
+      setTimeout(() => this.dataSource.paginator = this.paginator);
+    });
+  }
+
+  searchRecordByAdmin() {
+    this.dynamicStateApproved.roleName = sessionStorage.getItem('role');
+    if (this.dynamicStateApproved.districtId === null || this.dynamicStateApproved.districtId === undefined) {
+      this.dynamicStateApproved.districtId = 0;
+    }
+    if (this.dynamicStateApproved.panchayatName === null || this.dynamicStateApproved.panchayatName === undefined || this.dynamicStateApproved.panchayatName === '') {
+      this.dynamicStateApproved.panchayatName = 'ALL';
+
+    }
+
+    this.employeeService.postDynamicReqToPutOnHoldListByAdmin(this.dynamicStateApproved).subscribe(res => {
 
       this.putOnHoldData = res;
       let uniquePersonalDetailsData = _.uniqBy(this.putOnHoldData, 'id');

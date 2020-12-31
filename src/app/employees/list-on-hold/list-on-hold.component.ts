@@ -231,6 +231,27 @@ export class ListOnHoldComponent implements OnInit {
     });
   }
 
+  searchRecordByAdmin() {
+    this.dynamicOnHoldArtistByState.RoleName = sessionStorage.getItem('role');
+    if (this.dynamicOnHoldArtistByState.DistrictId === null || this.dynamicOnHoldArtistByState.DistrictId === undefined) {
+      this.dynamicOnHoldArtistByState.DistrictId = 0;
+    }
+    if (this.dynamicOnHoldArtistByState.panchayatName === null || this.dynamicOnHoldArtistByState.panchayatName === undefined || this.dynamicOnHoldArtistByState.panchayatName === '') {
+      this.dynamicOnHoldArtistByState.panchayatName = 'ALL';
+    }
+
+    this.dynamicOnHoldArtistByState.RoleName = this.role;
+
+
+    this.employeeService.postDynamicHoldListByAdmin(this.dynamicOnHoldArtistByState).subscribe(res => {
+      this.listOnHoldData = res;
+      let uniquePersonalDetailsData = _.uniqBy(this.listOnHoldData, 'id');
+      this.listOnHoldData = uniquePersonalDetailsData;
+      this.dataSource = new MatTableDataSource(this.listOnHoldData);
+      setTimeout(() => this.dataSource.paginator = this.paginator);
+    });
+  }
+
   selectedPanchyatFromList(res) {
     this.dynamicOnHoldArtistByState.panchayatName = res.PanchyatId;
   }

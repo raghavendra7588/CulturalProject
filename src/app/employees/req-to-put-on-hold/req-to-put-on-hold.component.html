@@ -1,6 +1,6 @@
 <h3 class="mt-3" style="text-align: center;color: blue;">Request To Put On Edit / Hold / Release</h3>
 <div class="container">
-    <div class="row" *ngIf="role === 'STATE' || role === 'ADMIN'">
+    <div class="row" *ngIf="role === 'STATE'">
         <div class="col-md-4 col-4 col-sm-4">
             <mat-form-field style="width: 100% !important;">
                 <mat-select placeholder="District List" [(ngModel)]="dynamicStateApproved.districtName">
@@ -31,7 +31,37 @@
                 color="primary">Search</button>
         </div>
     </div>
+    <div class="row" *ngIf="role === 'ADMIN'">
+        <div class="col-md-4 col-4 col-sm-4">
+            <mat-form-field style="width: 100% !important;">
+                <mat-select placeholder="District List" [(ngModel)]="dynamicStateApproved.districtName">
 
+                    <mat-option *ngFor="let item of districtData;" [value]="item.DistrictId"
+                        (click)="selectedDistrictFromList(item)">
+                        {{item.DistrictName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-4 col-4 col-sm-4">
+            <mat-form-field style="width: 100% !important;">
+                <mat-select placeholder="Panchayat List" [(ngModel)]="dynamicStateApproved.panchayatName">
+
+                    <mat-option *ngFor="let item of panchayatData;" [value]="item.PanchyatId"
+                        (click)="selectedPanchyatFromList(item)">
+                        {{item.PanchyatId| uppercase}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-4 col-4 col-sm-4">
+
+            <button mat-raised-button class="width-100 mt-2" (click)="searchRecordByAdmin()" [disabled]="!isDistrictSelected"
+                color="primary">Search</button>
+        </div>
+    </div>
 </div>
 
 <div class="container">

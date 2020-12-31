@@ -106,9 +106,18 @@ export class EmployeesService {
   private POST_DYNAMIC_GRADE_B_ARTIST_BY_ADMIN = environment.BASE_URL + 'api/DynamicStateApprovedList/DyanmicGradeBByAdmin';
   private POST_DYNAMIC_GRADE_C_ARTIST_BY_ADMIN = environment.BASE_URL + 'api/DynamicStateApprovedList/DyanmicGradeCByAdmin';
 
+
+
+  private POST_DYNAMIC_NEW_PROPOSAL_BY_ADMIN = environment.BASE_URL + 'api/DynamicActionByState/DynamicStateNewProposalByAdmin';
+  private POST_DYNAMIC_APPROVED_LIST_BY_ADMIN = environment.BASE_URL + 'api/DynamicStateApprovedList/DynamicStateApprovedListByAdmin';
+  private POST_DYNAMIC_REQ_TO_PUT_ON_HOLD_BY_ADMIN = environment.BASE_URL + 'api/DynamicActionByState/DynamicStateReqToPutOnHoldByAdmin';
+  private POST_DYNAMIC_HOLD_LIST_BY_ADMIN = environment.BASE_URL + 'api/DynamicStateApprovedList/DynamicStateHoldListByAdmin';
+  private POST_DYNAMIC_REJECTED_LIST_BY_ADMIN = environment.BASE_URL + 'api/DynamicStateApprovedList/DynamicStateRejectedListByAdmin';
+
   constructor(
     public http: HttpClient
   ) { }
+
 
   getAllPersonalDetailsData(userId: number) {
     return this.http.get(this.GET_PROPOSAL_FROM_PENDING_USERS + '/' + userId);
@@ -432,5 +441,28 @@ export class EmployeesService {
   getArtistCategoryCDataByAdmin(artistCategoryC) {
     return this.http.post(this.POST_DYNAMIC_GRADE_C_ARTIST_BY_ADMIN, artistCategoryC);
   }
-  
+
+  postDynamicNewApprovalsByAdmin(newApprovals) {
+    return this.http.post(this.POST_DYNAMIC_NEW_PROPOSAL_BY_ADMIN, newApprovals);
+  }
+
+  postDynamicApprovedListByAdmin(approvedList) {
+    return this.http.post(this.POST_DYNAMIC_APPROVED_LIST_BY_ADMIN, approvedList);
+  }
+
+  postDynamicReqToPutOnHoldListByAdmin(reqToPutOnHold) {
+    return this.http.post(this.POST_DYNAMIC_REQ_TO_PUT_ON_HOLD_BY_ADMIN, reqToPutOnHold);
+  }
+
+  postDynamicHoldListByAdmin(holdList) {
+    return this.http.post(this.POST_DYNAMIC_HOLD_LIST_BY_ADMIN, holdList);
+  }
+
+  postDynamicRejectedListByAdmin(rejectedList) {
+    return this.http.post(this.POST_DYNAMIC_REJECTED_LIST_BY_ADMIN, rejectedList);
+  }
+
+
+
+
 }

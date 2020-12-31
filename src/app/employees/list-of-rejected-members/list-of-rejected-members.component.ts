@@ -162,7 +162,24 @@ export class ListOfRejectedMembersComponent implements OnInit {
       setTimeout(() => this.dataSource.paginator = this.paginator);
     });
   }
+  searchRecordByAdmin() {
+    this.dynamicStateApproved.roleName = this.role;
+    if (this.dynamicStateApproved.districtId === null || this.dynamicStateApproved.districtId === undefined) {
+      this.dynamicStateApproved.districtId = 0;
+    }
+    if (this.dynamicStateApproved.panchayatName === null || this.dynamicStateApproved.panchayatName === undefined || this.dynamicStateApproved.panchayatName === '') {
+      this.dynamicStateApproved.panchayatName = 'ALL';
 
+    }
+
+    this.employeeService.postDynamicRejectedListByAdmin(this.dynamicStateApproved).subscribe(res => {
+      this.rejectedMembersData = res;
+      let uniqueRejectedMembersData = _.uniqBy(this.rejectedMembersData, 'id');
+      this.rejectedMembersData = uniqueRejectedMembersData;
+      this.dataSource = new MatTableDataSource(this.rejectedMembersData);
+      setTimeout(() => this.dataSource.paginator = this.paginator);
+    });
+  }
 
   districtSelectAll() {
     this.getRejectedMembersByState();
