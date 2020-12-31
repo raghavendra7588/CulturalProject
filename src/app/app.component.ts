@@ -5,6 +5,8 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { BasicuserService } from '../app/user/basicuser.service';
 import { MatSidenav } from '@angular/material/sidenav';
 import { EmployeesService } from './employees/employees.service';
+import { MatDialog } from '@angular/material/dialog';
+import { UserManagementComponent } from './employees/user-management/user-management.component';
 
 @Component({
   selector: 'app-root',
@@ -35,7 +37,8 @@ export class AppComponent {
     media: MediaMatcher,
     private emitterService: EmitterService,
     public router: Router,
-    public employeeService: EmployeesService
+    public employeeService: EmployeesService,
+    public dialog: MatDialog
   ) {
     this.userName = sessionStorage.getItem('Name');
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
@@ -146,9 +149,78 @@ export class AppComponent {
     });
   }
 
+  navigateToAdminUserManagement() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'ADMIN');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/userManagement']);
+  }
+
+  navigateToStateUserManagement() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'STATE');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/userManagement']);
+
+  }
+
+  navigateToDistrictUserManagement() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'DISTRICT');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/userManagement']);
+  }
+
+  navigateToPanchayatUserManagement() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'GRAMPANCHAYAT');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/userManagement']);
+  }
+
+  gradeAArtistByAdmin() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'ADMIN_A');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/gradeWiseData/admin']);
+  }
+
+  gradeBArtistByAdmin() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'ADMIN_B');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/gradeWiseData/admin']);
+  }
+
+  gradeCArtistByAdmin() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'ADMIN_C');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/gradeWiseData/admin']);
+  }
 
 
+  gradeAArtistByState() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'STATE_A');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/gradeWiseData/state']);
+  }
 
+
+  gradeBArtistByState() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'STATE_B');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/gradeWiseData/state']);
+  }
+
+  gradeCArtistByState() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'STATE_C');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/gradeWiseData/state']);
+  }
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }

@@ -34,7 +34,8 @@ export class ReqToRemoveFromHoldComponent implements OnInit {
     public basicuserService: BasicuserService,
     public toastr: ToastrService
   ) {
-
+    sessionStorage.removeItem('language');
+    sessionStorage.setItem('language', 'true');
     this.role = sessionStorage.getItem('role');
     this.userId = Number(sessionStorage.getItem('userId'));
 

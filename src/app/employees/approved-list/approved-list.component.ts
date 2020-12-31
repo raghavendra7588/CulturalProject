@@ -42,17 +42,24 @@ export class ApprovedListComponent implements OnInit {
     public toastr: ToastrService
   ) {
     this.roleName = sessionStorage.getItem('role');
-
+    sessionStorage.removeItem('language');
+    sessionStorage.setItem('language', 'true');
     this.userId = Number(sessionStorage.getItem('userId'));
     if (this.roleName === 'DISTRICT') {
       this.getApprovedListByDistrictData(this.userId);
       this.displayedColumns = ['artistCode', 'fullName', 'place', 'approvalStatus', 'approvedBy', 'approvedByAt', 'view'];
 
     }
-    else {
-      this.displayedColumns = ['artistCode', 'fullName', 'district', 'place', 'approvalStatus','approvedBy', 'approvedByAt', 'view'];
+    if (this.roleName === 'STATE') {
+      this.displayedColumns = ['artistCode', 'fullName', 'district', 'place', 'approvalStatus', 'approvedBy', 'approvedByAt', 'view'];
       this.getDistrictMasterData();
       this.getApprovedListData();
+    }
+
+    if (this.roleName === 'ADMIN') {
+      this.displayedColumns = ['artistCode', 'fullName', 'district', 'place', 'approvalStatus', 'approvedBy', 'approvedByAt', 'view'];
+      this.getDistrictMasterData();
+      this.getApprovedListDataByAdmin();
     }
     if ("role" in sessionStorage) {
       this.role = sessionStorage.getItem('role');
@@ -65,6 +72,17 @@ export class ApprovedListComponent implements OnInit {
       { id: 0, title: 'ENGLISH' },
       { id: 1, title: 'मराठी' }
     ];
+  }
+
+
+  getApprovedListDataByAdmin() {
+    this.employeeService.getApprovedListByAdminUser().subscribe(res => {
+      this.approvedListData = res;
+      let uniqueApprovedListData = _.uniqBy(this.approvedListData, 'id');
+      this.approvedListData = uniqueApprovedListData;
+      this.dataSource = new MatTableDataSource(this.approvedListData);
+      this.dataSource.paginator = this.paginator;
+    });
   }
 
   getApprovedListData() {

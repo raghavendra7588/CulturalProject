@@ -37,7 +37,8 @@ export class ReqToPutOnHoldComponent implements OnInit {
     public basicuserService: BasicuserService,
     public toastr: ToastrService
   ) {
-
+    sessionStorage.removeItem('language');
+    sessionStorage.setItem('language', 'true');
     this.role = sessionStorage.getItem('role');
     this.userId = Number(sessionStorage.getItem('userId'));
 
@@ -51,6 +52,10 @@ export class ReqToPutOnHoldComponent implements OnInit {
         }
         if (this.role === 'STATE') {
           this.getRequestToPutOnHoldByState();
+          this.getDistrictMasterData();
+        }
+        if (this.role === 'ADMIN') {
+          this.getRequestToPutOnHoldByAdmin();
           this.getDistrictMasterData();
         }
       }
@@ -75,6 +80,12 @@ export class ReqToPutOnHoldComponent implements OnInit {
     if (this.role === 'STATE') {
       this.displayedColumns = ['fullName', 'district', 'place', 'approvalStatus', 'userName', 'timestamp', 'view'];
       this.getRequestToPutOnHoldByState();
+      this.getDistrictMasterData();
+    }
+
+    if (this.role === 'ADMIN') {
+      this.displayedColumns = ['fullName', 'district', 'place', 'approvalStatus', 'userName', 'timestamp', 'view'];
+      this.getRequestToPutOnHoldByAdmin();
       this.getDistrictMasterData();
     }
 
@@ -112,6 +123,17 @@ export class ReqToPutOnHoldComponent implements OnInit {
       setTimeout(() => this.dataSource.paginator = this.paginator);
     });
   }
+
+  getRequestToPutOnHoldByAdmin() {
+    this.employeeService.getRequestToPutOnHoldDataByAdminUser().subscribe(res => {
+      this.putOnHoldData = res;
+      let uniquePersonalDetailsData = _.uniqBy(this.putOnHoldData, 'id');
+      this.putOnHoldData = uniquePersonalDetailsData;
+      this.dataSource = new MatTableDataSource(this.putOnHoldData);
+      setTimeout(() => this.dataSource.paginator = this.paginator);
+    });
+  }
+  
 
   viewEmployee(employee) {
 

@@ -29,6 +29,8 @@ export class GradeAComponent implements OnInit {
   ) {
     this.districtId = parseInt(sessionStorage.getItem('DistrictId'));
     this.userId = parseInt(sessionStorage.getItem('userId'));
+    sessionStorage.removeItem('language');
+    sessionStorage.setItem('language', 'true');
   }
 
   ngOnInit(): void {

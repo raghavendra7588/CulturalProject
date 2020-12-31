@@ -33,11 +33,6 @@ export class LoginComponent implements OnInit {
     public emitterService: EmitterService
   ) { }
 
-  loginForm = this.fb.group({
-    username: [null],
-    password: [null]
-  });
-
   ngOnInit(): void {
     this.role = 'ADMIN';
   }
@@ -48,10 +43,6 @@ export class LoginComponent implements OnInit {
 
     this.userService.verifyLogin(this.user).subscribe(res => {
       this.loginResponse = res;
-
-    
-
-
       if (this.loginResponse && this.loginResponse[0].Column1 != 'Incorrect Login Credentials') {
         this.userName = this.loginResponse[0].Name;
         this.roleName = this.loginResponse[0].RoleName;

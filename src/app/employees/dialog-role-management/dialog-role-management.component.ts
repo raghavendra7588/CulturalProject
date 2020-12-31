@@ -45,7 +45,8 @@ export class DialogRoleManagementComponent implements OnInit {
     private router: Router
   ) {
     this.role = sessionStorage.getItem('role');
-
+    sessionStorage.removeItem('language');
+    sessionStorage.setItem('language', 'true');
     this.saveUserMasterForm = this.formBuilder.group({
       name: [''],
       userName: [''],

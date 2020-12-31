@@ -145,14 +145,14 @@ export class DialogViewProposalFormComponent implements OnInit {
   newProposal: NewProposalBL = new NewProposalBL();
 
   isApprovedListRoute: boolean = false;
-  isNewApprovalsRoute: boolean;
+  isNewApprovalsRoute: boolean = false;
 
-  isApprovalsOnHoldForDistrict: boolean;
+  isApprovalsOnHoldForDistrict: boolean = false;
   role: string;
   statusMaster: any = [];
   submittedByPanchayat: number;
 
-  reqToPutOnHoldByDistrict: boolean;
+  reqToPutOnHoldByDistrict: boolean = false;
   onHoldArtistByDistrict: OnHoldArtistByDistrict = new OnHoldArtistByDistrict();
   holdByDistrict: number;
   approvedByDistrict: number;
@@ -298,27 +298,6 @@ export class DialogViewProposalFormComponent implements OnInit {
     });
 
 
-    if (this.personalDetailsData && this.role === 'DISTRICT') {
-      this.currentStatusId = this.personalDetailsData.StatusId;
-      this.currentStatusName = this.personalDetailsData.StatusNamee;
-      this.isApprovedListRoute = false;
-      this.closeButtonOnly = false;
-    }
-
-    if (this.personalDetailsData && this.role === 'GRAMPANCHAYAT') {
-      this.currentStatusId = this.personalDetailsData.StatusId;
-      this.currentStatusName = this.personalDetailsData.StatusName;
-
-      this.isApprovedListRoute = false;
-      this.closeButtonOnly = false;
-    }
-
-    if (this.router.url === '/requestToPutOnHold' && this.role === 'GRAMPANCHAYAT') {
-      this.isApprovedListRoute = true;
-      this.closeButtonOnly = true;
-    }
-
-
 
 
     this.preferredLanguage = sessionStorage.getItem('language');
@@ -330,27 +309,38 @@ export class DialogViewProposalFormComponent implements OnInit {
     this.role = sessionStorage.getItem('role');
 
 
-    if (this.router.url === '/district/approvedList' || this.router.url === '/panchayat/existingMemberAlteration'
+    if (this.personalDetailsData && this.role === 'DISTRICT') {
+      this.currentStatusId = this.personalDetailsData.StatusId;
+      this.currentStatusName = this.personalDetailsData.StatusNamee;
+    }
+
+    if (this.personalDetailsData && this.role === 'GRAMPANCHAYAT') {
+      this.currentStatusId = this.personalDetailsData.StatusId;
+      this.currentStatusName = this.personalDetailsData.StatusName;
+    }
+
+    if (this.router.url === '/requestToPutOnHold' && this.role === 'GRAMPANCHAYAT') {
+      this.isApprovedListRoute = true;
+      this.closeButtonOnly = true;
+    }
+
+
+    if (this.router.url === 'approvedList' || this.router.url === '/panchayat/existingMemberAlteration'
       || this.router.url === '/details/personalDetails') {
       this.isApprovedListRoute = true;
       this.closeButtonOnly = true;
-      this.isNewApprovalsRoute = false;
-      this.isApprovalsOnHoldForDistrict = false;
     }
-    if (this.router.url === '/district/newApprovals' && this.role === 'DISTRICT') {
+    if (this.router.url === '/newApprovals' && this.role === 'DISTRICT') {
       this.isNewApprovalsRoute = true;
       this.isApprovedListRoute = false;
-      this.isApprovalsOnHoldForDistrict = false;
-      this.reqToPutOnHoldByDistrict = false;
+    }
+    if (this.router.url === '/newApprovals' && this.role === 'ADMIN') {
+      this.isNewApprovalsRoute = true;
+      this.isApprovedListRoute = false;
     }
 
     if (this.router.url === '/approvalsOnHold' && this.role === 'DISTRICT') {
-
-      this.isNewApprovalsRoute = false;
-      this.isApprovedListRoute = false;
       this.isApprovalsOnHoldForDistrict = true;
-      this.reqToPutOnHoldByDistrict = false;
-      this.reqToRemoveFromHoldByDistrict = false;
     }
 
 
@@ -364,8 +354,7 @@ export class DialogViewProposalFormComponent implements OnInit {
       this.isApprovedListRoute = true;
       this.closeButtonOnly = true;
     }
-    if ((this.router.url === '/district/newApprovals' || this.router.url === '/district/approvedList' ||
-      this.router.url === '/requestToPutOnHold' || this.router.url === '/onHold' || this.router.url === '/listOfRejectedMembers') && this.role === 'STATE') {
+    if ((this.router.url === '/approvedList' || this.router.url === '/onHold' || this.router.url === '/listOfRejectedMembers') && this.role === 'STATE') {
       this.isApprovedListRoute = true;
       this.closeButtonOnly = true;
     }
@@ -386,11 +375,6 @@ export class DialogViewProposalFormComponent implements OnInit {
     }
 
     if (this.router.url === '/requestToRemoveFromHold' && this.role === 'DISTRICT') {
-
-      this.isNewApprovalsRoute = false;
-      this.isApprovedListRoute = false;
-      this.isApprovalsOnHoldForDistrict = false;
-      this.reqToPutOnHoldByDistrict = false;
       this.reqToRemoveFromHoldByDistrict = true;
 
     }
@@ -403,10 +387,14 @@ export class DialogViewProposalFormComponent implements OnInit {
       this.isApprovedListRoute = true;
     }
 
+    if ((this.router.url === '/approvedList' || this.router.url === '/requestToPutOnHold' || this.router.url === '/listOfRejectedMembers' || this.router.url === '/onHold') && this.role === 'ADMIN') {
+      this.isApprovedListRoute = true;
+      this.closeButtonOnly = true;
+    }
+
 
 
     this.emitterService.isApproved.subscribe(val => {
-
       this.dialogRef.close();
     });
   }

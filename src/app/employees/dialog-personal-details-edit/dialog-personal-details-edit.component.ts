@@ -179,7 +179,8 @@ export class DialogPersonalDetailsEditComponent implements OnInit {
   ) {
     this.personalDetailsData = data;
     this.submittedProposalFormId = this.personalDetailsData.id;
-
+    sessionStorage.removeItem('language');
+    sessionStorage.setItem('language', 'true');
     this.getUploadedDocumentsData(this.personalDetailsData.id);
 
     this.savePersonalDetailsForm = this.formBuilder.group({
@@ -374,9 +375,7 @@ export class DialogPersonalDetailsEditComponent implements OnInit {
       let fullDate;
 
       fullDate = this.valueChanged();
-      console.log('fullDate', fullDate);
       this.personalDetails.dob = fullDate.toString();
-      console.log(' this.personalDetails.dob',  this.personalDetails.dob);
       formData.append('dob', this.personalDetails.dob);
     }
 
@@ -704,15 +703,13 @@ export class DialogPersonalDetailsEditComponent implements OnInit {
 
   }
   assignValues() {
-    console.log(this.personalDetailsData)
+
     this.personalDetails.artistSystemCode = this.personalDetailsData.ArtistSystemCode;
     this.personalDetails.firstName = this.personalDetailsData.FirstName;
     this.personalDetails.middleName = this.personalDetailsData.MiddleName;
     this.personalDetails.lastName = this.personalDetailsData.LastName;
     let date = moment(this.personalDetailsData.DOB, "YYYY-MM-DD").toISOString();
     this.personalDetails.dob = date;
-    console.log('dt', date);
-    console.log('dob', this.personalDetails.dob);
     this.personalDetails.annualIncome = this.personalDetailsData.AnnualIncome;
     this.personalDetails.artType = this.personalDetailsData.ArtType;
     this.personalDetails.periodOfWork = this.personalDetailsData.PeriodOfWork;
@@ -1197,7 +1194,6 @@ export class DialogPersonalDetailsEditComponent implements OnInit {
   }
 
   deleteDocument(element) {
-    console.log(element);
     this.employeeService.deleteUploadedFiles(element).subscribe(res => {
       this.toastr.success('File Is Deleted Successfully !');
       this.emitterService.isFileDeleted.emit(true);
@@ -1215,9 +1211,6 @@ export class DialogPersonalDetailsEditComponent implements OnInit {
   }
 
   editImages(fileData, response) {
-    console.log(response);
-    console.log(fileData);
-
 
     for (var i = 0; i < fileData.target.files.length; i++) {
       this.editOperationFiles.push(fileData.target.files[i]);

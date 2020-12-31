@@ -37,6 +37,8 @@ export class ApprovedListPanchayatComponent implements OnInit {
     private modalService: BsModalService,
     public toastr: ToastrService
   ) {
+    sessionStorage.removeItem('language');
+    sessionStorage.setItem('language', 'true');
     this.districtId = parseInt(sessionStorage.getItem('DistrictId'));
     this.userId = parseInt(sessionStorage.getItem('userId'));
     this.onHoldProposalForm.userId = this.userId;

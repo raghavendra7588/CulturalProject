@@ -50,6 +50,9 @@ import { DistrictRoleManagementComponent } from './district-role-management/dist
 import { PanchayatRoleManagementComponent } from './panchayat-role-management/panchayat-role-management.component';
 import { DialogRoleManagementComponent } from './dialog-role-management/dialog-role-management.component';
 import { DialogPersonalDetailsEditComponent } from './dialog-personal-details-edit/dialog-personal-details-edit.component';
+import { UserManagementComponent } from './user-management/user-management.component';
+import { GradeWiseAdminComponent } from './grade-wise-admin/grade-wise-admin.component';
+import { GradeWiseStateComponent } from './grade-wise-state/grade-wise-state.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +81,10 @@ import { DialogPersonalDetailsEditComponent } from './dialog-personal-details-ed
     DistrictRoleManagementComponent,
     PanchayatRoleManagementComponent,
     DialogRoleManagementComponent,
-    DialogPersonalDetailsEditComponent
+    DialogPersonalDetailsEditComponent,
+    UserManagementComponent,
+    GradeWiseAdminComponent,
+    GradeWiseStateComponent
   ],
   imports: [
     CommonModule,
@@ -112,8 +118,9 @@ import { DialogPersonalDetailsEditComponent } from './dialog-personal-details-ed
   exports: [PersonalDetailsComponent, AddUserMasterComponent, NewApprovalsComponent, ApprovedListComponent,
     GradeAComponent, GradeBComponent, GradeCComponent, ExistingMemberAlterationComponent, ListOfRejectedMembersComponent,
     ApprovalsOnHoldComponent, EditAndHoldDistrictComponent, ReqToPutOnHoldComponent, ListOnHoldComponent, ReqToRemoveFromHoldComponent,
-    StateRoleManagementComponent, DistrictRoleManagementComponent, PanchayatRoleManagementComponent],
-  entryComponents: [DialogPersonalDetailComponent, DialogAddUserMasterComponent, DialogViewProposalFormComponent,
-    DialogApprovArtistComponent, ReasonForRejectionComponent, DialogRoleManagementComponent,DialogPersonalDetailsEditComponent]
+    StateRoleManagementComponent, DistrictRoleManagementComponent, PanchayatRoleManagementComponent, UserManagementComponent, GradeWiseAdminComponent, GradeWiseStateComponent],
+  
+    entryComponents: [DialogPersonalDetailComponent, DialogAddUserMasterComponent, DialogViewProposalFormComponent,
+    DialogApprovArtistComponent, ReasonForRejectionComponent, DialogRoleManagementComponent, DialogPersonalDetailsEditComponent]
 })
 export class EmployeesModule { }

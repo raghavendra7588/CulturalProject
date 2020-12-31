@@ -33,7 +33,8 @@ export class ListOfRejectedMembersComponent implements OnInit {
     public employeeService: EmployeesService,
     public emitterService: EmitterService
   ) {
-
+    sessionStorage.removeItem('language');
+    sessionStorage.setItem('language', 'true');
     this.userId = Number(sessionStorage.getItem('userId'));
     this.roleName = sessionStorage.getItem('role');
     if ("role" in sessionStorage) {
@@ -61,6 +62,12 @@ export class ListOfRejectedMembersComponent implements OnInit {
       this.getDistrictMasterData();
       this.getRejectedMembersByState();
     }
+
+    if (this.roleName === 'ADMIN') {
+      this.displayedColumns = ['artistCode', 'fullName', 'district', 'place', 'approvalStatus', 'rejectedBy', 'rejectedAt', 'view'];
+      this.getDistrictMasterData();
+      this.getRejectedMembersByAdmin();
+    }
   }
 
   ngOnInit(): void {
@@ -80,6 +87,16 @@ export class ListOfRejectedMembersComponent implements OnInit {
 
   getRejectedMembersByState() {
     this.employeeService.getListOfRejectedMembersByState().subscribe(res => {
+      this.rejectedMembersData = res;
+      let uniqueRejectedMembersData = _.uniqBy(this.rejectedMembersData, 'id');
+      this.rejectedMembersData = uniqueRejectedMembersData;
+      this.dataSource = new MatTableDataSource(this.rejectedMembersData);
+      setTimeout(() => this.dataSource.paginator = this.paginator);
+    });
+  }
+
+  getRejectedMembersByAdmin() {
+    this.employeeService.getListRejectedByAdminUser().subscribe(res => {
       this.rejectedMembersData = res;
       let uniqueRejectedMembersData = _.uniqBy(this.rejectedMembersData, 'id');
       this.rejectedMembersData = uniqueRejectedMembersData;

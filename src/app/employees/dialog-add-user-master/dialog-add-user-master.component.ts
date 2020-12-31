@@ -29,6 +29,9 @@ export class DialogAddUserMasterComponent implements OnInit {
   role: string;
   userId: number;
   isDistrictSelected: boolean = false;
+  currentUserStr: string = 'STATE';
+  currentUser: string;
+  savedUserMasterData: any = [];
 
   constructor(
     public emitterService: EmitterService,
@@ -39,9 +42,9 @@ export class DialogAddUserMasterComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router
   ) {
-
+    sessionStorage.removeItem('language');
+    sessionStorage.setItem('language', 'true');
     this.role = sessionStorage.getItem('role');
-
 
     this.saveUserMasterForm = this.formBuilder.group({
       name: [''],
@@ -57,6 +60,9 @@ export class DialogAddUserMasterComponent implements OnInit {
     });
     this.userResponse = data;
     this.userId = Number(sessionStorage.getItem('userId'));
+    if (this.userResponse) {
+      this.currentUserStr = this.userResponse.RoleName;
+    }
 
 
     if (this.userResponse) {
@@ -84,23 +90,28 @@ export class DialogAddUserMasterComponent implements OnInit {
     if (response.RoleName === 'DISTRICT') {
       this.isDistrictSelected = false;
       this.userMaster.PanchyatName = '';
+      this.currentUserStr = response.RoleName;
     }
     if (response.RoleName === 'GRAMPANCHAYAT') {
       this.isDistrictSelected = true;
+      this.currentUserStr = response.RoleName;
+    }
+    if (response.RoleName === 'STATE') {
+      this.currentUserStr = response.RoleName;
     }
 
   }
 
   selectedDistrictFromList(response) {
-    
+
   }
 
   getRoleMastersData(roleId) {
     let uniqueRoleMasterData: any = [];
     this.employeeService.getRoleMasterData(roleId).subscribe(res => {
       this.roleMasterData = res;
-      uniqueRoleMasterData = _.uniqBy(this.roleMasterData, 'UserId');
-
+      uniqueRoleMasterData = _.uniqBy(this.roleMasterData, 'RoleId');
+      this.roleMasterData = uniqueRoleMasterData;
     });
   }
 
@@ -116,9 +127,9 @@ export class DialogAddUserMasterComponent implements OnInit {
 
       if (this.role === 'ADMIN') {
         this.userMaster.updatedBy = this.userId;
-        this.userMaster.pinCode = "";
-        this.userMaster.districtId = 0;
-        this.userMaster.PanchyatName = "";
+        //this.userMaster.pinCode = "";
+        //  this.userMaster.districtId = 0;
+        // this.userMaster.PanchyatName = "";
 
       }
       if (this.role === 'STATE') {
@@ -130,29 +141,37 @@ export class DialogAddUserMasterComponent implements OnInit {
       if (this.role === 'ADMIN') {
         this.userMaster.createdBy = this.userId;
         this.userMaster.updatedBy = 0;
-        this.userMaster.password = '123456';
-        this.userMaster.pinCode = "";
-        this.userMaster.districtId = 0;
-        this.userMaster.PanchyatName = "";
+        // this.userMaster.password = '123456';
+        // this.userMaster.pinCode = "";
+        //  this.userMaster.districtId = 0;
+        // this.userMaster.PanchyatName = "";
       }
       if (this.role === 'STATE') {
         this.userMaster.createdBy = this.userId;
         this.userMaster.updatedBy = 0;
-        this.userMaster.password = '123456';
+        //this.userMaster.password = '123456';
       }
 
     }
-   
+
     this.employeeService.saveUserMasterData(this.userMaster).subscribe(res => {
-      this.emitterService.isUserMasterCreated.emit(true);
-      this.toastr.success('Record Submitted');
-      this.dialogRef.close();
+      this.savedUserMasterData = res;
+
+      if (this.savedUserMasterData === 0) {
+        this.toastr.error('This User Name Exists.Use Another One');
+        return;
+      }
+      else {
+        this.emitterService.isUserMasterCreated.emit(true);
+        this.toastr.success('Record Submitted');
+        this.dialogRef.close();
+      }
+
     });
   }
 
   assignValues() {
     if (this.userResponse) {
-     
       this.userMaster.roleId = this.userResponse.RoleId;
       this.userMaster.name = this.userResponse.Name;
       this.userMaster.userName = this.userResponse.UserName;

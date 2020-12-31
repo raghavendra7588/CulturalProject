@@ -14,7 +14,7 @@ import { MatPaginator } from '@angular/material/paginator';
 })
 export class AddUserMasterComponent implements OnInit {
 
-  displayedColumns: string[] = ['name', 'mobileNo', 'email', 'isActive', 'edit'];
+  displayedColumns: string[] = ['name', 'districtName', 'panchayat', 'role', 'isActive', 'edit'];
   dataSource: any;
   userMaster: any = [];
   roleId: number;
@@ -28,6 +28,8 @@ export class AddUserMasterComponent implements OnInit {
     public employeeService: EmployeesService) {
     this.roleId = parseInt(sessionStorage.getItem('RoleId'));
     this.role = sessionStorage.getItem('role');
+    sessionStorage.removeItem('language');
+    sessionStorage.setItem('language', 'true');
     this.emitterService.isUserMasterCreated.subscribe(res => {
       if (res) {
 
@@ -50,7 +52,7 @@ export class AddUserMasterComponent implements OnInit {
     if (this.role === 'STATE') {
       this.getUserMasterData(this.roleId);
     }
-    
+
   }
 
 
@@ -63,6 +65,7 @@ export class AddUserMasterComponent implements OnInit {
   }
 
   editUser(user: any) {
+
     this.userObj = user;
     this.dialog.open(DialogAddUserMasterComponent, {
       height: '330px',
@@ -97,4 +100,7 @@ export class AddUserMasterComponent implements OnInit {
   }
 
 
+  applyFilter(filter: string) {
+    this.dataSource.filter = filter.trim().toLowerCase();
+  }
 }

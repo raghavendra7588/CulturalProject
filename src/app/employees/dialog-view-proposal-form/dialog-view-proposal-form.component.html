@@ -319,7 +319,7 @@
         </div>
     </div>
     <mat-divider class="my-2"></mat-divider>
-   
+
 
     <div class="container-fluid">
         <div class="row">
@@ -339,7 +339,7 @@
                     <th mat-header-cell *matHeaderCellDef> Type </th>
                     <td mat-cell *matCellDef="let element"> {{element.FileType}} </td>
                 </ng-container>
-        
+
                 <ng-container matColumnDef="filePath">
                     <th mat-header-cell *matHeaderCellDef> Image </th>
                     <td mat-cell *matCellDef="let element">
@@ -347,14 +347,14 @@
                                 [src]="employeeService.BASE_API+element.FilePath" height="20px" width="20px" /></a>
                     </td>
                 </ng-container>
-        
+
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
             <mat-paginator [pageSizeOptions]="[10, 50, 100]" showFirstLastButtons></mat-paginator>
         </div>
     </div>
-    
+
 
 
     <mat-divider class="my-3"></mat-divider>
@@ -446,7 +446,7 @@
         <button mat-raised-button mat-dialog-close>Close</button>
     </div>
 
-    <div mat-dialog-actions align="end" *ngIf="isApprovedListRoute">
+    <div mat-dialog-actions align="end" *ngIf="isApprovedListRoute && !isNewApprovalsRoute && currentStatusName != 'REQ TO REMOVE FROM HOLD BY PANCHAYAT'">
         <button mat-raised-button mat-dialog-close>Close</button>
     </div>
     <div mat-dialog-actions align="end" *ngIf="currentStatusName === 'REQ FOR EDIT BY PANCHAYAT'">
@@ -472,7 +472,8 @@
     </div>
 
 
-    <div mat-dialog-actions align="end" *ngIf="currentStatusName === 'HOLD BY DISTRICT' && role ==='GRAMPANCHAYAT' && currentAction != 'viewByPanchayat'">
+    <div mat-dialog-actions align="end"
+        *ngIf="currentStatusName === 'HOLD BY DISTRICT' && role ==='GRAMPANCHAYAT' && currentAction != 'viewByPanchayat'">
         <button mat-raised-button color="primary" (click)="ReqToRemoveFromHoldByPanchayat()"
             [disabled]="!personalDetails.reasonForRequestToRemoveFromHoldByPanchayat">Req To Remove Hold</button>
 
@@ -829,7 +830,7 @@
                     <th mat-header-cell *matHeaderCellDef> Type </th>
                     <td mat-cell *matCellDef="let element"> {{element.FileType}} </td>
                 </ng-container>
-        
+
                 <ng-container matColumnDef="filePath">
                     <th mat-header-cell *matHeaderCellDef> Image </th>
                     <td mat-cell *matCellDef="let element">
@@ -837,7 +838,7 @@
                                 [src]="employeeService.BASE_API+element.FilePath" height="20px" width="20px" /></a>
                     </td>
                 </ng-container>
-        
+
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>

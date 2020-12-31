@@ -83,6 +83,29 @@ export class EmployeesService {
   private DELETE_UPLOADED_DOCUMENT = environment.BASE_URL + 'api/proposalFormModified/deleteFile';
   private EDIT_DOCUMENTS = environment.BASE_URL + 'api/editDocuments';
 
+  private GET_NEW_APPROVALS_BY_ADMIN = environment.BASE_URL + 'api/proposalForm/admin/newApprovals';
+  private GET_REQ_TO_PUT_ON_HOLD_BY_ADMIN = environment.BASE_URL + 'api/ReqToPutOnHold/ReqToPutOnHoldByAdmin';
+  private GET_APPROVED_LIST_BY_ADMIN = environment.BASE_URL + 'api/ApprovedList/Admin';
+  private GET_LIST_ON_HOLD_BY_ADMIN = environment.BASE_URL + 'api/ListOnHold/Admin';
+  private GET_LIST_OF_REJECTED_ADMIN = environment.BASE_URL + 'api/RejectedMembers/GetAllRejectedMembersByAdmin';
+
+  private GET_ADMIN_USER_BY_ADMIN = environment.BASE_URL + 'api/userMaster/adminUser';
+  private GET_STATE_USER_BY_ADMIN = environment.BASE_URL + 'api/userMaster/stateUser';
+  private GET_DISTRICT_USER_BY_ADMIN = environment.BASE_URL + 'api/userMaster/districteUser';
+  private GET_PANCHAYAT_USER_BY_ADMIN = environment.BASE_URL + 'api/userMaster/panchayatUser';
+
+  private GET_GRADE_A_ARTIST_BY_ADMIN = environment.BASE_URL + 'api/GradeWiseData/admin/gradeA';
+  private GET_GRADE_B_ARTIST_BY_ADMIN = environment.BASE_URL + 'api/GradeWiseData/admin/gradeB';
+  private GET_GRADE_C_ARTIST_BY_ADMIN = environment.BASE_URL + 'api/GradeWiseData/admin/gradeC';
+
+  private GET_GRADE_A_ARTIST_BY_STATE = environment.BASE_URL + 'api/GradeWiseData/state/gradeA';
+  private GET_GRADE_B_ARTIST_BY_STATE = environment.BASE_URL + 'api/GradeWiseData/state/gradeB';
+  private GET_GRADE_C_ARTIST_BY_STATE = environment.BASE_URL + 'api/GradeWiseData/state/gradeC';
+
+  private POST_DYNAMIC_GRADE_A_ARTIST_BY_ADMIN = environment.BASE_URL + 'api/DynamicStateApprovedList/DyanmicGradeAByAdmin';
+  private POST_DYNAMIC_GRADE_B_ARTIST_BY_ADMIN = environment.BASE_URL + 'api/DynamicStateApprovedList/DyanmicGradeBByAdmin';
+  private POST_DYNAMIC_GRADE_C_ARTIST_BY_ADMIN = environment.BASE_URL + 'api/DynamicStateApprovedList/DyanmicGradeCByAdmin';
+
   constructor(
     public http: HttpClient
   ) { }
@@ -337,6 +360,77 @@ export class EmployeesService {
 
   editUploadedFile(editedFiles) {
     return this.http.post(this.EDIT_DOCUMENTS, editedFiles);
+  }
+
+  getNewApprovalsDataByAdminUser() {
+    return this.http.get(this.GET_NEW_APPROVALS_BY_ADMIN);
+  }
+
+
+  getRequestToPutOnHoldDataByAdminUser() {
+    return this.http.get(this.GET_REQ_TO_PUT_ON_HOLD_BY_ADMIN);
+  }
+
+  getApprovedListByAdminUser() {
+    return this.http.get(this.GET_APPROVED_LIST_BY_ADMIN);
+  }
+
+  getListOnHoldByAdminUser() {
+    return this.http.get(this.GET_LIST_ON_HOLD_BY_ADMIN);
+  }
+
+  getListRejectedByAdminUser() {
+    return this.http.get(this.GET_LIST_OF_REJECTED_ADMIN);
+  }
+  getAdminUserByAdmin() {
+    return this.http.get(this.GET_ADMIN_USER_BY_ADMIN);
+  }
+  getStatedByAdmin() {
+    return this.http.get(this.GET_STATE_USER_BY_ADMIN);
+  }
+  getDistrictAdmin() {
+    return this.http.get(this.GET_DISTRICT_USER_BY_ADMIN);
+  }
+  getPanchayatByAdmin() {
+    return this.http.get(this.GET_PANCHAYAT_USER_BY_ADMIN);
+  }
+
+  getGradeAArtistByAdmin() {
+    return this.http.get(this.GET_GRADE_A_ARTIST_BY_ADMIN);
+  }
+
+
+  getGradeBArtistByAdmin() {
+    return this.http.get(this.GET_GRADE_B_ARTIST_BY_ADMIN);
+  }
+
+  getGradeCArtistByAdmin() {
+    return this.http.get(this.GET_GRADE_C_ARTIST_BY_ADMIN);
+  }
+
+
+  getGradeAArtistByState() {
+    return this.http.get(this.GET_GRADE_A_ARTIST_BY_STATE);
+  }
+
+
+  getGradeBArtistByState() {
+    return this.http.get(this.GET_GRADE_B_ARTIST_BY_STATE);
+  }
+
+  getGradeCArtistByState() {
+    return this.http.get(this.GET_GRADE_C_ARTIST_BY_STATE);
+  }
+
+
+  getArtistCategoryADataByAdmin(artistCategoryA) {
+    return this.http.post(this.POST_DYNAMIC_GRADE_A_ARTIST_BY_ADMIN, artistCategoryA);
+  }
+  getArtistCategoryBDataByAdmin(artistCategoryB) {
+    return this.http.post(this.POST_DYNAMIC_GRADE_B_ARTIST_BY_ADMIN, artistCategoryB);
+  }
+  getArtistCategoryCDataByAdmin(artistCategoryC) {
+    return this.http.post(this.POST_DYNAMIC_GRADE_C_ARTIST_BY_ADMIN, artistCategoryC);
   }
   
 }

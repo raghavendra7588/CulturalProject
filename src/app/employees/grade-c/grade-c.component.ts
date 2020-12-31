@@ -24,9 +24,10 @@ export class GradeCComponent implements OnInit {
     public employeeService: EmployeesService,
     public emitterService: EmitterService
   ) {
-
     this.districtId = parseInt(sessionStorage.getItem('DistrictId'));
     this.userId = parseInt(sessionStorage.getItem('userId'));
+    sessionStorage.removeItem('language');
+    sessionStorage.setItem('language', 'true');
   }
 
 

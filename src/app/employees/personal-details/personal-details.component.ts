@@ -44,29 +44,39 @@ export class PersonalDetailsComponent implements OnInit {
     if (this.role === 'DISTRICT') {
       this.isDistrict = true;
     }
+    if (this.role === 'ADMIN') {
+      this.getNewProposalFormByAdmin();
+    }
     else {
       this.isDistrict = false;
     }
 
     this.emitterService.isPersonalDataCreated.subscribe(value => {
       if (value) {
-        this.getPersonalDetailsData();
-        this.dataSource.paginator = this.paginator;
+        if (this.role === 'ADMIN') {
+          this.getNewProposalFormByAdmin();
+        }
+        else {
+          this.getPersonalDetailsData();
+          this.dataSource.paginator = this.paginator;
+        }
       }
     });
 
     this.emitterService.isLanguageChanged.subscribe(val => {
-
       this.preferredLanguage = sessionStorage.getItem('language');
-
-
     });
   }
 
   ngOnInit(): void {
     this.userId = Number(sessionStorage.getItem('userId'));
-
-    this.getPersonalDetailsData();
+    if (this.role === 'ADMIN') {
+      this.getNewProposalFormByAdmin();
+    }
+    else {
+      this.getPersonalDetailsData();
+      this.dataSource.paginator = this.paginator;
+    }
 
   }
 
@@ -116,6 +126,16 @@ export class PersonalDetailsComponent implements OnInit {
 
   getPersonalDetailsData() {
     this.employeeService.getAllPersonalDetailsData(this.userId).subscribe(res => {
+      this.personalDetailsData = res;
+      let uniquePersonalDetailsData = _.uniqBy(this.personalDetailsData, 'id');
+      this.personalDetailsData = uniquePersonalDetailsData;
+      this.dataSource = new MatTableDataSource(this.personalDetailsData);
+      setTimeout(() => this.dataSource.paginator = this.paginator);
+    });
+  }
+
+  getNewProposalFormByAdmin() {
+    this.employeeService.getNewApprovalsDataByAdminUser().subscribe(res => {
       this.personalDetailsData = res;
       let uniquePersonalDetailsData = _.uniqBy(this.personalDetailsData, 'id');
       this.personalDetailsData = uniquePersonalDetailsData;

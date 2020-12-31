@@ -36,9 +36,8 @@ export class ApprovalsOnHoldComponent implements OnInit {
     if ("role" in sessionStorage) {
       this.role = sessionStorage.getItem('role');
     }
-
-
-
+    sessionStorage.removeItem('language');
+    sessionStorage.setItem('language', 'true');
   }
 
   ngOnInit(): void {

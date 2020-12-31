@@ -49,7 +49,8 @@ export class ListOnHoldComponent implements OnInit {
     public toastr: ToastrService,
     private modalService: BsModalService
   ) {
-
+    sessionStorage.removeItem('language');
+    sessionStorage.setItem('language', 'true');
     this.userId = Number(sessionStorage.getItem('userId'));
     this.role = sessionStorage.getItem('role');
     if (this.role === 'GRAMPANCHAYAT') {
@@ -65,6 +66,12 @@ export class ListOnHoldComponent implements OnInit {
       this.getDistrictMasterData();
       this.getOnHoldArtistDataByState();
     }
+    if (this.role === 'ADMIN') {
+      this.displayedColumns = ['artistCode', 'fullName', 'district', 'place', 'approvalStatus', 'holdBy', 'holdAt', 'view',];
+      this.getDistrictMasterData();
+      this.getOnHoldArtistDataByAdmin();
+    }
+
 
     this.emitterService.isPanchyatArtistPuttedOnHold.subscribe(val => {
       if (val) {
@@ -74,9 +81,13 @@ export class ListOnHoldComponent implements OnInit {
         if (this.role === 'DISTRICT') {
           this.getListOnHoldDataByDistrict(this.userId);
         }
-        else {
+        if (this.role === 'STATE') {
           this.getDistrictMasterData();
           this.getOnHoldArtistDataByState();
+        }
+        if (this.role === 'ADMIN') {
+          this.getDistrictMasterData();
+          this.getOnHoldArtistDataByAdmin();
         }
       }
     });
@@ -116,6 +127,16 @@ export class ListOnHoldComponent implements OnInit {
     });
   }
 
+  getOnHoldArtistDataByAdmin() {
+    this.employeeService.getListOnHoldByAdminUser().subscribe(res => {
+      this.listOnHoldData = res;
+      let uniquePersonalDetailsData = _.uniqBy(this.listOnHoldData, 'id');
+      this.listOnHoldData = uniquePersonalDetailsData;
+      this.dataSource = new MatTableDataSource(this.listOnHoldData);
+      setTimeout(() => this.dataSource.paginator = this.paginator);
+    });
+  }
+
 
   applyFilter(filter: string) {
     this.dataSource.filter = filter.trim().toLowerCase();
@@ -132,6 +153,18 @@ export class ListOnHoldComponent implements OnInit {
       disableClose: true
     });
   }
+
+  viewHoldEmployee(employee) {
+    sessionStorage.removeItem('action');
+    sessionStorage.setItem('action', 'hold');
+    this.dialog.open(DialogViewProposalFormComponent, {
+      height: '600px',
+      width: '1200px',
+      data: employee,
+      disableClose: true
+    });
+  }
+
 
   openModal(template: TemplateRef<any>, artist) {
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });

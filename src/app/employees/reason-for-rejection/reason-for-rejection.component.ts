@@ -37,6 +37,8 @@ export class ReasonForRejectionComponent implements OnInit {
   ) {
     this.artistResponse = data;
     this.newProposal.id = this.artistResponse.id;
+    sessionStorage.removeItem('language');
+    sessionStorage.setItem('language', 'true');
   }
 
   ngOnInit(): void {

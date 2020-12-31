@@ -10,6 +10,8 @@ import { ExistingMemberAlterationComponent } from './employees/existing-member-a
 import { GradeAComponent } from './employees/grade-a/grade-a.component';
 import { GradeBComponent } from './employees/grade-b/grade-b.component';
 import { GradeCComponent } from './employees/grade-c/grade-c.component';
+import { GradeWiseAdminComponent } from './employees/grade-wise-admin/grade-wise-admin.component';
+import { GradeWiseStateComponent } from './employees/grade-wise-state/grade-wise-state.component';
 import { ListOfRejectedMembersComponent } from './employees/list-of-rejected-members/list-of-rejected-members.component';
 import { ListOnHoldComponent } from './employees/list-on-hold/list-on-hold.component';
 import { NewApprovalsComponent } from './employees/new-approvals/new-approvals.component';
@@ -18,6 +20,7 @@ import { PersonalDetailsComponent } from './employees/personal-details/personal-
 import { ReqToPutOnHoldComponent } from './employees/req-to-put-on-hold/req-to-put-on-hold.component';
 import { ReqToRemoveFromHoldComponent } from './employees/req-to-remove-from-hold/req-to-remove-from-hold.component';
 import { StateRoleManagementComponent } from './employees/state-role-management/state-role-management.component';
+import { UserManagementComponent } from './employees/user-management/user-management.component';
 import { DashboardComponent } from './layout/dashboard/dashboard.component';
 import { LoginComponent } from './user/login/login.component';
 
@@ -28,8 +31,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'add/user', component: AddUserMasterComponent },
-  { path: 'district/newApprovals', component: NewApprovalsComponent },
-  { path: 'district/approvedList', component: ApprovedListComponent },
+  { path: 'newApprovals', component: NewApprovalsComponent },
+  { path: 'approvedList', component: ApprovedListComponent },
   { path: 'panchayat/gradeA', component: GradeAComponent },
   { path: 'panchayat/gradeB', component: GradeBComponent },
   { path: 'panchayat/gradeC', component: GradeCComponent },
@@ -44,6 +47,9 @@ const routes: Routes = [
   { path: 'role/State', component: StateRoleManagementComponent },
   { path: 'role/District', component: DistrictRoleManagementComponent },
   { path: 'role/Panchayat', component: PanchayatRoleManagementComponent },
+  { path: 'userManagement', component: UserManagementComponent },
+  { path: 'gradeWiseData/admin', component: GradeWiseAdminComponent },
+  { path: 'gradeWiseData/state', component: GradeWiseStateComponent },
   { path: '**', redirectTo: '/login' }
 ];
 

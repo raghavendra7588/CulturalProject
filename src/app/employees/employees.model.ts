@@ -182,7 +182,9 @@ export class DynamicStateApproved {
     districtId?: number;
     roleName?: string;
     panchayatName?: string;
+    districtName?: string;
 }
+
 
 export class DynamicStateReject {
     districtId?: number;

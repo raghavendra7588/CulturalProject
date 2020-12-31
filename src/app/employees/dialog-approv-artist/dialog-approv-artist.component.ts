@@ -33,8 +33,8 @@ export class DialogApprovArtistComponent implements OnInit {
     private dialogRef: MatDialogRef<DialogApprovArtistComponent>,
     public toastr: ToastrService,
   ) {
-
-
+    sessionStorage.removeItem('language');
+    sessionStorage.setItem('language', 'true');
     this.artistResponse = data;
     this.newProposal.id = this.artistResponse.id;
   }

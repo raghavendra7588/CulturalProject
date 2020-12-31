@@ -39,7 +39,7 @@
                         [(ngModel)]="userMaster.emailId">
                 </mat-form-field>
             </div>
-   
+
             <div class="col-md-4 col-4 col-sm-4">
                 <mat-form-field style="width: 100% !important;">
 
@@ -88,9 +88,9 @@
 
 
 
-<form [formGroup]="saveUserMasterForm" autocomplete="off" *ngIf="role ==='ADMIN'">
+<form [formGroup]="saveUserMasterForm" autocomplete="off" *ngIf="role ==='ADMIN' && !userResponse">
     <div class="container-fluid">
-        <h3 class="font-weight-bold">Add User</h3>
+        <h3 class="font-weight-bold">Add User new user</h3>
         <div class="row">
 
             <div class="col-md-4 col-4 col-sm-4">
@@ -129,7 +129,127 @@
                         [(ngModel)]="userMaster.emailId">
                 </mat-form-field>
             </div>
+
+            <div class="col-md-4 col-4 col-sm-4"
+                *ngIf="currentUserStr !== 'STATE' ||  (currentUserStr === 'GRAMPANCHAYAT' || currentUserStr === 'DISTRICT') ">
+                <mat-form-field style="width: 100% !important;">
+                    <input matInput placeholder="Pin Code" type="text" formControlName="pinCode"
+                        [maxLength]="maxLengthPinCode" [(ngModel)]="userMaster.pinCode" appNumber>
+                </mat-form-field>
+            </div>
         </div>
+
+
+        <div class="row">
+            <div class="col-md-4 col-4 col-sm-4"
+                *ngIf="currentUserStr === 'GRAMPANCHAYAT' || currentUserStr === 'DISTRICT'">
+                <mat-form-field style="width: 100% !important;">
+                    <mat-select placeholder="District" formControlName="district" [(ngModel)]="userMaster.districtId">
+                        <mat-option *ngFor="let item of districtMasterData;" [value]="item.DistrictId"
+                            (click)="selectedDistrictFromList(item)">
+                            {{item.DistrictName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 col-4 col-sm-4" *ngIf="currentUserStr === 'GRAMPANCHAYAT'">
+                <mat-form-field style="width: 100%;">
+                    <input matInput placeholder="Panchayat Name" type="text" formControlName="PanchyatName"
+                        [(ngModel)]="userMaster.PanchyatName">
+                </mat-form-field>
+            </div>
+        </div>
+
+
+        <div class="row mt-4">
+            <div class="col-md-2 col-6 col-sm-6">
+                <button mat-raised-button class="width-100" color="primary" (click)="addNewUser()">Submit</button>
+            </div>
+            <div class="col-md-2 col-6 col-sm-6">
+                <button mat-raised-button class="width-100" color="warn" mat-dialog-close>Cancel</button>
+            </div>
+        </div>
+    </div>
+
+
+</form>
+
+
+
+
+
+<form [formGroup]="saveUserMasterForm" autocomplete="off" *ngIf="role ==='ADMIN' && userResponse">
+    <div class="container-fluid">
+        <h3 class="font-weight-bold">Add User userResponse</h3>
+        <div class="row">
+
+            <div class="col-md-4 col-4 col-sm-4">
+                <mat-form-field style="width: 100% !important;">
+                    <mat-select placeholder="Role" formControlName="roleId" [(ngModel)]="userMaster.roleId">
+                        <mat-option *ngFor="let item of roleMasterData;" [value]="item.RoleId"
+                            (click)="selectedRoleFromList(item)">
+                            {{item.RoleName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 col-4 col-sm-4">
+                <mat-form-field style="width: 100%;">
+                    <input matInput placeholder="Name" type="text" formControlName="name" [(ngModel)]="userMaster.name">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 col-4 col-sm-4">
+                <mat-form-field style="width: 100%;">
+                    <input matInput placeholder="User Name" type="text" formControlName="userName"
+                        [(ngModel)]="userMaster.userName">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 col-4 col-sm-4">
+                <mat-form-field style="width: 100%;">
+                    <input matInput placeholder="Mobile Number" type="text" formControlName="mobileNumber"
+                        [maxLength]="maxLengthPhone" [(ngModel)]="userMaster.mobileNumber" appNumber>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 col-4 col-sm-4">
+                <mat-form-field style="width: 100%;">
+                    <input matInput placeholder="Email ID" type="text" formControlName="emailId"
+                        [(ngModel)]="userMaster.emailId">
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-4 col-4 col-sm-4"
+                *ngIf="currentUserStr == 'GRAMPANCHAYAT' || currentUserStr == 'DISTRICT'">
+                <mat-form-field style="width: 100% !important;">
+                    <input matInput placeholder="Pin Code" type="text" formControlName="pinCode"
+                        [maxLength]="maxLengthPinCode" [(ngModel)]="userMaster.pinCode" appNumber>
+                </mat-form-field>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-4 col-4 col-sm-4"
+                *ngIf="currentUserStr == 'GRAMPANCHAYAT' || currentUserStr == 'DISTRICT'">
+                <mat-form-field style="width: 100% !important;">
+                    <mat-select placeholder="District" formControlName="district" [(ngModel)]="userMaster.districtId">
+                        <mat-option *ngFor="let item of districtMasterData;" [value]="item.DistrictId"
+                            (click)="selectedDistrictFromList(item)">
+                            {{item.DistrictName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 col-4 col-sm-4" *ngIf="currentUserStr == 'GRAMPANCHAYAT'">
+                <mat-form-field style="width: 100%;">
+                    <input matInput placeholder="Panchayat Name" type="text" formControlName="PanchyatName"
+                        [(ngModel)]="userMaster.PanchyatName">
+                </mat-form-field>
+            </div>
+        </div>
+
 
         <div class="row mt-4">
             <div class="col-md-2 col-6 col-sm-6">

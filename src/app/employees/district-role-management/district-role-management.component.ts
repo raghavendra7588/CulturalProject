@@ -36,7 +36,8 @@ export class DistrictRoleManagementComponent implements OnInit {
     public basicuserService: BasicuserService,
     public toastr: ToastrService
   ) {
-
+    sessionStorage.removeItem('language');
+    sessionStorage.setItem('language', 'true');
     this.emitterService.isActiveStatusChanged.subscribe(val => {
       if (val) {
         this.getUserMasterDataForDistrict();

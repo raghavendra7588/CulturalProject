@@ -31,7 +31,8 @@ export class StateRoleManagementComponent implements OnInit {
     public toastr: ToastrService
   ) {
     this.userId = parseInt(sessionStorage.getItem('userId'));
-
+    sessionStorage.removeItem('language');
+    sessionStorage.setItem('language', 'true');
     this.emitterService.isActiveStatusChanged.subscribe(val => {
       if (val) {
         this.getUserMasterDataForState();

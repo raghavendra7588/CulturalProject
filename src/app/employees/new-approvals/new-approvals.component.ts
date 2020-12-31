@@ -40,12 +40,13 @@ export class NewApprovalsComponent implements OnInit {
     public basicuserService: BasicuserService,
     public toastr: ToastrService
   ) {
+    sessionStorage.removeItem('language');
+    sessionStorage.setItem('language', 'true');
     this.userId = Number(sessionStorage.getItem('userId'));
     this.role = sessionStorage.getItem('role');
 
     if (this.role === 'DISTRICT') {
       this.displayedColumns = ['artistCode', 'fullName', 'place', 'approvalStatus', 'actionTakenBy', 'createdBy', 'view'];
-
       this.isDistrict = true;
       this.getPersonalDetailsData();
     }
@@ -54,6 +55,12 @@ export class NewApprovalsComponent implements OnInit {
       this.isDistrict = false;
       this.getDistrictMasterData();
       this.getNewProposalFormDetailsAtState();
+    }
+    if (this.role === 'ADMIN') {
+      this.displayedColumns = ['artistCode', 'fullName','district', 'place', 'approvalStatus', 'actionTakenBy', 'createdBy', 'view'];
+      this.isDistrict = false;
+      this.getDistrictMasterData();
+      this.getNewProposalFormByAdmin();
     }
 
 
@@ -66,6 +73,10 @@ export class NewApprovalsComponent implements OnInit {
         if (this.role === 'STATE') {
           this.isDistrict = false;
           this.getNewProposalFormDetailsAtState();
+        }
+        if (this.role === 'ADMIN') {
+          this.isDistrict = false;
+          this.getNewProposalFormByAdmin();
         }
       }
 
@@ -109,6 +120,16 @@ export class NewApprovalsComponent implements OnInit {
 
   getNewProposalFormDetailsAtState() {
     this.employeeService.getNewApprovalsByState().subscribe(res => {
+      this.personalDetailsData = res;
+      let uniqueData = _.uniqBy(this.personalDetailsData, 'id');
+      this.personalDetailsData = uniqueData;
+      this.dataSource = new MatTableDataSource(this.personalDetailsData);
+      setTimeout(() => this.dataSource.paginator = this.paginator);
+    });
+  }
+
+  getNewProposalFormByAdmin() {
+    this.employeeService.getNewApprovalsDataByAdminUser().subscribe(res => {
       this.personalDetailsData = res;
       let uniqueData = _.uniqBy(this.personalDetailsData, 'id');
       this.personalDetailsData = uniqueData;
@@ -177,5 +198,8 @@ export class NewApprovalsComponent implements OnInit {
       this.districtData = res;
     });
   }
+
+
+
 
 }
