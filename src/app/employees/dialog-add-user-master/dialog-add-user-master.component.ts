@@ -127,9 +127,6 @@ export class DialogAddUserMasterComponent implements OnInit {
 
       if (this.role === 'ADMIN') {
         this.userMaster.updatedBy = this.userId;
-        //this.userMaster.pinCode = "";
-        //  this.userMaster.districtId = 0;
-        // this.userMaster.PanchyatName = "";
 
       }
       if (this.role === 'STATE') {
@@ -141,15 +138,10 @@ export class DialogAddUserMasterComponent implements OnInit {
       if (this.role === 'ADMIN') {
         this.userMaster.createdBy = this.userId;
         this.userMaster.updatedBy = 0;
-        // this.userMaster.password = '123456';
-        // this.userMaster.pinCode = "";
-        //  this.userMaster.districtId = 0;
-        // this.userMaster.PanchyatName = "";
       }
       if (this.role === 'STATE') {
         this.userMaster.createdBy = this.userId;
         this.userMaster.updatedBy = 0;
-        //this.userMaster.password = '123456';
       }
 
     }
