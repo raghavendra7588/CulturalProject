@@ -7,7 +7,8 @@ import { environment } from '../../environments/environment';
 })
 export class EmployeesService {
 
-  public BASE_API = 'http://localhost:54372';
+  // public BASE_API = 'http://localhost:54372';
+  public BASE_API = 'https://3intellects.co.in/uat_culturalApi/';
 
   private SAVE_PERSONAL_DETAILS_FORM = environment.BASE_URL + 'api/ProposalForm';
   private SAVE_PROPOSAL_FORM = environment.BASE_URL + 'api/ProposalFormModified';
