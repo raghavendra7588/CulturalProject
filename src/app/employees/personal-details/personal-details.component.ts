@@ -75,7 +75,6 @@ export class PersonalDetailsComponent implements OnInit {
     }
     else {
       this.getPersonalDetailsData();
-      this.dataSource.paginator = this.paginator;
     }
 
   }

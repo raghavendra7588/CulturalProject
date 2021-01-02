@@ -21,7 +21,7 @@ export class GradeWiseAdminComponent implements OnInit {
 
 
   dataSource: any;
-  displayedColumns: string[] = ['fullName', 'grade', 'district','place', 'approvalStatus', 'approvedBy', 'approvedAt', 'view'];
+  displayedColumns: string[] = ['fullName', 'grade', 'district', 'place', 'approvalStatus', 'approvedBy', 'approvedAt', 'view'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
 
@@ -138,6 +138,9 @@ export class GradeWiseAdminComponent implements OnInit {
       this.districtData = res;
     });
   }
+  selectedPanchyatFromList(res) {
+    this.dynamicStateApproved.panchayatName = res.PanchyatId;
+  }
 
   searchRecord() {
     this.dynamicStateApproved.roleName = sessionStorage.getItem('role');
@@ -154,7 +157,7 @@ export class GradeWiseAdminComponent implements OnInit {
     if (this.currentUserRole === 'ADMIN_A') {
       this.employeeService.getArtistCategoryADataByAdmin(this.dynamicStateApproved).subscribe(res => {
         this.userMasterData = res;
-        uniqueData = _.uniqBy(this.userMasterData, 'id');
+        uniqueData = _.uniqBy(this.userMasterData, 'UserId');
         this.userMasterData = uniqueData;
         this.dataSource = new MatTableDataSource(this.userMasterData);
         setTimeout(() => this.dataSource.paginator = this.paginator);
@@ -163,7 +166,7 @@ export class GradeWiseAdminComponent implements OnInit {
     if (this.currentUserRole === 'ADMIN_B') {
       this.employeeService.getArtistCategoryBDataByAdmin(this.dynamicStateApproved).subscribe(res => {
         this.userMasterData = res;
-        uniqueData = _.uniqBy(this.userMasterData, 'id');
+        uniqueData = _.uniqBy(this.userMasterData, 'UserId');
         this.userMasterData = uniqueData;
         this.dataSource = new MatTableDataSource(this.userMasterData);
         setTimeout(() => this.dataSource.paginator = this.paginator);
@@ -172,7 +175,7 @@ export class GradeWiseAdminComponent implements OnInit {
     if (this.currentUserRole === 'ADMIN_C') {
       this.employeeService.getArtistCategoryCDataByAdmin(this.dynamicStateApproved).subscribe(res => {
         this.userMasterData = res;
-        uniqueData = _.uniqBy(this.userMasterData, 'id');
+        uniqueData = _.uniqBy(this.userMasterData, 'UserId');
         this.userMasterData = uniqueData;
         this.dataSource = new MatTableDataSource(this.userMasterData);
         setTimeout(() => this.dataSource.paginator = this.paginator);
@@ -180,12 +183,8 @@ export class GradeWiseAdminComponent implements OnInit {
     }
   }
 
-  selectedPanchyatFromList(res) {
-    this.dynamicStateApproved.panchayatName = res.PanchyatId;
-  }
 
   viewEmployee(response) {
-
     let res: any = [];
     res = response;
     this.dialog.open(DialogViewProposalFormComponent, {

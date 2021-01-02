@@ -13,8 +13,9 @@
       fixedTopGap="56">
       <mat-nav-list>
         <ng-container *ngIf="role === 'ADMIN' || role === 'STATE' || role === 'DISTRICT' || role === 'GRAMPANCHAYAT' ">
-          <h3 class="font-weight-bold text-center">{{welcome}} {{userName |uppercase}}</h3>
-          <h4 class="font-weight-bold text-center" style="color:#3f51b5;">{{districtName}}</h4>
+          <h3 class="font-weight-bold text-center">{{welcome}} {{userName
+            |uppercase}}<br>{{role|uppercase}}<br>{{districtName}}
+          </h3>
           <mat-divider class="my-2"></mat-divider>
         </ng-container>
 
@@ -62,14 +63,6 @@
           <mat-divider class="my-2"></mat-divider>
         </ng-container>
 
-        <ng-container *ngIf="role === 'ADMIN' || role === 'STATE'">
-          <h3 class="text-center font-weight-bold">Role Management</h3>
-          <a mat-list-item routerLink="role/State" *ngIf="role === 'ADMIN' ">State</a>
-          <a mat-list-item routerLink="role/District" *ngIf="role === 'STATE'">District</a>
-          <a mat-list-item routerLink="role/Panchayat" *ngIf="role === 'STATE'">Panchayat</a>
-          <mat-divider class="my-2"></mat-divider>
-        </ng-container>
-
         <ng-container *ngIf="role === 'ADMIN'">
           <h3 class="text-center font-weight-bold">Artist Category</h3>
           <a mat-list-item (click)="gradeAArtistByAdmin()">Grade A</a>
@@ -86,11 +79,21 @@
           <mat-divider class="my-2"></mat-divider>
         </ng-container>
 
+        <ng-container *ngIf="role === 'ADMIN' || role === 'STATE'">
+          <h3 class="text-center font-weight-bold">Role Management</h3>
+          <a mat-list-item routerLink="role/State" *ngIf="role === 'ADMIN' ">State</a>
+          <a mat-list-item routerLink="role/District" *ngIf="role === 'STATE'">District</a>
+          <a mat-list-item routerLink="role/Panchayat" *ngIf="role === 'STATE'">Panchayat</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+
+        <!-- 
         <ng-container *ngIf="role === 'GRAMPANCHAYAT' ||role === 'DISTRICT'">
           <h3 class="text-center font-weight-bold">Forms</h3>
           <a mat-list-item (click)="navigateToPersonalDetailsEnglish()">Praposal Form</a>
           <mat-divider class="my-2"></mat-divider>
-        </ng-container>
+        </ng-container> -->
         <ng-container *ngIf="role === 'ADMIN'">
           <h3 class="text-center font-weight-bold">User Management</h3>
           <a mat-list-item (click)="navigateToAdminUserManagement()">Admin</a>

@@ -20,7 +20,7 @@
             <mat-select placeholder="Panchayat List" [(ngModel)]="dynamicStateApproved.panchayatName">
               <mat-option *ngFor="let item of panchayatData;" [value]="item.PanchyatId"
                 (click)="selectedPanchyatFromList(item)">
-                {{item.PanchyatId}}
+                {{item.PanchyatId |uppercase}}
               </mat-option>
             </mat-select>
           </mat-form-field>

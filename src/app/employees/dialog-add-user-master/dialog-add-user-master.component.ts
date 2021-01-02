@@ -32,6 +32,7 @@ export class DialogAddUserMasterComponent implements OnInit {
   currentUserStr: string = 'STATE';
   currentUser: string;
   savedUserMasterData: any = [];
+  viewAction: string='';
 
   constructor(
     public emitterService: EmitterService,
@@ -45,6 +46,7 @@ export class DialogAddUserMasterComponent implements OnInit {
     sessionStorage.removeItem('language');
     sessionStorage.setItem('language', 'true');
     this.role = sessionStorage.getItem('role');
+
 
     this.saveUserMasterForm = this.formBuilder.group({
       name: [''],
@@ -67,6 +69,10 @@ export class DialogAddUserMasterComponent implements OnInit {
 
     if (this.userResponse) {
       this.assignValues();
+    }
+
+    if ("viewAction" in sessionStorage) {
+      this.viewAction = sessionStorage.getItem('viewAction');
     }
   }
 
@@ -174,5 +180,10 @@ export class DialogAddUserMasterComponent implements OnInit {
       this.userMaster.districtId = this.userResponse.DistrictId;
       this.userMaster.pinCode = this.userResponse.PinCode;
     }
+  }
+
+  closeDiaglog() {
+    sessionStorage.removeItem('viewAction');
+    this.dialogRef.close();
   }
 }

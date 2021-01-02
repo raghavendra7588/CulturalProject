@@ -6,6 +6,7 @@ import { DialogAddUserMasterComponent } from '../dialog-add-user-master/dialog-a
 import { EmployeesService } from '../employees.service';
 import * as _ from 'lodash';
 import { MatPaginator } from '@angular/material/paginator';
+import { DynamicOnHoldArtistByState, DynamicStateRoleDistrict } from '../employees.model';
 
 @Component({
   selector: 'app-add-user-master',
@@ -21,6 +22,13 @@ export class AddUserMasterComponent implements OnInit {
   userObj: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   role: string;
+
+  districtId: number;
+  districtData: any = [];
+  panchayatData: any = [];
+
+  dynamicStateRoleDistrict: DynamicStateRoleDistrict = new DynamicStateRoleDistrict();
+  dynamicOnHoldArtistByState: DynamicOnHoldArtistByState = new DynamicOnHoldArtistByState();
 
   constructor(
     public dialog: MatDialog,
@@ -45,7 +53,7 @@ export class AddUserMasterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.getDistrictMasterData();
     if (this.role === 'ADMIN') {
       this.getStateUserMasterData();
     }
@@ -103,4 +111,66 @@ export class AddUserMasterComponent implements OnInit {
   applyFilter(filter: string) {
     this.dataSource.filter = filter.trim().toLowerCase();
   }
+
+
+  searchRecordForPanchayat() {
+    if (this.dynamicOnHoldArtistByState.DistrictId === null || this.dynamicOnHoldArtistByState.DistrictId === undefined) {
+      this.dynamicOnHoldArtistByState.DistrictId = 0;
+    }
+    if (this.dynamicOnHoldArtistByState.panchayatName === null || this.dynamicOnHoldArtistByState.panchayatName === undefined || this.dynamicOnHoldArtistByState.panchayatName === '') {
+      this.dynamicOnHoldArtistByState.panchayatName = 'ALL';
+    }
+
+    this.dynamicOnHoldArtistByState.RoleName = sessionStorage.getItem('role');
+    console.log(this.dynamicOnHoldArtistByState);
+
+    this.employeeService.postDynamicUserCreationDataAtAdmin(this.dynamicOnHoldArtistByState).subscribe(res => {
+      this.userMaster = res;
+      let uniqueRoleMasterData = _.uniqBy(this.userMaster, 'UserId');
+
+      this.userMaster = uniqueRoleMasterData;
+      this.dataSource = new MatTableDataSource(this.userMaster);
+      this.dataSource.paginator = this.paginator;
+    });
+  }
+
+  selectedPanchyatFromList(res) {
+    this.dynamicOnHoldArtistByState.panchayatName = res.PanchyatId;
+  }
+  selectedDistrictFromList(district) {
+    this.dynamicOnHoldArtistByState.DistrictId = district.DistrictId;
+    this.employeeService.getPanchayatBasedOnDistrictId(this.dynamicOnHoldArtistByState.DistrictId).subscribe(res => {
+      this.panchayatData = res;
+    });
+    this.dynamicOnHoldArtistByState.panchayatName = '';
+  }
+
+  getDistrictMasterData() {
+    this.employeeService.getDistrictMasterData().subscribe(res => {
+      this.districtData = res;
+    });
+  }
+
+
+  searchRecordForPanchayatByState(){
+    if (this.dynamicOnHoldArtistByState.DistrictId === null || this.dynamicOnHoldArtistByState.DistrictId === undefined) {
+      this.dynamicOnHoldArtistByState.DistrictId = 0;
+    }
+    if (this.dynamicOnHoldArtistByState.panchayatName === null || this.dynamicOnHoldArtistByState.panchayatName === undefined || this.dynamicOnHoldArtistByState.panchayatName === '') {
+      this.dynamicOnHoldArtistByState.panchayatName = 'ALL';
+    }
+
+    this.dynamicOnHoldArtistByState.RoleName = sessionStorage.getItem('role');
+    console.log(this.dynamicOnHoldArtistByState);
+
+    this.employeeService.postDynamicUserCreationDataAtAdmin(this.dynamicOnHoldArtistByState).subscribe(res => {
+      this.userMaster = res;
+      let uniqueRoleMasterData = _.uniqBy(this.userMaster, 'UserId');
+
+      this.userMaster = uniqueRoleMasterData;
+      this.dataSource = new MatTableDataSource(this.userMaster);
+      this.dataSource.paginator = this.paginator;
+    });
+  }
+
 }

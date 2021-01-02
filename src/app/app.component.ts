@@ -51,7 +51,6 @@ export class AppComponent {
 
     if ("districtName" in sessionStorage) {
       this.districtName = sessionStorage.getItem('districtName');
-
     }
     this.getDistrictMastersData();
     this.emitterService.isLoggedIn.subscribe(val => {

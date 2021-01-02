@@ -323,7 +323,19 @@ export class DialogViewProposalFormComponent implements OnInit {
       this.isApprovedListRoute = true;
       this.closeButtonOnly = true;
     }
-
+    if (this.router.url === '/requestToPutOnHold' && this.role === 'STATE') {
+      this.isApprovedListRoute = true;
+      this.closeButtonOnly = true;
+    }
+    if (this.router.url === '/newApprovals' && this.role === 'STATE') {
+      this.isApprovedListRoute = true;
+      this.closeButtonOnly = true;
+    }
+    if (this.router.url === '/approvedList' && this.role === 'DISTRICT') {
+      this.isApprovedListRoute = true;
+      this.closeButtonOnly = true;
+    }
+   
 
     if (this.router.url === 'approvedList' || this.router.url === '/panchayat/existingMemberAlteration'
       || this.router.url === '/details/personalDetails') {
@@ -335,8 +347,8 @@ export class DialogViewProposalFormComponent implements OnInit {
       this.isApprovedListRoute = false;
     }
     if (this.router.url === '/newApprovals' && this.role === 'ADMIN') {
-      this.isNewApprovalsRoute = true;
-      this.isApprovedListRoute = false;
+      this.isApprovedListRoute = true;
+      this.closeButtonOnly = true;
     }
 
     if (this.router.url === '/approvalsOnHold' && this.role === 'DISTRICT') {
@@ -391,8 +403,11 @@ export class DialogViewProposalFormComponent implements OnInit {
       this.isApprovedListRoute = true;
       this.closeButtonOnly = true;
     }
-
-
+    
+    if (this.router.url === '/gradeWiseData/state' && this.role === 'STATE') {
+      this.isApprovedListRoute = true;
+      this.closeButtonOnly = true;
+    }
 
     this.emitterService.isApproved.subscribe(val => {
       this.dialogRef.close();

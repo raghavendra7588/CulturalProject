@@ -106,13 +106,23 @@ export class EmployeesService {
   private POST_DYNAMIC_GRADE_B_ARTIST_BY_ADMIN = environment.BASE_URL + 'api/DynamicStateApprovedList/DyanmicGradeBByAdmin';
   private POST_DYNAMIC_GRADE_C_ARTIST_BY_ADMIN = environment.BASE_URL + 'api/DynamicStateApprovedList/DyanmicGradeCByAdmin';
 
-
+  private POST_DYNAMIC_GRADE_A_ARTIST_BY_STATE = environment.BASE_URL + 'api/DynamicStateApprovedList/DyanmicGradeAByState';
+  private POST_DYNAMIC_GRADE_B_ARTIST_BY_STATE = environment.BASE_URL + 'api/DynamicStateApprovedList/DyanmicGradeBByState';
+  private POST_DYNAMIC_GRADE_C_ARTIST_BY_STATE = environment.BASE_URL + 'api/DynamicStateApprovedList/DyanmicGradeCByState';
 
   private POST_DYNAMIC_NEW_PROPOSAL_BY_ADMIN = environment.BASE_URL + 'api/DynamicActionByState/DynamicStateNewProposalByAdmin';
   private POST_DYNAMIC_APPROVED_LIST_BY_ADMIN = environment.BASE_URL + 'api/DynamicStateApprovedList/DynamicStateApprovedListByAdmin';
   private POST_DYNAMIC_REQ_TO_PUT_ON_HOLD_BY_ADMIN = environment.BASE_URL + 'api/DynamicActionByState/DynamicStateReqToPutOnHoldByAdmin';
   private POST_DYNAMIC_HOLD_LIST_BY_ADMIN = environment.BASE_URL + 'api/DynamicStateApprovedList/DynamicStateHoldListByAdmin';
   private POST_DYNAMIC_REJECTED_LIST_BY_ADMIN = environment.BASE_URL + 'api/DynamicStateApprovedList/DynamicStateRejectedListByAdmin';
+
+  private POST_DYNAMIC_DISTRICT_USERS_BY_ADMIN = environment.BASE_URL + 'api/DynamicActionByState/DynamicDistrictUsersByAdmin';
+  private POST_DYNAMIC_PANCHAYAT_USERS_BY_ADMIN = environment.BASE_URL + 'api/DynamicActionByState/DynamicPanchayatDataByAdmin';
+
+  private POST_DYNAMIC_USER_CREATION_DATA_AT_ADMIN = environment.BASE_URL + 'api/DynamicActionByState/DynamicUserCreatedDataByAdmin';
+  private POST_DYNAMIC_USER_CREATION_DATA_AT_STATE = environment.BASE_URL + 'api/DynamicActionByState/DynamicUserCreatedDataByState';
+
+  
 
   constructor(
     public http: HttpClient
@@ -442,6 +452,18 @@ export class EmployeesService {
     return this.http.post(this.POST_DYNAMIC_GRADE_C_ARTIST_BY_ADMIN, artistCategoryC);
   }
 
+
+
+  getArtistCategoryADataByState(artistCategoryA) {
+    return this.http.post(this.POST_DYNAMIC_GRADE_A_ARTIST_BY_STATE, artistCategoryA);
+  }
+  getArtistCategoryBDataByState(artistCategoryB) {
+    return this.http.post(this.POST_DYNAMIC_GRADE_B_ARTIST_BY_STATE, artistCategoryB);
+  }
+  getArtistCategoryCDataByState(artistCategoryC) {
+    return this.http.post(this.POST_DYNAMIC_GRADE_C_ARTIST_BY_STATE, artistCategoryC);
+  }
+
   postDynamicNewApprovalsByAdmin(newApprovals) {
     return this.http.post(this.POST_DYNAMIC_NEW_PROPOSAL_BY_ADMIN, newApprovals);
   }
@@ -462,7 +484,21 @@ export class EmployeesService {
     return this.http.post(this.POST_DYNAMIC_REJECTED_LIST_BY_ADMIN, rejectedList);
   }
 
+  postDynamicDistrictUsersByAdmin(districtUsers) {
+    return this.http.post(this.POST_DYNAMIC_DISTRICT_USERS_BY_ADMIN, districtUsers);
+  }
 
+  postDynamicPanchayatUsersByAdmin(pacnhayatUsers) {
+    return this.http.post(this.POST_DYNAMIC_PANCHAYAT_USERS_BY_ADMIN, pacnhayatUsers);
+  }
 
+  postDynamicUserCreationDataAtAdmin(userCreation) {
+    return this.http.post(this.POST_DYNAMIC_USER_CREATION_DATA_AT_ADMIN, userCreation);
+  }
 
+  postDynamicUserCreationDataAtState(userCreation) {
+    return this.http.post(this.POST_DYNAMIC_USER_CREATION_DATA_AT_STATE, userCreation);
+  }
+
+  
 }

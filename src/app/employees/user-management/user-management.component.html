@@ -1,13 +1,64 @@
-<h4 class="text-center">{{currentUserRole}} DATA</h4>
+<h4 class="text-center mt-3">{{currentUserRole}} DATA</h4>
 
-<div class="container my-5">
+
+<div class="container">
+    <div class="row" *ngIf="currentUserRole === 'DISTRICT'">
+        <div class="col-md-4 col-4 col-sm-4">
+            <mat-form-field style="width: 100% !important;">
+                <mat-select placeholder="District List" [(ngModel)]="dynamicStateRoleDistrict.districtId">
+
+                    <mat-option *ngFor="let item of districtData;" [value]="item.DistrictId"
+                        (click)="selectedDistrictFromList(item)">
+                        {{item.DistrictName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-4 col-4 col-sm-4">
+            <button mat-raised-button class="width-100 mt-2" (click)="searchRecord()" color="primary">Search</button>
+        </div>
+    </div>
+    <div class="row" *ngIf="currentUserRole === 'GRAMPANCHAYAT'">
+        <div class="col-md-4 col-4 col-sm-4">
+            <mat-form-field style="width: 100% !important;">
+                <mat-select placeholder="District List" [(ngModel)]="dynamicOnHoldArtistByState.districtName">
+                    <mat-option *ngFor="let item of districtData;" [value]="item.DistrictId"
+                        (click)="selectedDistrictFromList(item)">
+                        {{item.DistrictName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+
+        <div class="col-md-4 col-4 col-sm-4">
+            <mat-form-field style="width: 100% !important;">
+                <mat-select placeholder="Panchayat List" [(ngModel)]="dynamicOnHoldArtistByState.panchayatName">
+
+                    <mat-option *ngFor="let item of panchayatData;" [value]="item.PanchyatId"
+                        (click)="selectedPanchyatFromList(item)">
+                        {{item.PanchyatId |uppercase}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4 col-4 col-sm-4">
+            <button mat-raised-button class="width-100 mt-2" (click)="searchRecordForPanchayat()"
+                color="primary">Search</button>
+        </div>
+    </div>
+</div>
+
+<div class="container my-3">
     <div class="row">
-        <div class="col-md-12 col-12 col-sm-12">
+        <div class="col-md-12 col-sm-12 col-12">
             <mat-form-field style="width: 100%;">
                 <mat-label>Search</mat-label>
                 <input matInput (keyup)="applyFilter($event.target.value)">
             </mat-form-field>
         </div>
+
     </div>
 </div>
 
@@ -39,7 +90,7 @@
         <ng-container matColumnDef="view">
             <th mat-header-cell *matHeaderCellDef [hidden]="show">View</th>
             <td mat-cell *matCellDef="let element">
-                <button mat-icon-button (click)="viewUser(element)">
+                <button mat-icon-button (click)="viewArtist(element)">
                     <mat-icon class="mat-18">remove_red_eye</mat-icon>
                 </button>
             </td>
@@ -79,7 +130,7 @@
         <ng-container matColumnDef="view">
             <th mat-header-cell *matHeaderCellDef [hidden]="show">View</th>
             <td mat-cell *matCellDef="let element">
-                <button mat-icon-button (click)="viewUser(element)">
+                <button mat-icon-button (click)="viewArtist(element)">
                     <mat-icon class="mat-18">remove_red_eye</mat-icon>
                 </button>
             </td>
@@ -92,7 +143,7 @@
 </div>
 
 <div class="col-md-12 col-12 col-sm-12 mt-4" *ngIf="currentUserRole === 'DISTRICT'">
-    
+
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
 
@@ -120,7 +171,7 @@
         <ng-container matColumnDef="view">
             <th mat-header-cell *matHeaderCellDef [hidden]="show">View</th>
             <td mat-cell *matCellDef="let element">
-                <button mat-icon-button (click)="viewUser(element)">
+                <button mat-icon-button (click)="viewArtist(element)">
                     <mat-icon class="mat-18">remove_red_eye</mat-icon>
                 </button>
             </td>
@@ -163,7 +214,7 @@
         <ng-container matColumnDef="view">
             <th mat-header-cell *matHeaderCellDef [hidden]="show">View</th>
             <td mat-cell *matCellDef="let element">
-                <button mat-icon-button (click)="viewUser(element)">
+                <button mat-icon-button (click)="viewArtist(element)">
                     <mat-icon class="mat-18">remove_red_eye</mat-icon>
                 </button>
             </td>
