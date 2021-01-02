@@ -98,7 +98,7 @@
 
 <form [formGroup]="saveUserMasterForm" autocomplete="off" *ngIf="role=== 'ADMIN' ">
     <div class="container-fluid">
-        <h3 class="font-weight-bold">Add User</h3>
+        <h3 class="font-weight-bold">Update Active StatusE</h3>
         <div class="row">
 
             <div class="col-md-4 col-4 col-sm-4">
@@ -113,12 +113,12 @@
             </div>
             <div class="col-md-4 col-4 col-sm-4">
                 <mat-form-field style="width: 100%;">
-                    <input matInput placeholder="Name" type="text" formControlName="name" [(ngModel)]="userMaster.name">
+                    <input matInput placeholder="Name" type="text" formControlName="name" readonly [(ngModel)]="userMaster.name">
                 </mat-form-field>
             </div>
             <div class="col-md-4 col-4 col-sm-4">
                 <mat-form-field style="width: 100%;">
-                    <input matInput placeholder="User Name" type="text" formControlName="userName"
+                    <input matInput placeholder="User Name" type="text" formControlName="userName" readonly
                         [(ngModel)]="userMaster.userName">
                 </mat-form-field>
             </div>
@@ -139,13 +139,13 @@
             <div class="col-md-4 col-4 col-sm-4">
                 <mat-form-field style="width: 100%;">
                     <input matInput placeholder="Mobile Number" type="text" formControlName="mobileNumber"
-                        [maxLength]="maxLengthPhone" [(ngModel)]="userMaster.mobileNumber" appNumber>
+                        [maxLength]="maxLengthPhone" [(ngModel)]="userMaster.mobileNumber" readonly appNumber>
                 </mat-form-field>
             </div>
             <div class="col-md-4 col-4 col-sm-4">
                 <mat-form-field style="width: 100%;">
                     <input matInput placeholder="Email ID" type="text" formControlName="emailId"
-                        [(ngModel)]="userMaster.emailId">
+                        [(ngModel)]="userMaster.emailId" readonly>
                 </mat-form-field>
             </div>
            

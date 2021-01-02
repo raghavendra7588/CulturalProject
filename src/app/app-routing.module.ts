@@ -11,6 +11,7 @@ import { GradeAComponent } from './employees/grade-a/grade-a.component';
 import { GradeBComponent } from './employees/grade-b/grade-b.component';
 import { GradeCComponent } from './employees/grade-c/grade-c.component';
 import { GradeWiseAdminComponent } from './employees/grade-wise-admin/grade-wise-admin.component';
+import { GradeWiseDistrictComponent } from './employees/grade-wise-district/grade-wise-district.component';
 import { GradeWiseStateComponent } from './employees/grade-wise-state/grade-wise-state.component';
 import { ListOfRejectedMembersComponent } from './employees/list-of-rejected-members/list-of-rejected-members.component';
 import { ListOnHoldComponent } from './employees/list-on-hold/list-on-hold.component';
@@ -22,6 +23,7 @@ import { ReqToRemoveFromHoldComponent } from './employees/req-to-remove-from-hol
 import { StateRoleManagementComponent } from './employees/state-role-management/state-role-management.component';
 import { UserManagementComponent } from './employees/user-management/user-management.component';
 import { DashboardComponent } from './layout/dashboard/dashboard.component';
+import { ChangePasswordComponent } from './user/change-password/change-password.component';
 import { LoginComponent } from './user/login/login.component';
 
 
@@ -50,6 +52,8 @@ const routes: Routes = [
   { path: 'userManagement', component: UserManagementComponent },
   { path: 'gradeWiseData/admin', component: GradeWiseAdminComponent },
   { path: 'gradeWiseData/state', component: GradeWiseStateComponent },
+  { path: 'gradeWiseData/district', component: GradeWiseDistrictComponent },
+  { path: 'changePassword', component: ChangePasswordComponent },
   { path: '**', redirectTo: '/login' }
 ];
 

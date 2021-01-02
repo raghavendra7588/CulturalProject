@@ -91,7 +91,7 @@ export class AppComponent {
     if ("role" in sessionStorage) {
       this.role = sessionStorage.getItem('role');
     }
-    this.getData();
+   
   }
 
   navigateToDashboard() {
@@ -133,13 +133,9 @@ export class AppComponent {
   }
 
   changePassword() {
-
+    this.router.navigate(['/changePassword']);
   }
 
-  getData() {
-    this.employeeService.getAllData().subscribe(res => {
-    });
-  }
 
 
   getDistrictMastersData() {
@@ -220,6 +216,28 @@ export class AppComponent {
     this.emitterService.isUserMasterSelected.emit(true);
     this.router.navigate(['/gradeWiseData/state']);
   }
+
+  gradeAArtistByDistrict() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'DISTRICT_A');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/gradeWiseData/district']);
+  }
+  gradeBArtistByDistrict() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'DISTRICT_B');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/gradeWiseData/district']);
+  }
+  gradeCArtistByDistrict() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'DISTRICT_C');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/gradeWiseData/district']);
+  }
+
+
+
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }

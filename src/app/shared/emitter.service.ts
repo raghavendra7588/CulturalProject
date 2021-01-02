@@ -14,6 +14,7 @@ export class EmitterService {
   public isFileDeleted: EventEmitter<boolean>;
   public isUserMasterSelected: EventEmitter<boolean>;
 
+
   constructor() {
     this.isPersonalDataCreated = new EventEmitter();
     this.isLanguageChanged = new EventEmitter();

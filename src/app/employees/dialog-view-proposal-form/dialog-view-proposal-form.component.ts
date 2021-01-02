@@ -409,6 +409,12 @@ export class DialogViewProposalFormComponent implements OnInit {
       this.closeButtonOnly = true;
     }
 
+    if (this.router.url === '/gradeWiseData/district' && this.role === 'DISTRICT') {
+      this.isApprovedListRoute = true;
+      this.closeButtonOnly = true;
+    }
+
+
     this.emitterService.isApproved.subscribe(val => {
       this.dialogRef.close();
     });

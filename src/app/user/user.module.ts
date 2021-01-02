@@ -26,9 +26,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { BasicuserService } from './basicuser.service';
 import { UserService } from './user.service';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
-  declarations: [LoginComponent],
+  declarations: [LoginComponent, ChangePasswordComponent],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -55,6 +56,7 @@ import { UserService } from './user.service';
     MatPaginatorModule,
     MatCheckboxModule
   ],
+  exports: [ChangePasswordComponent],
   providers: [BasicuserService, UserService]
 })
 export class UserModule { }

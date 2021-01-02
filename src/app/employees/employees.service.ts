@@ -103,6 +103,10 @@ export class EmployeesService {
   private GET_GRADE_B_ARTIST_BY_STATE = environment.BASE_URL + 'api/GradeWiseData/state/gradeB';
   private GET_GRADE_C_ARTIST_BY_STATE = environment.BASE_URL + 'api/GradeWiseData/state/gradeC';
 
+  private GET_GRADE_A_ARTIST_BY_DISTRICT = environment.BASE_URL + 'api/GradeWiseData/gradeA_ByDistrict';
+  private GET_GRADE_B_ARTIST_BY_DISTRICT = environment.BASE_URL + 'api/GradeWiseData/gradeB_ByDistrict';
+  private GET_GRADE_C_ARTIST_BY_DISTRICT = environment.BASE_URL + 'api/GradeWiseData/gradeC_ByDistrict';
+
   private POST_DYNAMIC_GRADE_A_ARTIST_BY_ADMIN = environment.BASE_URL + 'api/DynamicStateApprovedList/DyanmicGradeAByAdmin';
   private POST_DYNAMIC_GRADE_B_ARTIST_BY_ADMIN = environment.BASE_URL + 'api/DynamicStateApprovedList/DyanmicGradeBByAdmin';
   private POST_DYNAMIC_GRADE_C_ARTIST_BY_ADMIN = environment.BASE_URL + 'api/DynamicStateApprovedList/DyanmicGradeCByAdmin';
@@ -110,6 +114,11 @@ export class EmployeesService {
   private POST_DYNAMIC_GRADE_A_ARTIST_BY_STATE = environment.BASE_URL + 'api/DynamicStateApprovedList/DyanmicGradeAByState';
   private POST_DYNAMIC_GRADE_B_ARTIST_BY_STATE = environment.BASE_URL + 'api/DynamicStateApprovedList/DyanmicGradeBByState';
   private POST_DYNAMIC_GRADE_C_ARTIST_BY_STATE = environment.BASE_URL + 'api/DynamicStateApprovedList/DyanmicGradeCByState';
+
+  private POST_DYNAMIC_GRADE_A_ARTIST_BY_DISTRICT = environment.BASE_URL + 'api/DynamicStateApprovedList/DyanmicGradeAByDistrict';
+  private POST_DYNAMIC_GRADE_B_ARTIST_BY_DISTRICT = environment.BASE_URL + 'api/DynamicStateApprovedList/DyanmicGradeBByDistrict';
+  private POST_DYNAMIC_GRADE_C_ARTIST_BY_DISTRICT = environment.BASE_URL + 'api/DynamicStateApprovedList/DyanmicGradeCByDistrict';
+
 
   private POST_DYNAMIC_NEW_PROPOSAL_BY_ADMIN = environment.BASE_URL + 'api/DynamicActionByState/DynamicStateNewProposalByAdmin';
   private POST_DYNAMIC_APPROVED_LIST_BY_ADMIN = environment.BASE_URL + 'api/DynamicStateApprovedList/DynamicStateApprovedListByAdmin';
@@ -123,7 +132,7 @@ export class EmployeesService {
   private POST_DYNAMIC_USER_CREATION_DATA_AT_ADMIN = environment.BASE_URL + 'api/DynamicActionByState/DynamicUserCreatedDataByAdmin';
   private POST_DYNAMIC_USER_CREATION_DATA_AT_STATE = environment.BASE_URL + 'api/DynamicActionByState/DynamicUserCreatedDataByState';
 
-  
+
 
   constructor(
     public http: HttpClient
@@ -501,5 +510,26 @@ export class EmployeesService {
     return this.http.post(this.POST_DYNAMIC_USER_CREATION_DATA_AT_STATE, userCreation);
   }
 
-  
+  getGradeAArtistDataByDistrict(userId) {
+    return this.http.get(this.GET_GRADE_A_ARTIST_BY_DISTRICT + '/' + userId);
+  }
+
+  getGradeBArtistDataByDistrict(userId) {
+    return this.http.get(this.GET_GRADE_B_ARTIST_BY_DISTRICT + '/' + userId);
+  }
+
+  getGradeCArtistDataByDistrict(userId) {
+    return this.http.get(this.GET_GRADE_C_ARTIST_BY_DISTRICT + '/' + userId);
+  }
+
+
+  postDynamicGradeAArtistByDistrict(gradeA) {
+    return this.http.post(this.POST_DYNAMIC_GRADE_A_ARTIST_BY_DISTRICT, gradeA);
+  }
+  postDynamicGradeBArtistByDistrict(gradeB) {
+    return this.http.post(this.POST_DYNAMIC_GRADE_B_ARTIST_BY_DISTRICT, gradeB);
+  }
+  postDynamicGradeCArtistByDistrict(gradeC) {
+    return this.http.post(this.POST_DYNAMIC_GRADE_C_ARTIST_BY_DISTRICT, gradeC);
+  }
 }

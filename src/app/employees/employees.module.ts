@@ -53,6 +53,7 @@ import { DialogPersonalDetailsEditComponent } from './dialog-personal-details-ed
 import { UserManagementComponent } from './user-management/user-management.component';
 import { GradeWiseAdminComponent } from './grade-wise-admin/grade-wise-admin.component';
 import { GradeWiseStateComponent } from './grade-wise-state/grade-wise-state.component';
+import { GradeWiseDistrictComponent } from './grade-wise-district/grade-wise-district.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import { GradeWiseStateComponent } from './grade-wise-state/grade-wise-state.com
     DialogPersonalDetailsEditComponent,
     UserManagementComponent,
     GradeWiseAdminComponent,
-    GradeWiseStateComponent
+    GradeWiseStateComponent,
+    GradeWiseDistrictComponent
   ],
   imports: [
     CommonModule,
@@ -118,9 +120,10 @@ import { GradeWiseStateComponent } from './grade-wise-state/grade-wise-state.com
   exports: [PersonalDetailsComponent, AddUserMasterComponent, NewApprovalsComponent, ApprovedListComponent,
     GradeAComponent, GradeBComponent, GradeCComponent, ExistingMemberAlterationComponent, ListOfRejectedMembersComponent,
     ApprovalsOnHoldComponent, EditAndHoldDistrictComponent, ReqToPutOnHoldComponent, ListOnHoldComponent, ReqToRemoveFromHoldComponent,
-    StateRoleManagementComponent, DistrictRoleManagementComponent, PanchayatRoleManagementComponent, UserManagementComponent, GradeWiseAdminComponent, GradeWiseStateComponent],
-  
-    entryComponents: [DialogPersonalDetailComponent, DialogAddUserMasterComponent, DialogViewProposalFormComponent,
+    StateRoleManagementComponent, DistrictRoleManagementComponent, PanchayatRoleManagementComponent, UserManagementComponent, GradeWiseAdminComponent, GradeWiseStateComponent,
+    GradeWiseDistrictComponent],
+
+  entryComponents: [DialogPersonalDetailComponent, DialogAddUserMasterComponent, DialogViewProposalFormComponent,
     DialogApprovArtistComponent, ReasonForRejectionComponent, DialogRoleManagementComponent, DialogPersonalDetailsEditComponent]
 })
 export class EmployeesModule { }
