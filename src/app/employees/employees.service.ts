@@ -14,7 +14,6 @@ export class EmployeesService {
   private SAVE_PROPOSAL_FORM = environment.BASE_URL + 'api/ProposalFormModified';
   private GET_PROPOSAL_FROM_PENDING_USERS = environment.BASE_URL + 'api/ProposalFormModified';
   private GET_ALL_PERSONAL_DETAILS = environment.BASE_URL + 'api/ProposalForm';
-  private GET_TEST_DATA = environment.BASE_URL + 'api/test';
   private GET_ROLE_MASTER_DATA = environment.BASE_URL + 'api/RoleMaster';
   private GET_DISTRICT_MASTER_DATA = environment.BASE_URL + 'api/DistrictMaster';
   private SAVE_USER_MASTER = environment.BASE_URL + 'api/UserMaster';
@@ -133,6 +132,19 @@ export class EmployeesService {
   private POST_DYNAMIC_USER_CREATION_DATA_AT_STATE = environment.BASE_URL + 'api/DynamicActionByState/DynamicUserCreatedDataByState';
 
 
+  private GET_ALL_GRADE_WISE_DATA_AT_PANCHAYAT = environment.BASE_URL + 'api/GradeWiseData/gradeAll';
+  private GET_ALL_GRADE_WISE_DATA_AT_DISTRICT = environment.BASE_URL + 'api/GradeWiseData/gradeAllDistrict';
+  private GET_ALL_HOLDED_GRADE_WISE_DATA_AT_PANCHAYAT = environment.BASE_URL + 'api/GradeWiseData/holdedGradeAll';
+  private GET_ALL_HOLDED_GRADE_WISE_DATA_AT_DISTRICT = environment.BASE_URL + 'api/GradeWiseData/holdedGradeAllDistrict';
+
+  private GET_HOLDED_GRADE_WISE_A_DATA_AT_PANCHAYAT = environment.BASE_URL + 'api/GradeWiseData/holdedGradeA';
+  private GET_HOLDED_GRADE_WISE_B_DATA_AT_PANCHAYAT = environment.BASE_URL + 'api/GradeWiseData/holdedGradeB';
+  private GET_HOLDED_GRADE_WISE_C_DATA_AT_PANCHAYAT = environment.BASE_URL + 'api/GradeWiseData/holdedGradeC';
+
+
+  private GET_HOLDED_GRADE_WISE_A_DATA_AT_DISTRICT = environment.BASE_URL + 'api/GradeWiseData/holdedGradeADistrict';
+  private GET_HOLDED_GRADE_WISE_B_DATA_AT_DISTRICT = environment.BASE_URL + 'api/GradeWiseData/holdedGradeBDistrict';
+  private GET_HOLDED_GRADE_WISE_C_DATA_AT_DISTRICT = environment.BASE_URL + 'api/GradeWiseData/holdedGradeCDistrict';
 
   constructor(
     public http: HttpClient
@@ -145,10 +157,6 @@ export class EmployeesService {
 
   savePersonalDetailsForm(personalDetails) {
     return this.http.post(this.SAVE_PERSONAL_DETAILS_FORM, personalDetails);
-  }
-
-  getAllData() {
-    return this.http.get(this.GET_TEST_DATA);
   }
 
   getRoleMasterData(roleId) {
@@ -531,5 +539,49 @@ export class EmployeesService {
   }
   postDynamicGradeCArtistByDistrict(gradeC) {
     return this.http.post(this.POST_DYNAMIC_GRADE_C_ARTIST_BY_DISTRICT, gradeC);
+  }
+
+
+  getAllGradeWiseDataAtPanchayat(userId) {
+    return this.http.get(this.GET_ALL_GRADE_WISE_DATA_AT_PANCHAYAT + '/' + userId);
+  }
+
+  getHoldedAllGradeWiseDataAtPanchayat(userId) {
+    return this.http.get(this.GET_ALL_HOLDED_GRADE_WISE_DATA_AT_PANCHAYAT + '/' + userId);
+  }
+
+  getHoldedGradeAArtistData(userId) {
+    return this.http.get(this.GET_HOLDED_GRADE_WISE_A_DATA_AT_PANCHAYAT + '/' + userId);
+  }
+
+  getHoldedGradeBArtistData(userId) {
+    return this.http.get(this.GET_HOLDED_GRADE_WISE_B_DATA_AT_PANCHAYAT + '/' + userId);
+  }
+
+  getHoldedGradeCArtistData(userId) {
+    return this.http.get(this.GET_HOLDED_GRADE_WISE_C_DATA_AT_PANCHAYAT + '/' + userId);
+  }
+
+  getALLArtistDataByDistrict(userId) {
+    return this.http.get(this.GET_ALL_GRADE_WISE_DATA_AT_DISTRICT + '/' + userId);
+  }
+
+
+
+  
+  getHoldedGradeAArtistDataByDistrict(userId) {
+    return this.http.get(this.GET_HOLDED_GRADE_WISE_A_DATA_AT_DISTRICT + '/' + userId);
+  }
+
+  getHoldedGradeBArtistDataByDistrict(userId) {
+    return this.http.get(this.GET_HOLDED_GRADE_WISE_B_DATA_AT_DISTRICT + '/' + userId);
+  }
+
+  getHoldedGradeCArtistDataByDistrict(userId) {
+    return this.http.get(this.GET_HOLDED_GRADE_WISE_C_DATA_AT_DISTRICT + '/' + userId);
+  }
+
+  getHoldedGradeAllArtistDataByDistrict(userId) {
+    return this.http.get(this.GET_ALL_HOLDED_GRADE_WISE_DATA_AT_DISTRICT + '/' + userId);
   }
 }

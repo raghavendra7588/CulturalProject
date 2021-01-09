@@ -112,12 +112,64 @@
           <mat-divider class="my-2"></mat-divider>
         </ng-container>
 
-        <ng-container *ngIf="role === 'GRAMPANCHAYAT' || role === 'DISTRICT' ">
-          <h3 class="text-center font-weight-bold">Reports</h3>
-          <a mat-list-item>Sample Report</a>
-          <a mat-list-item>Sample Report</a>
+        <!-- <ng-container *ngIf="role === 'GRAMPANCHAYAT'">
+          <h3 class="text-center font-weight-bold">Approved Status Reports</h3>
+          <a mat-list-item (click)="categoryAWisePanchayatReport()">Category A Wise</a>
+          <a mat-list-item (click)="categoryBWisePanchayatReport()">Category B Wise</a>
+          <a mat-list-item (click)="categoryCWisePanchayatReport()">Category C Wise</a>
+          <a mat-list-item (click)="combinePanchayatWiseReport()">Combine Category Wise</a>
           <mat-divider class="my-2"></mat-divider>
         </ng-container>
+        <ng-container *ngIf="role === 'GRAMPANCHAYAT'">
+          <h3 class="text-center font-weight-bold">Hold Status Reports</h3>
+          <a mat-list-item (click)="holdedCategoryAWisePanchayatReport()">Category A Wise</a>
+          <a mat-list-item (click)="holdedCategoryBWisePanchayatReport()">Category B Wise</a>
+          <a mat-list-item (click)="holdedCategoryCWisePanchayatReport()">Category C Wise</a>
+          <a mat-list-item (click)="holdedCombinePanchayatWiseReport()">Combine Category Wise</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container> -->
+
+<!-- 
+        <ng-container *ngIf="role === 'DISTRICT'">
+          <h3 class="text-center font-weight-bold">Reports</h3>
+          <h3 class="text-center font-weight-bold">Approved Status Reports</h3>
+          <a mat-list-item (click)="categoryAWiseDistrictReport()">Category A Wise</a>
+          <a mat-list-item (click)="categoryBWiseDistrictReport()">Category B Wise</a>
+          <a mat-list-item (click)="categoryCWiseDistrictReport()">Category C Wise</a>
+          <a mat-list-item (click)="combineDistrictWiseReport()">Combine Category Wise</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+        <ng-container *ngIf="role === 'DISTRICT'">
+          <h3 class="text-center font-weight-bold">Hold Status Reports</h3>
+          <a mat-list-item (click)="holdedCategoryAWiseDistrictReport()">Category A Wise</a>
+          <a mat-list-item (click)="holdedCategoryBWiseDistrictReport()">Category B Wise</a>
+          <a mat-list-item (click)="holdedCategoryCWiseDistrictReport()">Category C Wise</a>
+          <a mat-list-item (click)="holdedCombineDistrictWiseReport()">Combine Category Wise</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container> -->
+
+
+
+        <!-- <ng-container *ngIf="role === 'STATE'">
+          <h3 class="text-center font-weight-bold">Reports</h3>
+          <h3 class="text-center font-weight-bold">Approved Status Reports</h3>
+          <a mat-list-item (click)="categoryAWiseStateReport()">Category A Wise</a>
+          <a mat-list-item (click)="categoryBWiseStateReport()">Category B Wise</a>
+          <a mat-list-item (click)="categoryCWiseStateReport()">Category C Wise</a>
+          <a mat-list-item (click)="combineStateWiseReport()">Combine Category Wise</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+        <ng-container *ngIf="role === 'STATE'">
+          <h3 class="text-center font-weight-bold">Hold Status Reports</h3>
+          <a mat-list-item (click)="holdedCategoryAWiseStateReport()">Category A Wise</a>
+          <a mat-list-item (click)="holdedCategoryBWiseStateReport()">Category B Wise</a>
+          <a mat-list-item (click)="holdedCategoryCWiseStateReport()">Category C Wise</a>
+          <a mat-list-item (click)="holdedCombineStateWiseReport()">Combine Category Wise</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container> -->
+
         <a mat-list-item (click)="changePassword()">Change Password</a>
         <a mat-list-item (click)="[isLogout(),snav.close()]">Logout</a>
 

@@ -413,7 +413,10 @@ export class DialogViewProposalFormComponent implements OnInit {
       this.isApprovedListRoute = true;
       this.closeButtonOnly = true;
     }
-
+    if (this.router.url === '/gradeWiseData/admin' && this.role === 'ADMIN') {
+      this.isApprovedListRoute = true;
+      this.closeButtonOnly = true;
+    }
 
     this.emitterService.isApproved.subscribe(val => {
       this.dialogRef.close();
@@ -459,7 +462,7 @@ export class DialogViewProposalFormComponent implements OnInit {
       { id: 2, title: 'C' }
     ];
     this.getDistrictMastersData();
-    this.savePersonalDetailsForm.controls.financialBenefitReceived.disable();
+    //this.savePersonalDetailsForm.controls.financialBenefitReceived.disable();
     this.savePersonalDetailsForm.controls.illHandicapedProof.disable();
     this.savePersonalDetailsForm.controls.notarisedCertificateOfConfirmationProof.disable();
 
@@ -474,7 +477,7 @@ export class DialogViewProposalFormComponent implements OnInit {
 
 
   assignValues() {
-
+    console.log(this.personalDetailsData);
     this.personalDetails.artistSystemCode = this.personalDetailsData.ArtistSystemCode;
     this.personalDetails.firstName = this.personalDetailsData.FirstName;
     this.personalDetails.middleName = this.personalDetailsData.MiddleName;
@@ -511,6 +514,7 @@ export class DialogViewProposalFormComponent implements OnInit {
     this.personalDetails.pinCode = this.personalDetailsData.PinCode;
     this.personalDetails.currentAge = this.personalDetailsData.CurrentAge;
     this.personalDetails.applicationDate = this.personalDetailsData.ApplicationDate;
+    this.personalDetails.financialBenefitReceived = this.personalDetailsData.FinancialBenefitReceived;
   }
   valueChanged() {
 
@@ -573,12 +577,12 @@ export class DialogViewProposalFormComponent implements OnInit {
   selectedBeneficiaryFromList(response) {
     let selectedBeneficiaryResponse = response.title;
     if (selectedBeneficiaryResponse === 'Yes') {
-      this.savePersonalDetailsForm.controls.financialBenefitReceived.enable();
+    // this.savePersonalDetailsForm.controls.financialBenefitReceived.enable();
       this.savePersonalDetailsForm.controls.notarisedCertificateOfConfirmationProof.disable();
     }
     else {
       this.isNotarisedCertificateOfConfirmationProof = true;
-      this.savePersonalDetailsForm.controls.financialBenefitReceived.disable();
+    //  this.savePersonalDetailsForm.controls.financialBenefitReceived.disable();
       this.savePersonalDetailsForm.controls.notarisedCertificateOfConfirmationProof.enable();
     }
   }

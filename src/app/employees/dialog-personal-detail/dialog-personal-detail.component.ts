@@ -248,7 +248,7 @@ export class DialogPersonalDetailComponent implements OnInit {
       setTimeout(() => {
         this.assignValues();
       }, 3000);
-  
+
       this.personalDetails.id = this.personalDetailsData.id;
       this.isViewSelected = true;
     }
@@ -287,7 +287,7 @@ export class DialogPersonalDetailComponent implements OnInit {
       { id: 2, title: 'C' }
     ];
 
-    this.savePersonalDetailsForm.controls.financialBenefitReceived.disable();
+    //this.savePersonalDetailsForm.controls.financialBenefitReceived.disable();
     this.savePersonalDetailsForm.controls.illHandicapedProof.disable();
     this.savePersonalDetailsForm.controls.notarisedCertificateOfConfirmationProof.disable();
     this.userId = Number(sessionStorage.getItem('userId'));
@@ -630,12 +630,21 @@ export class DialogPersonalDetailComponent implements OnInit {
     formData.append('createdBy', this.userId.toString());
     formData.append('applicationDate', this.personalDetails.applicationDate);
 
+    if (this.personalDetails.financialBenefitReceived === null || this.personalDetails.financialBenefitReceived === undefined || this.personalDetails.financialBenefitReceived === '') {
+      this.personalDetails.financialBenefitReceived = "";
+      formData.append('financialBenefitReceived', '');
+    }
+    else {
+      formData.append('financialBenefitReceived', this.personalDetails.financialBenefitReceived);
+    }
+
+
 
     this.employeeService.saveProposalFormData(formData).subscribe(response => {
       this.submittedProposalFormId = Number(response);
       this.isFormSubmitted = true;
       this.toastr.success('Record Submitted Successfully');
-      this.enableFileUploadingControls();   
+      this.enableFileUploadingControls();
     });
   }
   disableFileUploadingControls() {
@@ -680,7 +689,7 @@ export class DialogPersonalDetailComponent implements OnInit {
 
   }
   assignValues() {
-
+    console.log(this.personalDetailsData.FinancialBenefitReceived);
     this.personalDetails.artistSystemCode = this.personalDetailsData.ArtistSystemCode;
     this.personalDetails.firstName = this.personalDetailsData.FirstName;
     this.personalDetails.middleName = this.personalDetailsData.MiddleName;
@@ -717,6 +726,7 @@ export class DialogPersonalDetailComponent implements OnInit {
     this.personalDetails.pinCode = this.personalDetailsData.PinCode;
     this.personalDetails.currentAge = this.personalDetailsData.CurrentAge;
     this.personalDetails.applicationDate = this.personalDetailsData.ApplicationDate;
+    this.personalDetails.financialBenefitReceived = this.personalDetailsData.FinancialBenefitReceived;
     this.isViewSelected = true;
   }
   valueChanged() {
@@ -783,13 +793,13 @@ export class DialogPersonalDetailComponent implements OnInit {
 
     let selectedBeneficiaryResponse = response.title;
     if (selectedBeneficiaryResponse === 'Yes') {
-      this.savePersonalDetailsForm.controls.financialBenefitReceived.enable();
-      this.savePersonalDetailsForm.controls.notarisedCertificateOfConfirmationProof.disable();
+      //this.savePersonalDetailsForm.controls.financialBenefitReceived.enable();
+      this.savePersonalDetailsForm.controls.notarisedCertificateOfConfirmationProof.enable();
     }
     else {
       this.isNotarisedCertificateOfConfirmationProof = true;
-      this.savePersonalDetailsForm.controls.financialBenefitReceived.disable();
-      this.savePersonalDetailsForm.controls.notarisedCertificateOfConfirmationProof.enable();
+      //this.savePersonalDetailsForm.controls.financialBenefitReceived.disable();
+      this.savePersonalDetailsForm.controls.notarisedCertificateOfConfirmationProof.disable();
     }
   }
 

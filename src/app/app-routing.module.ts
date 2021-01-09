@@ -4,6 +4,10 @@ import { AddUserMasterComponent } from './employees/add-user-master/add-user-mas
 import { ApprovalsOnHoldComponent } from './employees/approvals-on-hold/approvals-on-hold.component';
 import { ApprovedListPanchayatComponent } from './employees/approved-list-panchayat/approved-list-panchayat.component';
 import { ApprovedListComponent } from './employees/approved-list/approved-list.component';
+import { CategoryWiseAdminReportComponent } from './employees/category-wise-admin-report/category-wise-admin-report.component';
+import { CategoryWiseDistrictReportComponent } from './employees/category-wise-district-report/category-wise-district-report.component';
+import { CategoryWisePanchayatReportComponent } from './employees/category-wise-panchayat-report/category-wise-panchayat-report.component';
+import { CategoryWiseStateReportComponent } from './employees/category-wise-state-report/category-wise-state-report.component';
 import { DistrictRoleManagementComponent } from './employees/district-role-management/district-role-management.component';
 import { EditAndHoldDistrictComponent } from './employees/edit-and-hold-district/edit-and-hold-district.component';
 import { ExistingMemberAlterationComponent } from './employees/existing-member-alteration/existing-member-alteration.component';
@@ -54,6 +58,10 @@ const routes: Routes = [
   { path: 'gradeWiseData/state', component: GradeWiseStateComponent },
   { path: 'gradeWiseData/district', component: GradeWiseDistrictComponent },
   { path: 'changePassword', component: ChangePasswordComponent },
+  { path: 'panchayat/categoryWise/report', component: CategoryWisePanchayatReportComponent },
+  { path: 'district/categoryWise/report', component: CategoryWiseDistrictReportComponent },
+  { path: 'state/categoryWise/report', component: CategoryWiseStateReportComponent },
+  { path: 'admin/categoryWise/report', component: CategoryWiseAdminReportComponent },
   { path: '**', redirectTo: '/login' }
 ];
 

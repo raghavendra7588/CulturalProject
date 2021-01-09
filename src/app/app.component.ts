@@ -91,7 +91,7 @@ export class AppComponent {
     if ("role" in sessionStorage) {
       this.role = sessionStorage.getItem('role');
     }
-   
+
   }
 
   navigateToDashboard() {
@@ -237,6 +237,172 @@ export class AppComponent {
   }
 
 
+
+
+  categoryAWisePanchayatReport() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'GRAMPANCHAYAT_A');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/panchayat/categoryWise/report']);
+  }
+
+  categoryBWisePanchayatReport() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'GRAMPANCHAYAT_B');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/panchayat/categoryWise/report']);
+  }
+
+  categoryCWisePanchayatReport() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'GRAMPANCHAYAT_C');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/panchayat/categoryWise/report']);
+  }
+
+  combinePanchayatWiseReport() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'GRAMPANCHAYAT_ALL');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/panchayat/categoryWise/report']);
+  }
+
+  holdedCategoryAWisePanchayatReport() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'GRAMPANCHAYAT_HOLD_A');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/panchayat/categoryWise/report']);
+  }
+  holdedCategoryBWisePanchayatReport() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'GRAMPANCHAYAT_HOLD_B');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/panchayat/categoryWise/report']);
+  }
+  holdedCategoryCWisePanchayatReport() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'GRAMPANCHAYAT_HOLD_C');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/panchayat/categoryWise/report']);
+  }
+  holdedCombinePanchayatWiseReport() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'GRAMPANCHAYAT_HOLD_ALL');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/panchayat/categoryWise/report']);
+  }
+
+
+
+
+  categoryAWiseDistrictReport() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'DISTRICT_A');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/district/categoryWise/report']);
+  }
+
+  categoryBWiseDistrictReport() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'DISTRICT_B');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/district/categoryWise/report']);
+  }
+
+  categoryCWiseDistrictReport() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'DISTRICT_C');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/district/categoryWise/report']);
+  }
+
+  combineDistrictWiseReport() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'DISTRICT_ALL');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/district/categoryWise/report']);
+  }
+
+
+
+  holdedCategoryAWiseDistrictReport() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'DISTRICT_HOLD_A');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/district/categoryWise/report']);
+  }
+  holdedCategoryBWiseDistrictReport() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'DISTRICT_HOLD_B');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/district/categoryWise/report']);
+  }
+  holdedCategoryCWiseDistrictReport() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'DISTRICT_HOLD_C');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/district/categoryWise/report']);
+  }
+  holdedCombineDistrictWiseReport() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'DISTRICT_HOLD_ALL');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/district/categoryWise/report']);
+  }
+
+
+
+  categoryAWiseStateReport() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'STATE_A');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/state/categoryWise/report']);
+  }
+  categoryBWiseStateReport() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'STATE_B');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/state/categoryWise/report']);
+  }
+
+  categoryCWiseStateReport() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'STATE_C');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/state/categoryWise/report']);
+  }
+
+  combineStateWiseReport() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'STATE_ALL');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/state/categoryWise/report']);
+  }
+
+  holdedCategoryAWiseStateReport() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'STATE_HOLD_A');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/state/categoryWise/report']);
+  }
+  holdedCategoryBWiseStateReport() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'STATE_HOLD_B');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/state/categoryWise/report']);
+  }
+  holdedCategoryCWiseStateReport() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'STATE_HOLD_C');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/state/categoryWise/report']);
+  }
+  holdedCombineStateWiseReport() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'STATE_HOLD_ALL');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/state/categoryWise/report']);
+  }
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);

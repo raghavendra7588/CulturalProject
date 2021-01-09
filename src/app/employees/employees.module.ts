@@ -54,6 +54,10 @@ import { UserManagementComponent } from './user-management/user-management.compo
 import { GradeWiseAdminComponent } from './grade-wise-admin/grade-wise-admin.component';
 import { GradeWiseStateComponent } from './grade-wise-state/grade-wise-state.component';
 import { GradeWiseDistrictComponent } from './grade-wise-district/grade-wise-district.component';
+import { CategoryWisePanchayatReportComponent } from './category-wise-panchayat-report/category-wise-panchayat-report.component';
+import { CategoryWiseDistrictReportComponent } from './category-wise-district-report/category-wise-district-report.component';
+import { CategoryWiseStateReportComponent } from './category-wise-state-report/category-wise-state-report.component';
+import { CategoryWiseAdminReportComponent } from './category-wise-admin-report/category-wise-admin-report.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +90,11 @@ import { GradeWiseDistrictComponent } from './grade-wise-district/grade-wise-dis
     UserManagementComponent,
     GradeWiseAdminComponent,
     GradeWiseStateComponent,
-    GradeWiseDistrictComponent
+    GradeWiseDistrictComponent,
+    CategoryWisePanchayatReportComponent,
+    CategoryWiseDistrictReportComponent,
+    CategoryWiseStateReportComponent,
+    CategoryWiseAdminReportComponent
   ],
   imports: [
     CommonModule,
@@ -120,8 +128,9 @@ import { GradeWiseDistrictComponent } from './grade-wise-district/grade-wise-dis
   exports: [PersonalDetailsComponent, AddUserMasterComponent, NewApprovalsComponent, ApprovedListComponent,
     GradeAComponent, GradeBComponent, GradeCComponent, ExistingMemberAlterationComponent, ListOfRejectedMembersComponent,
     ApprovalsOnHoldComponent, EditAndHoldDistrictComponent, ReqToPutOnHoldComponent, ListOnHoldComponent, ReqToRemoveFromHoldComponent,
-    StateRoleManagementComponent, DistrictRoleManagementComponent, PanchayatRoleManagementComponent, UserManagementComponent, GradeWiseAdminComponent, GradeWiseStateComponent,
-    GradeWiseDistrictComponent],
+    StateRoleManagementComponent, DistrictRoleManagementComponent, PanchayatRoleManagementComponent, UserManagementComponent,
+    GradeWiseAdminComponent, GradeWiseStateComponent, CategoryWiseDistrictReportComponent,
+    GradeWiseDistrictComponent, CategoryWisePanchayatReportComponent, CategoryWiseStateReportComponent, CategoryWiseAdminReportComponent],
 
   entryComponents: [DialogPersonalDetailComponent, DialogAddUserMasterComponent, DialogViewProposalFormComponent,
     DialogApprovArtistComponent, ReasonForRejectionComponent, DialogRoleManagementComponent, DialogPersonalDetailsEditComponent]
