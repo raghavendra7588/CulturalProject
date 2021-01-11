@@ -157,7 +157,7 @@ export class DialogPersonalDetailComponent implements OnInit {
   submittedProposalFormId: number;
   documentrTypeStr: string = '';
   files: any = [];
-
+  fullDate: any;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -353,10 +353,12 @@ export class DialogPersonalDetailComponent implements OnInit {
       formData.append('dob', '');
     }
     else {
-      let fullDate;
-      fullDate = this.valueChanged();
-      this.personalDetails.dob = fullDate.toString();
-      formData.append('dob', this.personalDetails.dob);
+      // let fullDate;
+      // fullDate = this.valueChanged();
+      // this.personalDetails.dob = fullDate.toString();
+      
+      this.fullDate = this.valueChanged();
+      formData.append('dob', this.fullDate.toString());
     }
 
     if (this.personalDetails.annualIncome === null || this.personalDetails.annualIncome === undefined || this.personalDetails.annualIncome === '') {
@@ -740,8 +742,8 @@ export class DialogPersonalDetailComponent implements OnInit {
     const stringDate = [day, month, year].join("/");
     const ageCalcultaion = [year, month, day].join("-");
     this.personalDetails.currentAge = this.currentAgeCalculation(ageCalcultaion).toString();
-    let fullDate = stringDate;
-    return fullDate
+    this.fullDate = stringDate;
+    return this.fullDate
   }
 
   applicationvalueChanged() {

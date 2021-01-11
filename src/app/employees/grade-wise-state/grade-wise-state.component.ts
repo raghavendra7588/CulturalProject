@@ -114,6 +114,8 @@ export class GradeWiseStateComponent implements OnInit {
     });
   }
 
+
+  
   applyFilter(filter: string) {
     this.dataSource.filter = filter.trim().toLowerCase();
   }

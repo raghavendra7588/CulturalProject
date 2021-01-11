@@ -7,8 +7,8 @@ import { environment } from '../../environments/environment';
 })
 export class EmployeesService {
 
-  // public BASE_API = 'http://localhost:54372';
-  public BASE_API = 'https://3intellects.co.in/uat_culturalApi/';
+  public BASE_API = 'http://localhost:54372';
+  // public BASE_API = 'https://3intellects.co.in/uat_culturalApi/';
 
   private SAVE_PERSONAL_DETAILS_FORM = environment.BASE_URL + 'api/ProposalForm';
   private SAVE_PROPOSAL_FORM = environment.BASE_URL + 'api/ProposalFormModified';
@@ -134,6 +134,9 @@ export class EmployeesService {
 
   private GET_ALL_GRADE_WISE_DATA_AT_PANCHAYAT = environment.BASE_URL + 'api/GradeWiseData/gradeAll';
   private GET_ALL_GRADE_WISE_DATA_AT_DISTRICT = environment.BASE_URL + 'api/GradeWiseData/gradeAllDistrict';
+  private GET_ALL_GRADE_WISE_DATA_AT_STATE = environment.BASE_URL + 'api/GradeWiseData/state/allGradeByState';
+  private GET_ALL_GRADE_WISE_DATA_AT_ADMIN = environment.BASE_URL + 'api/GradeWiseData/admin/allGradeByAdmin';
+
   private GET_ALL_HOLDED_GRADE_WISE_DATA_AT_PANCHAYAT = environment.BASE_URL + 'api/GradeWiseData/holdedGradeAll';
   private GET_ALL_HOLDED_GRADE_WISE_DATA_AT_DISTRICT = environment.BASE_URL + 'api/GradeWiseData/holdedGradeAllDistrict';
 
@@ -568,7 +571,7 @@ export class EmployeesService {
 
 
 
-  
+
   getHoldedGradeAArtistDataByDistrict(userId) {
     return this.http.get(this.GET_HOLDED_GRADE_WISE_A_DATA_AT_DISTRICT + '/' + userId);
   }
@@ -584,4 +587,13 @@ export class EmployeesService {
   getHoldedGradeAllArtistDataByDistrict(userId) {
     return this.http.get(this.GET_ALL_HOLDED_GRADE_WISE_DATA_AT_DISTRICT + '/' + userId);
   }
+
+  getAllGradeDataByState() {
+    return this.http.get(this.GET_ALL_GRADE_WISE_DATA_AT_STATE);
+  }
+
+  getAllGradeDataByAdmin() {
+    return this.http.get(this.GET_ALL_GRADE_WISE_DATA_AT_ADMIN);
+  }
+
 }

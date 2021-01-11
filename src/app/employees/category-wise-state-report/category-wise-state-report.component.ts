@@ -61,20 +61,20 @@ export class CategoryWiseStateReportComponent implements OnInit {
           this.currentGrade = 'C';
         }
         if (this.currentUserRole === 'STATE_ALL') {
-          //  this.getGradeAllArtistByDistrict();
+          this.getAllGradeArtistByState();
           this.currentGrade = 'ALL';
         }
 
 
-        if (this.currentUserRole === 'DISTRICT_HOLD_A') {
+        if (this.currentUserRole === 'STATE_HOLD_A') {
           // this.getHoldedGradeAArtistByDistrict();
           this.currentGrade = 'A';
         }
-        if (this.currentUserRole === 'DISTRICT_HOLD_B') {
+        if (this.currentUserRole === 'STATE_HOLD_B') {
           // this.getHoldedGradeBArtistByDistrict();
           this.currentGrade = 'B';
         }
-        if (this.currentUserRole === 'DISTRICT_HOLD_C') {
+        if (this.currentUserRole === 'STATE_HOLD_C') {
           // this.getHoldedGradeCArtistByDistrict();
           this.currentGrade = 'C';
         }
@@ -102,7 +102,7 @@ export class CategoryWiseStateReportComponent implements OnInit {
       this.currentGrade = 'C';
     }
     if (this.currentUserRole === 'STATE_ALL') {
-      // this.getGradeAllArtistByDistrict();
+      this.getAllGradeArtistByState();
       this.currentGrade = 'ALL';
     }
 
@@ -153,6 +153,17 @@ export class CategoryWiseStateReportComponent implements OnInit {
   getGradeCArtistByState() {
     let uniqueData: any = [];
     this.employeeService.getGradeCArtistByState().subscribe(res => {
+      this.categoryWiseMasterData = res;
+      uniqueData = _.uniqBy(this.categoryWiseMasterData, 'id');
+      this.categoryWiseMasterData = uniqueData;
+      this.dataSource = new MatTableDataSource(this.categoryWiseMasterData);
+      setTimeout(() => this.dataSource.paginator = this.paginator);
+    });
+  }
+
+  getAllGradeArtistByState() {
+    let uniqueData: any = [];
+    this.employeeService.getAllGradeDataByState().subscribe(res => {
       this.categoryWiseMasterData = res;
       uniqueData = _.uniqBy(this.categoryWiseMasterData, 'id');
       this.categoryWiseMasterData = uniqueData;

@@ -167,6 +167,7 @@ export class DialogPersonalDetailsEditComponent implements OnInit {
   displayedColumns: string[] = ['fileType', 'filePath'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   editOperationFiles: any = [];
+  fullDate: any;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -300,7 +301,7 @@ export class DialogPersonalDetailsEditComponent implements OnInit {
       { id: 2, title: 'C' }
     ];
 
-   // this.savePersonalDetailsForm.controls.financialBenefitReceived.disable();
+    // this.savePersonalDetailsForm.controls.financialBenefitReceived.disable();
     this.savePersonalDetailsForm.controls.illHandicapedProof.disable();
     this.savePersonalDetailsForm.controls.notarisedCertificateOfConfirmationProof.disable();
     this.userId = Number(sessionStorage.getItem('userId'));
@@ -372,11 +373,13 @@ export class DialogPersonalDetailsEditComponent implements OnInit {
       formData.append('dob', '');
     }
     else {
-      let fullDate;
+      // let fullDate;
 
-      fullDate = this.valueChanged();
-      this.personalDetails.dob = fullDate.toString();
-      formData.append('dob', this.personalDetails.dob);
+      // fullDate = this.valueChanged();
+      // this.personalDetails.dob = fullDate.toString();
+      this.fullDate = this.valueChanged();
+      formData.append('dob', this.fullDate.toString());
+      // formData.append('dob', this.personalDetails.dob);
     }
 
     if (this.personalDetails.annualIncome === null || this.personalDetails.annualIncome === undefined || this.personalDetails.annualIncome === '') {
@@ -716,8 +719,24 @@ export class DialogPersonalDetailsEditComponent implements OnInit {
     this.personalDetails.firstName = this.personalDetailsData.FirstName;
     this.personalDetails.middleName = this.personalDetailsData.MiddleName;
     this.personalDetails.lastName = this.personalDetailsData.LastName;
-    let date = moment(this.personalDetailsData.DOB, "YYYY-MM-DD").toISOString();
-    this.personalDetails.dob = date;
+
+
+
+    if (this.personalDetailsData.DOB !== 'NULL' || this.personalDetailsData.DOB === '') {
+      this.personalDetails.dob = this.personalDetailsData.DOB;
+      let dateString = this.personalDetailsData.DOB;
+      let dateParts = dateString.split("/");
+      let dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+      this.personalDetails.dob = dateObject;
+    }
+    else {
+      this.personalDetailsData.DO = '';
+    }
+
+
+
+    // let date = moment(this.personalDetailsData.DOB, "YYYY-MM-DD").toISOString();
+    // this.personalDetails.dob = date;
     this.personalDetails.annualIncome = this.personalDetailsData.AnnualIncome;
     this.personalDetails.artType = this.personalDetailsData.ArtType;
     this.personalDetails.periodOfWork = this.personalDetailsData.PeriodOfWork;
@@ -763,8 +782,8 @@ export class DialogPersonalDetailsEditComponent implements OnInit {
     const stringDate = [day, month, year].join("/");
     const ageCalcultaion = [year, month, day].join("-");
     this.personalDetails.currentAge = this.currentAgeCalculation(ageCalcultaion).toString();
-    let fullDate = stringDate;
-    return fullDate
+    this.fullDate = stringDate;
+    return this.fullDate
   }
 
   applicationvalueChanged() {
@@ -816,12 +835,12 @@ export class DialogPersonalDetailsEditComponent implements OnInit {
 
     let selectedBeneficiaryResponse = response.title;
     if (selectedBeneficiaryResponse === 'Yes') {
-     //this.savePersonalDetailsForm.controls.financialBenefitReceived.enable();
+      //this.savePersonalDetailsForm.controls.financialBenefitReceived.enable();
       this.savePersonalDetailsForm.controls.notarisedCertificateOfConfirmationProof.enable();
     }
     else {
       this.isNotarisedCertificateOfConfirmationProof = true;
-     // this.savePersonalDetailsForm.controls.financialBenefitReceived.disable();
+      // this.savePersonalDetailsForm.controls.financialBenefitReceived.disable();
       this.savePersonalDetailsForm.controls.notarisedCertificateOfConfirmationProof.disable();
     }
   }
