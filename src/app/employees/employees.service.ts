@@ -139,6 +139,8 @@ export class EmployeesService {
 
   private GET_ALL_HOLDED_GRADE_WISE_DATA_AT_PANCHAYAT = environment.BASE_URL + 'api/GradeWiseData/holdedGradeAll';
   private GET_ALL_HOLDED_GRADE_WISE_DATA_AT_DISTRICT = environment.BASE_URL + 'api/GradeWiseData/holdedGradeAllDistrict';
+  private GET_ALL_HOLDED_GRADE_WISE_DATA_AT_STATE = environment.BASE_URL + 'api/GradeWiseData/holdedGradeAllByState';
+  private GET_ALL_HOLDED_GRADE_WISE_DATA_AT_ADMIN = environment.BASE_URL + 'api/GradeWiseData/holdedGradeAllByAdmin';
 
   private GET_HOLDED_GRADE_WISE_A_DATA_AT_PANCHAYAT = environment.BASE_URL + 'api/GradeWiseData/holdedGradeA';
   private GET_HOLDED_GRADE_WISE_B_DATA_AT_PANCHAYAT = environment.BASE_URL + 'api/GradeWiseData/holdedGradeB';
@@ -148,6 +150,20 @@ export class EmployeesService {
   private GET_HOLDED_GRADE_WISE_A_DATA_AT_DISTRICT = environment.BASE_URL + 'api/GradeWiseData/holdedGradeADistrict';
   private GET_HOLDED_GRADE_WISE_B_DATA_AT_DISTRICT = environment.BASE_URL + 'api/GradeWiseData/holdedGradeBDistrict';
   private GET_HOLDED_GRADE_WISE_C_DATA_AT_DISTRICT = environment.BASE_URL + 'api/GradeWiseData/holdedGradeCDistrict';
+
+  private GET_HOLDED_GRADE_WISE_A_DATA_AT_STATE = environment.BASE_URL + 'api/GradeWiseData/holdedGradeAByState';
+  private GET_HOLDED_GRADE_WISE_B_DATA_AT_STATE = environment.BASE_URL + 'api/GradeWiseData/holdedGradeBByState';
+  private GET_HOLDED_GRADE_WISE_C_DATA_AT_STATE = environment.BASE_URL + 'api/GradeWiseData/holdedGradeCByState';
+
+  private GET_HOLDED_GRADE_WISE_A_DATA_AT_ADMIN = environment.BASE_URL + 'api/GradeWiseData/holdedGradeAByAdmin';
+  private GET_HOLDED_GRADE_WISE_B_DATA_AT_ADMIN = environment.BASE_URL + 'api/GradeWiseData/holdedGradeBByAdmin';
+  private GET_HOLDED_GRADE_WISE_C_DATA_AT_ADMIN = environment.BASE_URL + 'api/GradeWiseData/holdedGradeCByAdmin';
+
+  private POST_CONSOLIDATED_DATA_BY_STATE_ADMIN = environment.BASE_URL + 'api/Reports/ConsolidatedReport';
+  private POST_CONSOLIDATED_DATA_BY_DISTRICT = environment.BASE_URL + 'api/Reports/ConsolidatedReportByDistrict';
+  private POST_CONSOLIDATED_DATA_BY_PANCHAYAT = environment.BASE_URL + 'api/Reports/ConsolidatedReportByPanchayat';
+
+  private GET_ALL_ART_TYPE_DATA = environment.BASE_URL + 'api/Reports/getArtType';
 
   constructor(
     public http: HttpClient
@@ -569,9 +585,6 @@ export class EmployeesService {
     return this.http.get(this.GET_ALL_GRADE_WISE_DATA_AT_DISTRICT + '/' + userId);
   }
 
-
-
-
   getHoldedGradeAArtistDataByDistrict(userId) {
     return this.http.get(this.GET_HOLDED_GRADE_WISE_A_DATA_AT_DISTRICT + '/' + userId);
   }
@@ -596,4 +609,54 @@ export class EmployeesService {
     return this.http.get(this.GET_ALL_GRADE_WISE_DATA_AT_ADMIN);
   }
 
+  getAllHoldedGradeDataBySTATE() {
+    return this.http.get(this.GET_ALL_HOLDED_GRADE_WISE_DATA_AT_STATE);
+  }
+
+  getAllHoldedGradeDataByAdmin() {
+    return this.http.get(this.GET_ALL_HOLDED_GRADE_WISE_DATA_AT_ADMIN);
+  }
+
+
+  getHoldedGradeADataBySTATE() {
+    return this.http.get(this.GET_HOLDED_GRADE_WISE_A_DATA_AT_STATE);
+  }
+
+  getHoldedGradeBDataBySTATE() {
+    return this.http.get(this.GET_HOLDED_GRADE_WISE_B_DATA_AT_STATE);
+  }
+
+  getHoldedGradeCDataBySTATE() {
+    return this.http.get(this.GET_HOLDED_GRADE_WISE_C_DATA_AT_STATE);
+  }
+
+  getHoldedGradeADataByAdmin() {
+    return this.http.get(this.GET_HOLDED_GRADE_WISE_A_DATA_AT_ADMIN);
+  }
+
+  getHoldedGradeBDataByAdmin() {
+    return this.http.get(this.GET_HOLDED_GRADE_WISE_B_DATA_AT_ADMIN);
+  }
+
+  getHoldedGradeCDataByAdmin() {
+    return this.http.get(this.GET_HOLDED_GRADE_WISE_C_DATA_AT_ADMIN);
+  }
+
+
+  getConsolidatedReportByAdmin() {
+    return this.http.get(this.POST_CONSOLIDATED_DATA_BY_STATE_ADMIN);
+  }
+
+
+  getAllArtTypeData() {
+    return this.http.get(this.GET_ALL_ART_TYPE_DATA);
+  }
+
+  getConsolidatedReportByDistrict(id) {
+    return this.http.get(this.POST_CONSOLIDATED_DATA_BY_DISTRICT + '/' + id);
+  }
+
+  getConsolidatedReportByPanchayat(id: number) {
+    return this.http.get(this.POST_CONSOLIDATED_DATA_BY_PANCHAYAT + '/' + id);
+  }
 }

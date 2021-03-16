@@ -13,6 +13,7 @@ export class EmitterService {
   public isActiveStatusChanged: EventEmitter<boolean>;
   public isFileDeleted: EventEmitter<boolean>;
   public isUserMasterSelected: EventEmitter<boolean>;
+  public isSideBarLanguage: EventEmitter<boolean>;
 
 
   constructor() {
@@ -25,5 +26,6 @@ export class EmitterService {
     this.isActiveStatusChanged = new EventEmitter();
     this.isFileDeleted = new EventEmitter();
     this.isUserMasterSelected = new EventEmitter();
+    this.isSideBarLanguage = new EventEmitter();
   }
 }

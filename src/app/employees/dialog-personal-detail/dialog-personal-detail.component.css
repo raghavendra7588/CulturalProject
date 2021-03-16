@@ -2,7 +2,6 @@
    content: " *";
    color: red;
 }
-
 *:focus {
    outline: none;
 }

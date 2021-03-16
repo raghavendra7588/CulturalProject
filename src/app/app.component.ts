@@ -30,6 +30,7 @@ export class AppComponent {
   districtMasterData: any = [];
   districtId: number;
   districtName: string = '';
+  sideBarLanguage: string;
 
   constructor(
     public basicUserService: BasicuserService,
@@ -48,7 +49,9 @@ export class AppComponent {
     if ("language" in sessionStorage) {
       this.preferredLanguage = sessionStorage.getItem('language');
     }
-
+    if ("sideBarLanguage" in sessionStorage) {
+      this.sideBarLanguage = sessionStorage.getItem('sideBarLanguage');
+    }
     if ("districtName" in sessionStorage) {
       this.districtName = sessionStorage.getItem('districtName');
     }
@@ -79,6 +82,12 @@ export class AppComponent {
         }
       }
 
+    });
+
+    this.emitterService.isSideBarLanguage.subscribe(val => {
+      if (val) {
+        this.sideBarLanguage = sessionStorage.getItem('sideBarLanguage');
+      }
     });
 
   }
@@ -397,11 +406,54 @@ export class AppComponent {
     this.emitterService.isUserMasterSelected.emit(true);
     this.router.navigate(['/state/categoryWise/report']);
   }
+
   holdedCombineStateWiseReport() {
     sessionStorage.removeItem('userManagement');
     sessionStorage.setItem('userManagement', 'STATE_HOLD_ALL');
     this.emitterService.isUserMasterSelected.emit(true);
     this.router.navigate(['/state/categoryWise/report']);
+  }
+
+
+  stateCountWiseReport() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'STATE_COUNT_REPORT');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/consolidatedCount/report']);
+  }
+
+  adminCountWiseReport() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'ADMIN_COUNT_REPORT');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/consolidatedCount/report']);
+  }
+
+
+  districtCountWiseReport() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'DISTRICT_COUNT_REPORT');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/consolidatedCount/report']);
+  }
+
+
+  panchayatCountWiseReport() {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', 'PANCHAYAT_COUNT_REPORT');
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/consolidatedCount/report']);
+  }
+
+  changeSideBarLanguageToEnglish() {
+    sessionStorage.removeItem('sideBarLanguage');
+    sessionStorage.setItem('sideBarLanguage', 'true');
+    this.emitterService.isSideBarLanguage.emit(true);
+  }
+  changeSideBarLanguageToMarati() {
+    sessionStorage.removeItem('sideBarLanguage');
+    sessionStorage.setItem('sideBarLanguage', 'false');
+    this.emitterService.isSideBarLanguage.emit(true);
   }
 
   ngOnDestroy(): void {

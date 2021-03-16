@@ -11,7 +11,7 @@
   <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
       fixedTopGap="56">
-      <mat-nav-list>
+      <mat-nav-list *ngIf="sideBarLanguage=='true'">
         <ng-container *ngIf="role === 'ADMIN' || role === 'STATE' || role === 'DISTRICT' || role === 'GRAMPANCHAYAT' ">
           <h3 class="font-weight-bold text-center">{{welcome}} {{userName
             |uppercase}}<br>{{role|uppercase}}<br>{{districtName}}
@@ -19,7 +19,13 @@
           <mat-divider class="my-2"></mat-divider>
         </ng-container>
 
-
+        <ng-container *ngIf="role === 'ADMIN' || role === 'STATE' || role === 'DISTRICT' || role === 'GRAMPANCHAYAT' ">
+          <h3 class="font-weight-bold text-center">Change Side Bar Language
+          </h3>
+          <a mat-list-item (click)="changeSideBarLanguageToEnglish()">English</a>
+          <a mat-list-item (click)="changeSideBarLanguageToMarati()">मराठी</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
         <a mat-list-item (click)="navigateToDashboard()">Dashboard</a>
         <mat-divider class="my-2"></mat-divider>
 
@@ -39,7 +45,7 @@
           <a mat-list-item *ngIf=" role === 'DISTRICT' || role === 'STATE' ||  role === 'ADMIN'"
             routerLink="approvedList"> Approved
             List</a>
-          <a mat-list-item *ngIf=" role === 'GRAMPANCHAYAT' " routerLink="panchayat/approvedList"> Approved List</a>
+          <a mat-list-item *ngIf=" role === 'GRAMPANCHAYAT' " routerLink="panchayat/approvedList">Approved List</a>
           <a mat-list-item
             *ngIf=" role === 'DISTRICT' ||  role === 'GRAMPANCHAYAT' ||  role === 'STATE' ||  role === 'ADMIN'"
             routerLink="requestToPutOnHold">
@@ -51,7 +57,7 @@
           <a mat-list-item
             *ngIf=" role === 'DISTRICT' || role === 'STATE' || role === 'GRAMPANCHAYAT' || role === 'ADMIN'"
             routerLink='listOfRejectedMembers'>List of
-            Rejected Members</a>
+            Rejected</a>
           <mat-divider class="my-2"></mat-divider>
         </ng-container>
 
@@ -65,7 +71,7 @@
 
         <ng-container *ngIf="role === 'ADMIN'">
           <h3 class="text-center font-weight-bold">Artist Category</h3>
-          <a mat-list-item (click)="gradeAArtistByAdmin()">Grade A</a>
+          <a mat-list-item (click)="gradeAArtistByAdmin()">Category A</a>
           <a mat-list-item (click)="gradeBArtistByAdmin()">Grade B</a>
           <a mat-list-item (click)="gradeCArtistByAdmin()">Grade C</a>
           <mat-divider class="my-2"></mat-divider>
@@ -73,15 +79,15 @@
 
         <ng-container *ngIf="role === 'DISTRICT'">
           <h3 class="text-center font-weight-bold">Artist Category</h3>
-          <a mat-list-item (click)="gradeAArtistByDistrict()">Grade A</a>
+          <a mat-list-item (click)="gradeAArtistByDistrict()">Category A</a>
           <a mat-list-item (click)="gradeBArtistByDistrict()">Grade B</a>
-          <a mat-list-item (click)="gradeCArtistByDistrict()">Grade C</a>
+          <a mat-list-item (click)="gradeCArtistByDistrict()">Grade C </a>
           <mat-divider class="my-2"></mat-divider>
         </ng-container>
 
         <ng-container *ngIf="role === 'STATE'">
           <h3 class="text-center font-weight-bold">Artist Category</h3>
-          <a mat-list-item (click)="gradeAArtistByState()">Grade A</a>
+          <a mat-list-item (click)="gradeAArtistByState()">Category A </a>
           <a mat-list-item (click)="gradeBArtistByState()">Grade B</a>
           <a mat-list-item (click)="gradeCArtistByState()">Grade C</a>
           <mat-divider class="my-2"></mat-divider>
@@ -111,8 +117,34 @@
           <a mat-list-item (click)="navigateToPanchayatUserManagement()">Panchayat</a>
           <mat-divider class="my-2"></mat-divider>
         </ng-container>
-        
+
+        <ng-container *ngIf="role === 'STATE'">
+          <h3 class="text-center font-weight-bold">Reports</h3>
+          <a mat-list-item (click)="stateCountWiseReport()">Count Wise Report</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+        <ng-container *ngIf="role === 'ADMIN'">
+          <h3 class="text-center font-weight-bold">Reports</h3>
+          <a mat-list-item (click)="adminCountWiseReport()">Count Wise Report</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+        <ng-container *ngIf="role === 'DISTRICT'">
+          <h3 class="text-center font-weight-bold">Reports</h3>
+          <a mat-list-item (click)="districtCountWiseReport()">Count Wise Report</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
         <ng-container *ngIf="role === 'GRAMPANCHAYAT'">
+          <h3 class="text-center font-weight-bold">Reports</h3>
+          <a mat-list-item (click)="panchayatCountWiseReport()">Count Wise Report</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+        <a mat-list-item (click)="changePassword()">Change Password</a>
+        <a mat-list-item (click)="[isLogout(),snav.close()]">Logout</a>
+        <!-- <ng-container *ngIf="role === 'GRAMPANCHAYAT'">
           <h3 class="text-center font-weight-bold">Approved Status Reports</h3>
           <a mat-list-item (click)="categoryAWisePanchayatReport()">Category A Wise</a>
           <a mat-list-item (click)="categoryBWisePanchayatReport()">Category B Wise</a>
@@ -127,7 +159,7 @@
           <a mat-list-item (click)="holdedCategoryCWisePanchayatReport()">Category C Wise</a>
           <a mat-list-item (click)="holdedCombinePanchayatWiseReport()">Combine Category Wise</a>
           <mat-divider class="my-2"></mat-divider>
-        </ng-container>
+        </ng-container> -->
 
         <!-- 
         <ng-container *ngIf="role === 'DISTRICT'">
@@ -170,8 +202,250 @@
           <mat-divider class="my-2"></mat-divider>
         </ng-container> -->
 
-        <a mat-list-item (click)="changePassword()">Change Password</a>
-        <a mat-list-item (click)="[isLogout(),snav.close()]">Logout</a>
+
+
+        <!-- <ng-container *ngIf="role === 'ADMIN'">
+          <h3 class="text-center font-weight-bold">Reports</h3>
+          <h3 class="text-center font-weight-bold">Approved Status Reports</h3>
+          <a mat-list-item (click)="categoryAWiseStateReport()">Category A Wise</a>
+          <a mat-list-item (click)="categoryBWiseStateReport()">Category B Wise</a>
+          <a mat-list-item (click)="categoryCWiseStateReport()">Category C Wise</a>
+          <a mat-list-item (click)="combineStateWiseReport()">Combine Category Wise</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+        <ng-container *ngIf="role === 'ADMIN'">
+          <h3 class="text-center font-weight-bold">Hold Status Reports</h3>
+          <a mat-list-item (click)="holdedCategoryAWiseStateReport()">Category A Wise</a>
+          <a mat-list-item (click)="holdedCategoryBWiseStateReport()">Category B Wise</a>
+          <a mat-list-item (click)="holdedCategoryCWiseStateReport()">Category C Wise</a>
+          <a mat-list-item (click)="holdedCombineStateWiseReport()">Combine Category Wise</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container> -->
+
+
+
+      </mat-nav-list>
+
+
+
+      <mat-nav-list *ngIf="sideBarLanguage=='false'">
+        <ng-container *ngIf="role === 'ADMIN' || role === 'STATE' || role === 'DISTRICT' || role === 'GRAMPANCHAYAT' ">
+          <h3 class="font-weight-bold text-center">{{welcome}} {{userName
+            |uppercase}}<br>{{role|uppercase}}<br>{{districtName}}
+          </h3>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+        <ng-container *ngIf="role === 'ADMIN' || role === 'STATE' || role === 'DISTRICT' || role === 'GRAMPANCHAYAT' ">
+          <h3 class="font-weight-bold text-center">साइडबार भाषा बदला
+          </h3>
+          <a mat-list-item (click)="changeSideBarLanguageToEnglish()">English</a>
+          <a mat-list-item (click)="changeSideBarLanguageToMarati()">मराठी</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+        <a mat-list-item (click)="navigateToDashboard()">डॅशबोर्ड</a>
+        <mat-divider class="my-2"></mat-divider>
+
+        <ng-container *ngIf="role === 'ADMIN' || role === 'STATE'">
+          <h3 class="text-center font-weight-bold">वापरकर्ता</h3>
+          <a mat-list-item routerLink='add/user'>नवीन वापरकर्ता बनवा</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+        <ng-container *ngIf="role === 'STATE' || role === 'DISTRICT' || role === 'GRAMPANCHAYAT' || role === 'ADMIN'">
+          <h3 class="text-center font-weight-bold">प्रवेश व्यवस्थापन</h3>
+          <a mat-list-item *ngIf="role === 'GRAMPANCHAYAT'" routerLink="details/personalDetails">नवीन सदस्य जोडा</a>
+          <a mat-list-item *ngIf=" role === 'DISTRICT'  || role === 'STATE'|| role === 'ADMIN' "
+            routerLink="newApprovals">नवीन मान्यता</a>
+          <a mat-list-item *ngIf=" role === 'DISTRICT' || role === 'STATE' ||  role === 'ADMIN'"
+            routerLink="approvedList">मंजूर यादी</a>
+          <a mat-list-item *ngIf=" role === 'GRAMPANCHAYAT' " routerLink="panchayat/approvedList">मंजूर यादी</a>
+          <a mat-list-item
+            *ngIf=" role === 'DISTRICT' ||  role === 'GRAMPANCHAYAT' ||  role === 'STATE' ||  role === 'ADMIN'"
+            routerLink="requestToPutOnHold">
+            एडिट / होल्ड / रीलीझ करण्याची विनंती</a>
+          <a mat-list-item
+            *ngIf=" role === 'DISTRICT' || role === 'GRAMPANCHAYAT' ||role === 'STATE' || role === 'ADMIN'"
+            routerLink="onHold">होल्ड यादी</a>
+          <a mat-list-item
+            *ngIf=" role === 'DISTRICT' || role === 'STATE' || role === 'GRAMPANCHAYAT' || role === 'ADMIN'"
+            routerLink='listOfRejectedMembers'>नाकारलेल्या सदस्यांची यादी</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+        <ng-container *ngIf="role === 'GRAMPANCHAYAT' ">
+          <h3 class="text-center font-weight-bold">कलाकार श्रेणी</h3>
+          <a mat-list-item routerLink="panchayat/gradeA">श्रेणी अ</a>
+          <a mat-list-item routerLink="panchayat/gradeB">श्रेणी ब</a>
+          <a mat-list-item routerLink="panchayat/gradeC">श्रेणी क</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+        <ng-container *ngIf="role === 'ADMIN'">
+          <h3 class="text-center font-weight-bold">कलाकार श्रेणी</h3>
+          <a mat-list-item (click)="gradeAArtistByAdmin()">श्रेणी अ</a>
+          <a mat-list-item (click)="gradeBArtistByAdmin()">श्रेणी ब</a>
+          <a mat-list-item (click)="gradeCArtistByAdmin()">श्रेणी क</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+        <ng-container *ngIf="role === 'DISTRICT'">
+          <h3 class="text-center font-weight-bold">कलाकार श्रेणी</h3>
+          <a mat-list-item (click)="gradeAArtistByDistrict()">श्रेणी अ</a>
+          <a mat-list-item (click)="gradeBArtistByDistrict()">श्रेणी ब</a>
+          <a mat-list-item (click)="gradeCArtistByDistrict()">श्रेणी क</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+        <ng-container *ngIf="role === 'STATE'">
+          <h3 class="text-center font-weight-bold">कलाकार श्रेणी</h3>
+          <a mat-list-item (click)="gradeAArtistByState()">श्रेणी अ</a>
+          <a mat-list-item (click)="gradeBArtistByState()">श्रेणी ब</a>
+          <a mat-list-item (click)="gradeCArtistByState()">श्रेणी क</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+        <ng-container *ngIf="role === 'STATE'">
+          <h3 class="text-center font-weight-bold">भूमिका व्यवस्थापन</h3>
+          <a mat-list-item routerLink="role/State">राज्य</a>
+          <a mat-list-item routerLink="role/District">जिल्हा</a>
+          <a mat-list-item routerLink="role/Panchayat">पंचायत</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+        <ng-container *ngIf="role === 'ADMIN'">
+          <h3 class="text-center font-weight-bold">भूमिका व्यवस्थापन</h3>
+          <a mat-list-item routerLink="role/State">राज्य</a>
+          <a mat-list-item routerLink="role/District">जिल्हा</a>
+          <a mat-list-item routerLink="role/Panchayat">पंचायत</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+
+
+
+        <ng-container *ngIf="role === 'ADMIN'">
+          <h3 class="text-center font-weight-bold">वापरकर्ता व्यवस्थापन</h3>
+          <a mat-list-item (click)="navigateToAdminUserManagement()">ॲडमिन</a>
+          <a mat-list-item (click)="navigateToStateUserManagement()">राज्य</a>
+          <a mat-list-item (click)="navigateToDistrictUserManagement()">जिल्हा</a>
+          <a mat-list-item (click)="navigateToPanchayatUserManagement()">पंचायत</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+
+
+
+
+        <ng-container *ngIf="role === 'STATE'">
+          <h3 class="text-center font-weight-bold">अहवाल</h3>
+          <a mat-list-item (click)="stateCountWiseReport()">विभागीय संख्यात्मक अहवाल</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+        <ng-container *ngIf="role === 'ADMIN'">
+          <h3 class="text-center font-weight-bold">अहवाल</h3>
+          <a mat-list-item (click)="adminCountWiseReport()">विभागीय संख्यात्मक अहवाल</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+        <ng-container *ngIf="role === 'DISTRICT'">
+          <h3 class="text-center font-weight-bold">अहवाल</h3>
+          <a mat-list-item (click)="districtCountWiseReport()">विभागीय संख्यात्मक अहवाल</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+        <ng-container *ngIf="role === 'GRAMPANCHAYAT'">
+          <h3 class="text-center font-weight-bold">अहवाल</h3>
+          <a mat-list-item (click)="panchayatCountWiseReport()">विभागीय संख्यात्मक अहवाल</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+        <a mat-list-item (click)="changePassword()">पासवर्ड बदला</a>
+        <a mat-list-item (click)="[isLogout(),snav.close()]">बाहेर पडा</a>
+
+        <!-- <ng-container *ngIf="role === 'GRAMPANCHAYAT'">
+          <h3 class="text-center font-weight-bold">Approved Status Reports</h3>
+          <a mat-list-item (click)="categoryAWisePanchayatReport()">Category A Wise</a>
+          <a mat-list-item (click)="categoryBWisePanchayatReport()">Category B Wise</a>
+          <a mat-list-item (click)="categoryCWisePanchayatReport()">Category C Wise</a>
+          <a mat-list-item (click)="combinePanchayatWiseReport()">Combine Category Wise</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+        <ng-container *ngIf="role === 'GRAMPANCHAYAT'">
+          <h3 class="text-center font-weight-bold">Hold Status Reports</h3>
+          <a mat-list-item (click)="holdedCategoryAWisePanchayatReport()">Category A Wise</a>
+          <a mat-list-item (click)="holdedCategoryBWisePanchayatReport()">Category B Wise</a>
+          <a mat-list-item (click)="holdedCategoryCWisePanchayatReport()">Category C Wise</a>
+          <a mat-list-item (click)="holdedCombinePanchayatWiseReport()">Combine Category Wise</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container> -->
+
+        <!-- 
+        <ng-container *ngIf="role === 'DISTRICT'">
+          <h3 class="text-center font-weight-bold">Reports</h3>
+          <h3 class="text-center font-weight-bold">Approved Status Reports</h3>
+          <a mat-list-item (click)="categoryAWiseDistrictReport()">Category A Wise</a>
+          <a mat-list-item (click)="categoryBWiseDistrictReport()">Category B Wise</a>
+          <a mat-list-item (click)="categoryCWiseDistrictReport()">Category C Wise</a>
+          <a mat-list-item (click)="combineDistrictWiseReport()">Combine Category Wise</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+        <ng-container *ngIf="role === 'DISTRICT'">
+          <h3 class="text-center font-weight-bold">Hold Status Reports</h3>
+          <a mat-list-item (click)="holdedCategoryAWiseDistrictReport()">Category A Wise</a>
+          <a mat-list-item (click)="holdedCategoryBWiseDistrictReport()">Category B Wise</a>
+          <a mat-list-item (click)="holdedCategoryCWiseDistrictReport()">Category C Wise</a>
+          <a mat-list-item (click)="holdedCombineDistrictWiseReport()">Combine Category Wise</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container> -->
+
+
+
+        <!-- <ng-container *ngIf="role === 'STATE'">
+          <h3 class="text-center font-weight-bold">Reports</h3>
+          <h3 class="text-center font-weight-bold">Approved Status Reports</h3>
+          <a mat-list-item (click)="categoryAWiseStateReport()">Category A Wise</a>
+          <a mat-list-item (click)="categoryBWiseStateReport()">Category B Wise</a>
+          <a mat-list-item (click)="categoryCWiseStateReport()">Category C Wise</a>
+          <a mat-list-item (click)="combineStateWiseReport()">Combine Category Wise</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+        <ng-container *ngIf="role === 'STATE'">
+          <h3 class="text-center font-weight-bold">Hold Status Reports</h3>
+          <a mat-list-item (click)="holdedCategoryAWiseStateReport()">Category A Wise</a>
+          <a mat-list-item (click)="holdedCategoryBWiseStateReport()">Category B Wise</a>
+          <a mat-list-item (click)="holdedCategoryCWiseStateReport()">Category C Wise</a>
+          <a mat-list-item (click)="holdedCombineStateWiseReport()">Combine Category Wise</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container> -->
+
+
+
+        <!-- <ng-container *ngIf="role === 'ADMIN'">
+          <h3 class="text-center font-weight-bold">Reports</h3>
+          <h3 class="text-center font-weight-bold">Approved Status Reports</h3>
+          <a mat-list-item (click)="categoryAWiseStateReport()">Category A Wise</a>
+          <a mat-list-item (click)="categoryBWiseStateReport()">Category B Wise</a>
+          <a mat-list-item (click)="categoryCWiseStateReport()">Category C Wise</a>
+          <a mat-list-item (click)="combineStateWiseReport()">Combine Category Wise</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container>
+
+        <ng-container *ngIf="role === 'ADMIN'">
+          <h3 class="text-center font-weight-bold">Hold Status Reports</h3>
+          <a mat-list-item (click)="holdedCategoryAWiseStateReport()">Category A Wise</a>
+          <a mat-list-item (click)="holdedCategoryBWiseStateReport()">Category B Wise</a>
+          <a mat-list-item (click)="holdedCategoryCWiseStateReport()">Category C Wise</a>
+          <a mat-list-item (click)="holdedCombineStateWiseReport()">Combine Category Wise</a>
+          <mat-divider class="my-2"></mat-divider>
+        </ng-container> -->
+
+
 
       </mat-nav-list>
 

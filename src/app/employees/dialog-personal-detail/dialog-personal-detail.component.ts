@@ -356,7 +356,7 @@ export class DialogPersonalDetailComponent implements OnInit {
       // let fullDate;
       // fullDate = this.valueChanged();
       // this.personalDetails.dob = fullDate.toString();
-      
+
       this.fullDate = this.valueChanged();
       formData.append('dob', this.fullDate.toString());
     }
@@ -691,7 +691,7 @@ export class DialogPersonalDetailComponent implements OnInit {
 
   }
   assignValues() {
-    console.log(this.personalDetailsData.FinancialBenefitReceived);
+   
     this.personalDetails.artistSystemCode = this.personalDetailsData.ArtistSystemCode;
     this.personalDetails.firstName = this.personalDetailsData.FirstName;
     this.personalDetails.middleName = this.personalDetailsData.MiddleName;

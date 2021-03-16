@@ -61,8 +61,10 @@ export class LoginComponent implements OnInit {
         this.basicUserService.setLocalCache(this.roleName, this.roleId, this.districtId);
         sessionStorage.setItem('language', 'true');
         sessionStorage.setItem('Name', this.userName);
+        sessionStorage.setItem('sideBarLanguage', 'true');
         sessionStorage.setItem('userId', this.userId.toString());
         this.emitterService.isLoggedIn.emit(true);
+        this.emitterService.isSideBarLanguage.emit(true);
         this.router.navigate(['/dashboard']);
       }
       else {

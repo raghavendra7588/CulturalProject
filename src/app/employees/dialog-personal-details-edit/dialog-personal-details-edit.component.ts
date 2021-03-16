@@ -730,7 +730,7 @@ export class DialogPersonalDetailsEditComponent implements OnInit {
       this.personalDetails.dob = dateObject;
     }
     else {
-      this.personalDetailsData.DO = '';
+      this.personalDetailsData.DOB = '';
     }
 
 

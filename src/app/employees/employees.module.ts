@@ -58,6 +58,7 @@ import { CategoryWisePanchayatReportComponent } from './category-wise-panchayat-
 import { CategoryWiseDistrictReportComponent } from './category-wise-district-report/category-wise-district-report.component';
 import { CategoryWiseStateReportComponent } from './category-wise-state-report/category-wise-state-report.component';
 import { CategoryWiseAdminReportComponent } from './category-wise-admin-report/category-wise-admin-report.component';
+import { ConsolidatedCountWiseReportComponent } from './consolidated-count-wise-report/consolidated-count-wise-report.component';
 
 @NgModule({
   declarations: [
@@ -94,7 +95,8 @@ import { CategoryWiseAdminReportComponent } from './category-wise-admin-report/c
     CategoryWisePanchayatReportComponent,
     CategoryWiseDistrictReportComponent,
     CategoryWiseStateReportComponent,
-    CategoryWiseAdminReportComponent
+    CategoryWiseAdminReportComponent,
+    ConsolidatedCountWiseReportComponent
   ],
   imports: [
     CommonModule,
@@ -130,7 +132,8 @@ import { CategoryWiseAdminReportComponent } from './category-wise-admin-report/c
     ApprovalsOnHoldComponent, EditAndHoldDistrictComponent, ReqToPutOnHoldComponent, ListOnHoldComponent, ReqToRemoveFromHoldComponent,
     StateRoleManagementComponent, DistrictRoleManagementComponent, PanchayatRoleManagementComponent, UserManagementComponent,
     GradeWiseAdminComponent, GradeWiseStateComponent, CategoryWiseDistrictReportComponent,
-    GradeWiseDistrictComponent, CategoryWisePanchayatReportComponent, CategoryWiseStateReportComponent, CategoryWiseAdminReportComponent],
+    GradeWiseDistrictComponent, CategoryWisePanchayatReportComponent, CategoryWiseStateReportComponent, CategoryWiseAdminReportComponent,
+    ConsolidatedCountWiseReportComponent],
 
   entryComponents: [DialogPersonalDetailComponent, DialogAddUserMasterComponent, DialogViewProposalFormComponent,
     DialogApprovArtistComponent, ReasonForRejectionComponent, DialogRoleManagementComponent, DialogPersonalDetailsEditComponent]

@@ -318,3 +318,17 @@ export class DynamicStateRolePanchayat {
     districtId?: number;
     panchayatName?: string;
 }
+
+export class CountWise {
+    reportType?: string;
+    reportFromDate?: string;
+    reportToDate?: string;
+    userId?: number;
+}
+
+export class CountWiseReport {
+    reportType?: string;
+    reportFromDate?: string;
+    reportToDate?: string;
+    userId?: number;
+}
