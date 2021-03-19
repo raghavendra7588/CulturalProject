@@ -4,6 +4,8 @@ import { AddUserMasterComponent } from './employees/add-user-master/add-user-mas
 import { ApprovalsOnHoldComponent } from './employees/approvals-on-hold/approvals-on-hold.component';
 import { ApprovedListPanchayatComponent } from './employees/approved-list-panchayat/approved-list-panchayat.component';
 import { ApprovedListComponent } from './employees/approved-list/approved-list.component';
+import { ArtTypeConsolidatedCountWiseReportComponent } from './employees/art-type-consolidated-count-wise-report/art-type-consolidated-count-wise-report.component';
+import { CasteWiseConsolidatedReportComponent } from './employees/caste-wise-consolidated-report/caste-wise-consolidated-report.component';
 import { CategoryWiseAdminReportComponent } from './employees/category-wise-admin-report/category-wise-admin-report.component';
 import { CategoryWiseDistrictReportComponent } from './employees/category-wise-district-report/category-wise-district-report.component';
 import { CategoryWisePanchayatReportComponent } from './employees/category-wise-panchayat-report/category-wise-panchayat-report.component';
@@ -16,6 +18,7 @@ import { GradeAComponent } from './employees/grade-a/grade-a.component';
 import { GradeBComponent } from './employees/grade-b/grade-b.component';
 import { GradeCComponent } from './employees/grade-c/grade-c.component';
 import { GradeWiseAdminComponent } from './employees/grade-wise-admin/grade-wise-admin.component';
+import { GradeWiseConsolidatedReportComponent } from './employees/grade-wise-consolidated-report/grade-wise-consolidated-report.component';
 import { GradeWiseDistrictComponent } from './employees/grade-wise-district/grade-wise-district.component';
 import { GradeWiseStateComponent } from './employees/grade-wise-state/grade-wise-state.component';
 import { ListOfRejectedMembersComponent } from './employees/list-of-rejected-members/list-of-rejected-members.component';
@@ -23,6 +26,7 @@ import { ListOnHoldComponent } from './employees/list-on-hold/list-on-hold.compo
 import { NewApprovalsComponent } from './employees/new-approvals/new-approvals.component';
 import { PanchayatRoleManagementComponent } from './employees/panchayat-role-management/panchayat-role-management.component';
 import { PersonalDetailsComponent } from './employees/personal-details/personal-details.component';
+import { ReligionWiseConsolidatedReportComponent } from './employees/religion-wise-consolidated-report/religion-wise-consolidated-report.component';
 import { ReqToPutOnHoldComponent } from './employees/req-to-put-on-hold/req-to-put-on-hold.component';
 import { ReqToRemoveFromHoldComponent } from './employees/req-to-remove-from-hold/req-to-remove-from-hold.component';
 import { StateRoleManagementComponent } from './employees/state-role-management/state-role-management.component';
@@ -64,6 +68,18 @@ const routes: Routes = [
   { path: 'state/categoryWise/report', component: CategoryWiseStateReportComponent },
   { path: 'admin/categoryWise/report', component: CategoryWiseAdminReportComponent },
   { path: 'consolidatedCount/report', component: ConsolidatedCountWiseReportComponent },
+  {
+    path: 'artTypeConsolidatedCount/report', component: ArtTypeConsolidatedCountWiseReportComponent
+  },
+  {
+    path: 'castWiseConsolidatedCount/report', component: CasteWiseConsolidatedReportComponent
+  },
+  {
+    path: 'religionWiseConsolidatedCount/report', component: ReligionWiseConsolidatedReportComponent
+  },
+  {
+    path: 'gradeWiseConsolidatedCount/report', component: GradeWiseConsolidatedReportComponent
+  },
   { path: '**', redirectTo: '/login' }
 ];
 

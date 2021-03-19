@@ -164,6 +164,26 @@ export class EmployeesService {
   private POST_CONSOLIDATED_DATA_BY_PANCHAYAT = environment.BASE_URL + 'api/Reports/ConsolidatedReportByPanchayat';
 
   private GET_ALL_ART_TYPE_DATA = environment.BASE_URL + 'api/Reports/getArtType';
+  private GET_ALL_CASTE_TYPE_DATA = environment.BASE_URL + 'api/Reports/getCastType';
+  private GET_ALL_RELIGION_TYPE_DATA = environment.BASE_URL + 'api/Reports/getReligionType';
+
+  private POST_CONSOLIDATED_CASTE_WISE_REPORT_BY_ADMIN_STATE = environment.BASE_URL + 'api/Reports/ConsolidatedCasteWiseReportByAdminOrState';
+  private POST_CONSOLIDATED_CASTE_WISE_REPORT_BY_DISTRICT = environment.BASE_URL + 'api/Reports/ConsolidatedCasteWiseReportByDistrict';
+  private POST_CONSOLIDATED_CASTE_WISE_REPORT_BY_PANCHAYAT = environment.BASE_URL + 'api/Reports/ConsolidatedCasteWiseReportByPanchayat';
+
+  private POST_CONSOLIDATED_RELIGION_WISE_REPORT_BY_ADMIN_STATE = environment.BASE_URL + 'api/Reports/ConsolidatedReligionWiseReportByAdminOrState';
+  private POST_CONSOLIDATED_RELIGION_WISE_REPORT_BY_DISTRICT = environment.BASE_URL + 'api/Reports/ConsolidatedReligionWiseReportByDistrict';
+  private POST_CONSOLIDATED_RELIGION_WISE_REPORT_BY_PANCHAYAT = environment.BASE_URL + 'api/Reports/ConsolidatedReligionWiseReportByPanchayat';
+
+  private POST_CONSOLIDATED_ART_WISE_REPORT_BY_ADMIN_STATE = environment.BASE_URL + 'api/Reports/ConsolidatedArtWiseReportByAdminOrState';
+  private POST_CONSOLIDATED_ART_WISE_REPORT_BY_DISTRICT = environment.BASE_URL + 'api/Reports/ConsolidatedArtWiseReportByDistrict';
+  private POST_CONSOLIDATED_ART_WISE_REPORT_BY_PANCHAYAT = environment.BASE_URL + 'api/Reports/ConsolidatedArtWiseReportByPanchayat';
+
+  private POST_CONSOLIDATED_GRADE_WISE_REPORT_BY_ADMIN_STATE = environment.BASE_URL + 'api/Reports/ConsolidatedGradeWiseReportByAdminOrState';
+  // private POST_CONSOLIDATED_GRADE_WISE_REPORT_BY_DISTRICT = environment.BASE_URL + 'api/Reports/ConsolidatedArtWiseReportByDistrict';
+  private POST_CONSOLIDATED_GRADE_WISE_REPORT_BY_PANCHAYAT = environment.BASE_URL + 'api/Reports/ConsolidatedGradeWiseReportByPanchayat';
+
+
 
   constructor(
     public http: HttpClient
@@ -643,20 +663,83 @@ export class EmployeesService {
   }
 
 
-  getConsolidatedReportByAdmin() {
-    return this.http.get(this.POST_CONSOLIDATED_DATA_BY_STATE_ADMIN);
-  }
 
 
   getAllArtTypeData() {
     return this.http.get(this.GET_ALL_ART_TYPE_DATA);
   }
 
-  getConsolidatedReportByDistrict(id) {
-    return this.http.get(this.POST_CONSOLIDATED_DATA_BY_DISTRICT + '/' + id);
+  getAllCastTypeData() {
+    return this.http.get(this.GET_ALL_CASTE_TYPE_DATA);
   }
 
-  getConsolidatedReportByPanchayat(id: number) {
-    return this.http.get(this.POST_CONSOLIDATED_DATA_BY_PANCHAYAT + '/' + id);
+  getAllReligionTypeData() {
+    return this.http.get(this.GET_ALL_RELIGION_TYPE_DATA);
   }
+
+  getConsolidatedReportByAdmin(req) {
+    return this.http.post(this.POST_CONSOLIDATED_DATA_BY_STATE_ADMIN, req);
+  }
+
+  getConsolidatedReportByDistrict(req) {
+    return this.http.post(this.POST_CONSOLIDATED_DATA_BY_DISTRICT, req);
+  }
+
+  getConsolidatedReportByPanchayat(req) {
+    return this.http.post(this.POST_CONSOLIDATED_DATA_BY_PANCHAYAT, req);
+  }
+
+
+  postConsolidatedCasteWiseReportByStateAndAdmin(casteWise) {
+    return this.http.post(this.POST_CONSOLIDATED_CASTE_WISE_REPORT_BY_ADMIN_STATE, casteWise);
+  }
+
+
+  postConsolidatedCasteWiseReportByDistrict(casteWise) {
+    return this.http.post(this.POST_CONSOLIDATED_CASTE_WISE_REPORT_BY_DISTRICT, casteWise);
+  }
+
+  postConsolidatedCasteWiseReportByPanchyat(casteWise) {
+    return this.http.post(this.POST_CONSOLIDATED_CASTE_WISE_REPORT_BY_PANCHAYAT, casteWise);
+  }
+
+
+
+
+  postConsolidatedReligionWiseReportByStateAndAdmin(casteWise) {
+    return this.http.post(this.POST_CONSOLIDATED_RELIGION_WISE_REPORT_BY_ADMIN_STATE, casteWise);
+  }
+
+
+  postConsolidatedReligionWiseReportByDistrict(casteWise) {
+    return this.http.post(this.POST_CONSOLIDATED_RELIGION_WISE_REPORT_BY_DISTRICT, casteWise);
+  }
+
+  postConsolidatedReligionWiseReportByPanchyat(casteWise) {
+    return this.http.post(this.POST_CONSOLIDATED_RELIGION_WISE_REPORT_BY_PANCHAYAT, casteWise);
+  }
+
+  postConsolidatedArtWiseReportByStateAndAdmin(casteWise) {
+    return this.http.post(this.POST_CONSOLIDATED_ART_WISE_REPORT_BY_ADMIN_STATE, casteWise);
+  }
+
+
+  postConsolidatedArtWiseReportByDistrict(casteWise) {
+    return this.http.post(this.POST_CONSOLIDATED_ART_WISE_REPORT_BY_DISTRICT, casteWise);
+  }
+
+  postConsolidatedArtWiseReportByPanchyat(casteWise) {
+    return this.http.post(this.POST_CONSOLIDATED_ART_WISE_REPORT_BY_PANCHAYAT, casteWise);
+  }
+
+
+  postConsolidatedGradeWiseReportByStateAndAdmin(casteWise) {
+    return this.http.post(this.POST_CONSOLIDATED_GRADE_WISE_REPORT_BY_ADMIN_STATE, casteWise);
+  }
+
+  postConsolidatedGradeWiseReportByPanchyat(casteWise) {
+    return this.http.post(this.POST_CONSOLIDATED_GRADE_WISE_REPORT_BY_PANCHAYAT, casteWise);
+  }
+
+
 }

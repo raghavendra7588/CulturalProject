@@ -59,6 +59,11 @@ import { CategoryWiseDistrictReportComponent } from './category-wise-district-re
 import { CategoryWiseStateReportComponent } from './category-wise-state-report/category-wise-state-report.component';
 import { CategoryWiseAdminReportComponent } from './category-wise-admin-report/category-wise-admin-report.component';
 import { ConsolidatedCountWiseReportComponent } from './consolidated-count-wise-report/consolidated-count-wise-report.component';
+import { ArtTypeConsolidatedCountWiseReportComponent } from './art-type-consolidated-count-wise-report/art-type-consolidated-count-wise-report.component';
+
+import { CasteWiseConsolidatedReportComponent } from './caste-wise-consolidated-report/caste-wise-consolidated-report.component';
+import { ReligionWiseConsolidatedReportComponent } from './religion-wise-consolidated-report/religion-wise-consolidated-report.component';
+import { GradeWiseConsolidatedReportComponent } from './grade-wise-consolidated-report/grade-wise-consolidated-report.component';
 
 @NgModule({
   declarations: [
@@ -96,7 +101,11 @@ import { ConsolidatedCountWiseReportComponent } from './consolidated-count-wise-
     CategoryWiseDistrictReportComponent,
     CategoryWiseStateReportComponent,
     CategoryWiseAdminReportComponent,
-    ConsolidatedCountWiseReportComponent
+    ConsolidatedCountWiseReportComponent,
+    ArtTypeConsolidatedCountWiseReportComponent,
+    CasteWiseConsolidatedReportComponent,
+    ReligionWiseConsolidatedReportComponent,
+    GradeWiseConsolidatedReportComponent
   ],
   imports: [
     CommonModule,
@@ -133,7 +142,10 @@ import { ConsolidatedCountWiseReportComponent } from './consolidated-count-wise-
     StateRoleManagementComponent, DistrictRoleManagementComponent, PanchayatRoleManagementComponent, UserManagementComponent,
     GradeWiseAdminComponent, GradeWiseStateComponent, CategoryWiseDistrictReportComponent,
     GradeWiseDistrictComponent, CategoryWisePanchayatReportComponent, CategoryWiseStateReportComponent, CategoryWiseAdminReportComponent,
-    ConsolidatedCountWiseReportComponent],
+    ConsolidatedCountWiseReportComponent, ArtTypeConsolidatedCountWiseReportComponent,
+    CasteWiseConsolidatedReportComponent,
+    ReligionWiseConsolidatedReportComponent,
+    GradeWiseConsolidatedReportComponent],
 
   entryComponents: [DialogPersonalDetailComponent, DialogAddUserMasterComponent, DialogViewProposalFormComponent,
     DialogApprovArtistComponent, ReasonForRejectionComponent, DialogRoleManagementComponent, DialogPersonalDetailsEditComponent]

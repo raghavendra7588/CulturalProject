@@ -332,3 +332,15 @@ export class CountWiseReport {
     reportToDate?: string;
     userId?: number;
 }
+
+export class CasteWiseReport {
+    userId?: number;
+    districtId?: number;
+    castName?: string;
+    religionName?: string;
+    artType?: string;
+    gradeType?: string;
+    fromDate?: string;
+    toDate?: string;
+    reportType?: string;
+}

@@ -445,6 +445,34 @@ export class AppComponent {
     this.router.navigate(['/consolidatedCount/report']);
   }
 
+  artTypeConsolidatedReport(currentUserText) {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', currentUserText.toString());
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/artTypeConsolidatedCount/report']);
+  }
+
+  casteWiseConsolidatedReport(currentUserText) {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', currentUserText.toString());
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/castWiseConsolidatedCount/report']);
+  }
+
+  religionWiseConsolidatedReport(currentUserText) {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', currentUserText.toString());
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/religionWiseConsolidatedCount/report']);
+  }
+
+  gradeWiseConsolidatedReport(currentUserText) {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', currentUserText.toString());
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/gradeWiseConsolidatedCount/report']);
+  }
+
   changeSideBarLanguageToEnglish() {
     sessionStorage.removeItem('sideBarLanguage');
     sessionStorage.setItem('sideBarLanguage', 'true');

@@ -1,0 +1,318 @@
+<h4 class="text-center mt-3" style="color:blue">{{currentStatusCode}}</h4>
+
+
+<form [formGroup]="countForm">
+
+    <div class="container mt-5">
+        <div class="row">
+ 
+            <div class="col-md-3 mt-3">
+                <mat-radio-group placeholder="Report Type" aria-labelledby="example-radio-group-label"
+                    class="example-radio-group mt-3" [(ngModel)]="casteWiseReport.reportType" formControlName="reportType"
+                    style="width: 100%;" (change)="radioChange($event)">
+                    <mat-radio-button class="example-radio-button mr-2" *ngFor="let reportType of reportTypeArray"
+                        [value]="reportType.title">
+                        {{reportType.title}}
+                    </mat-radio-button><br>
+                </mat-radio-group>
+
+            </div>
+
+            <div class="col-md-3">
+                <mat-form-field style="width: 100% !important">
+                    <mat-select placeholder="Cast List" [(ngModel)]="casteWiseReport.castName" formControlName="castType">
+                        <mat-option *ngFor="let item of casteData;" [value]="item.Caste">
+                            {{item.Caste}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-3">
+                <mat-form-field class="example-full-width" style="width: 100%;">
+                    <mat-label>From</mat-label>
+                    <input matInput [matDatepicker]="pickerOne" formControlName="reportFromDate"
+                    [(ngModel)]="casteWiseReport.fromDate" readonly [max]="maxDate">
+                    <mat-datepicker-toggle matSuffix [for]="pickerOne"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerOne></mat-datepicker>
+                </mat-form-field>
+
+            </div>
+
+            <div class="col-md-3">
+                <mat-form-field class="example-full-width" style="width: 100%;">
+                    <mat-label>TO</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="reportToDate"
+                    [(ngModel)]="casteWiseReport.toDate" readonly [max]="maxDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+
+        </div>
+
+
+        <div class="row mt-3">
+
+            <div class="col-md-3">
+                <button mat-raised-button color="primary" (click)="onSearch()" class="width-100">Search</button>
+
+            </div>
+            <div class="col-md-3">
+                <button mat-raised-button color="primary" (click)="downloadReport()" class="width-100">Download</button>
+            </div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-12 my-5" *ngIf="role=='ADMIN' || role=='STATE'">
+
+            <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+                <ng-container matColumnDef="districtName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>District Name</th>
+                    <td mat-cell *matCellDef="let element"> {{element.DistrictName| uppercase}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="approvedGradeA">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Approved Grade A</th>
+                    <td mat-cell *matCellDef="let element">
+
+                        {{element.APPROVED_A == null?
+                        '0' : element.APPROVED_A}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="approvedGradeB">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Approved Grade B</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.APPROVED_B == null?
+                        '0' : element.APPROVED_B}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="approvedGradeC">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Approved Grade C</th>
+                    <td mat-cell *matCellDef="let element">
+
+                        {{element.APPROVED_C == null?
+                        '0' : element.APPROVED_C}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="holdGradeA">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Holded Grade A</th>
+                    <td mat-cell *matCellDef="let element">
+
+                        {{element.HOLD_A == null?
+                        '0' : element.HOLD_A}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="holdGradeB">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Holded Grade B</th>
+                    <td mat-cell *matCellDef="let element">
+
+                        {{element.HOLD_B == null?
+                        '0' : element.HOLD_B}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="holdGradeC">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Holded Grade C</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.HOLD_C == null?
+                        '0' : element.HOLD_C}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="rejectedA">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Rejected A</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.REJECTED_A == null?
+                        '0' : element.REJECTED_A}} </td>
+                </ng-container>
+                <ng-container matColumnDef="rejectedB">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Rejected B</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.REJECTED_B == null?
+                        '0' : element.REJECTED_B}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="rejectedC">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Rejected C</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.REJECTED_C == null?
+                        '0' : element.REJECTED_C}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+
+        <div class="col-md-12 col-sm-12 col-12 my-5" *ngIf="role=='DISTRICT'">
+
+            <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+                <ng-container matColumnDef="panchayat">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Panchayat Name</th>
+                    <td mat-cell *matCellDef="let element"> {{element.Place| uppercase}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="approvedGradeA">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Approved Grade A</th>
+                    <td mat-cell *matCellDef="let element">
+
+                        {{element.APPROVED_A == null?
+                        '0' : element.APPROVED_A}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="approvedGradeB">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Approved Grade B</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.APPROVED_B == null?
+                        '0' : element.APPROVED_B}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="approvedGradeC">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Approved Grade C</th>
+                    <td mat-cell *matCellDef="let element">
+
+                        {{element.APPROVED_C == null?
+                        '0' : element.APPROVED_C}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="holdGradeA">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Holded Grade A</th>
+                    <td mat-cell *matCellDef="let element">
+
+                        {{element.HOLD_A == null?
+                        '0' : element.HOLD_A}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="holdGradeB">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Holded Grade B</th>
+                    <td mat-cell *matCellDef="let element">
+
+                        {{element.HOLD_B == null?
+                        '0' : element.HOLD_B}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="holdGradeC">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Holded Grade C</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.HOLD_C == null?
+                        '0' : element.HOLD_C}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="rejectedA">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Rejected A</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.REJECTED_A == null?
+                        '0' : element.REJECTED_A}} </td>
+                </ng-container>
+                <ng-container matColumnDef="rejectedB">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Rejected B</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.REJECTED_B == null?
+                        '0' : element.REJECTED_B}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="rejectedC">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Rejected C</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.REJECTED_C == null?
+                        '0' : element.REJECTED_C}} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+
+        <div class="col-md-12 col-sm-12 col-12 my-5" *ngIf="role=='GRAMPANCHAYAT'">
+
+            <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+                <ng-container matColumnDef="panchayat">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Panchayat Name</th>
+                    <td mat-cell *matCellDef="let element"> {{element.Place| uppercase}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="approvedGradeA">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Approved Grade A</th>
+                    <td mat-cell *matCellDef="let element">
+
+                        {{element.APPROVED_A == null?
+                        '0' : element.APPROVED_A}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="approvedGradeB">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Approved Grade B</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.APPROVED_B == null?
+                        '0' : element.APPROVED_B}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="approvedGradeC">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Approved Grade C</th>
+                    <td mat-cell *matCellDef="let element">
+
+                        {{element.APPROVED_C == null?
+                        '0' : element.APPROVED_C}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="holdGradeA">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Holded Grade A</th>
+                    <td mat-cell *matCellDef="let element">
+
+                        {{element.HOLD_A == null?
+                        '0' : element.HOLD_A}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="holdGradeB">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Holded Grade B</th>
+                    <td mat-cell *matCellDef="let element">
+
+                        {{element.HOLD_B == null?
+                        '0' : element.HOLD_B}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="holdGradeC">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Holded Grade C</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.HOLD_C == null?
+                        '0' : element.HOLD_C}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="rejectedA">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Rejected A</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.REJECTED_A == null?
+                        '0' : element.REJECTED_A}} </td>
+                </ng-container>
+                <ng-container matColumnDef="rejectedB">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Rejected B</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.REJECTED_B == null?
+                        '0' : element.REJECTED_B}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="rejectedC">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Rejected C</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.REJECTED_C == null?
+                        '0' : element.REJECTED_C}} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </div>
+
+
+</form>
