@@ -99,23 +99,19 @@ export class ArtTypeConsolidatedCountWiseReportComponent implements OnInit {
     this.countForm.controls.reportToDate.disable();
     if (this.currentUserRole === 'STATE_ART_TYPE_COUNT_REPORT') {
       this.currentStatusCode = 'State Art Wise Count Report';
-      this.displayedColumns = ['districtName', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC',
-        'rejectedA', 'rejectedB', 'rejectedC'];
+      this.displayedColumns = ['districtName', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC'];
     }
     if (this.currentUserRole === 'ADMIN_ART_TYPE_COUNT_REPORT') {
       this.currentStatusCode = 'Admin Art Wise Count Report';
-      this.displayedColumns = ['districtName', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC',
-        'rejectedA', 'rejectedB', 'rejectedC'];
+      this.displayedColumns = ['districtName', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC'];
     }
     if (this.currentUserRole === 'DISTRICT_ART_TYPE_COUNT_REPORT') {
       this.currentStatusCode = 'District Art Wise Count Report';
-      this.displayedColumns = ['panchayat', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC',
-        'rejectedA', 'rejectedB', 'rejectedC'];
+      this.displayedColumns = ['panchayat', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC'];
     }
     if (this.currentUserRole === 'PANCHAYAT_ART_TYPE_COUNT_REPORT') {
       this.currentStatusCode = 'Panchayat Art Wise Count Report';
-      this.displayedColumns = ['panchayat', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC',
-        'rejectedA', 'rejectedB', 'rejectedC'];
+      this.displayedColumns = ['panchayat', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC'];
     }
 
     this.getArtData();
@@ -191,7 +187,10 @@ export class ArtTypeConsolidatedCountWiseReportComponent implements OnInit {
 
 
     this.casteWiseReport.userId = Number(this.userId);
-
+    if (!this.isDateRangeSelected) {
+      this.reportFromDate = '';
+      this.reportToDate = '';
+    }
     let reqObj = {
       userId: this.casteWiseReport.userId,
       districtId: this.casteWiseReport.districtId,
@@ -251,8 +250,7 @@ export class ArtTypeConsolidatedCountWiseReportComponent implements OnInit {
 
     for (let i = 0; i < arr.length; i++) {
       if (arr[i].APPROVED_A == null && arr[i].APPROVED_B == null && arr[i].APPROVED_C == null &&
-        arr[i].HOLD_A == null && arr[i].HOLD_B == null && arr[i].HOLD_C == null &&
-        arr[i].REJECTED_A == null && arr[i].REJECTED_B == null && arr[i].REJECTED_C == null
+        arr[i].HOLD_A == null && arr[i].HOLD_B == null && arr[i].HOLD_C == null
       ) {
         continue;
       }

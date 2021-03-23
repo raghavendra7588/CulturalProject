@@ -119,23 +119,19 @@ export class CasteWiseConsolidatedReportComponent implements OnInit {
 
     if (this.currentUserRole === 'STATE_CAST_WISE_COUNT_REPORT') {
       this.currentStatusCode = 'State Cast Wise Report';
-      this.displayedColumns = ['districtName', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC',
-        'rejectedA', 'rejectedB', 'rejectedC'];
+      this.displayedColumns = ['districtName', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC'];
     }
     if (this.currentUserRole === 'ADMIN_CAST_WISE_COUNT_REPORT') {
       this.currentStatusCode = 'Admin Cast Wise Report';
-      this.displayedColumns = ['districtName', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC',
-        'rejectedA', 'rejectedB', 'rejectedC'];
+      this.displayedColumns = ['districtName', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC'];
     }
     if (this.currentUserRole === 'DISTRICT_CAST_WISE_COUNT_REPORT') {
       this.currentStatusCode = 'District Cast Wise Report';
-      this.displayedColumns = ['panchayat', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC',
-        'rejectedA', 'rejectedB', 'rejectedC'];
+      this.displayedColumns = ['panchayat', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC'];
     }
     if (this.currentUserRole === 'PANCHAYAT_CAST_WISE_COUNT_REPORT') {
       this.currentStatusCode = 'Panchayat Cast Wise Report';
-      this.displayedColumns = ['panchayat', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC',
-        'rejectedA', 'rejectedB', 'rejectedC'];
+      this.displayedColumns = ['panchayat', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC'];
     }
 
     this.getCastData();
@@ -176,8 +172,7 @@ export class CasteWiseConsolidatedReportComponent implements OnInit {
 
     for (let i = 0; i < arr.length; i++) {
       if (arr[i].APPROVED_A == null && arr[i].APPROVED_B == null && arr[i].APPROVED_C == null &&
-        arr[i].HOLD_A == null && arr[i].HOLD_B == null && arr[i].HOLD_C == null &&
-        arr[i].REJECTED_A == null && arr[i].REJECTED_B == null && arr[i].REJECTED_C == null
+        arr[i].HOLD_A == null && arr[i].HOLD_B == null && arr[i].HOLD_C == null
       ) {
         continue;
       }
@@ -234,17 +229,22 @@ export class CasteWiseConsolidatedReportComponent implements OnInit {
     }
 
 
-
+    if (!this.isDateRangeSelected) {
+      this.reportFromDate = '';
+      this.reportToDate = '';
+    }
     this.casteWiseReport.userId = Number(this.userId);
 
     let reqObj = {
       userId: this.casteWiseReport.userId,
       districtId: this.casteWiseReport.districtId,
-      gradeType: this.casteWiseReport.gradeType,
+      castName: this.casteWiseReport.castName,
       fromDate: this.reportFromDate,
       toDate: this.reportToDate,
       reportType: this.casteWiseReport.reportType
     }
+
+  
     console.log('reqObj', reqObj);
 
     if (this.role == 'STATE' || this.role == 'ADMIN') {

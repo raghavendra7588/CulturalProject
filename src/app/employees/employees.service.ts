@@ -180,7 +180,7 @@ export class EmployeesService {
   private POST_CONSOLIDATED_ART_WISE_REPORT_BY_PANCHAYAT = environment.BASE_URL + 'api/Reports/ConsolidatedArtWiseReportByPanchayat';
 
   private POST_CONSOLIDATED_GRADE_WISE_REPORT_BY_ADMIN_STATE = environment.BASE_URL + 'api/Reports/ConsolidatedGradeWiseReportByAdminOrState';
-  // private POST_CONSOLIDATED_GRADE_WISE_REPORT_BY_DISTRICT = environment.BASE_URL + 'api/Reports/ConsolidatedArtWiseReportByDistrict';
+  private POST_CONSOLIDATED_GRADE_WISE_REPORT_BY_DISTRICT = environment.BASE_URL + 'api/Reports/ConsolidatedGradeWiseReportByDistrict';
   private POST_CONSOLIDATED_GRADE_WISE_REPORT_BY_PANCHAYAT = environment.BASE_URL + 'api/Reports/ConsolidatedGradeWiseReportByPanchayat';
 
 
@@ -737,9 +737,15 @@ export class EmployeesService {
     return this.http.post(this.POST_CONSOLIDATED_GRADE_WISE_REPORT_BY_ADMIN_STATE, casteWise);
   }
 
+  postConsolidatedGradeWiseReportByDistrict(casteWise) {
+    return this.http.post(this.POST_CONSOLIDATED_GRADE_WISE_REPORT_BY_DISTRICT, casteWise);
+  }
+
   postConsolidatedGradeWiseReportByPanchyat(casteWise) {
     return this.http.post(this.POST_CONSOLIDATED_GRADE_WISE_REPORT_BY_PANCHAYAT, casteWise);
   }
 
+
+  
 
 }

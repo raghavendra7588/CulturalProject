@@ -7,7 +7,8 @@
         <div class="row">
  
             <div class="col-md-3 mt-3">
-                <mat-radio-group placeholder="Report Type" aria-labelledby="example-radio-group-label"
+                <!-- <mat-label class="mt-1">Report Type : </mat-label> -->
+                <mat-radio-group  aria-labelledby="example-radio-group-label"
                     class="example-radio-group mt-3" [(ngModel)]="casteWiseReport.reportType" formControlName="reportType"
                     style="width: 100%;" (change)="radioChange($event)">
                     <mat-radio-button class="example-radio-button mr-2" *ngFor="let reportType of reportTypeArray"

@@ -70,7 +70,7 @@ export class ReligionWiseConsolidatedReportComponent implements OnInit {
       reportToDate: ['']
     });
 
-   }
+  }
 
   ngOnInit(): void {
     this.reportTypeArray = [
@@ -116,24 +116,20 @@ export class ReligionWiseConsolidatedReportComponent implements OnInit {
     });
 
     if (this.currentUserRole === 'STATE_RELIGION_WISE_COUNT_REPORT') {
-      this.currentStatusCode = 'State Count Wise Report';
-      this.displayedColumns = ['districtName', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC',
-        'rejectedA', 'rejectedB', 'rejectedC'];
+      this.currentStatusCode = 'State Religion Wise Count Report';
+      this.displayedColumns = ['districtName', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC'];
     }
     if (this.currentUserRole === 'ADMIN_RELIGION_WISE_COUNT_REPORT') {
-      this.currentStatusCode = 'Admin Count Wise Report';
-      this.displayedColumns = ['districtName', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC',
-        'rejectedA', 'rejectedB', 'rejectedC'];
+      this.currentStatusCode = 'Admin Religion Wise Count Report';
+      this.displayedColumns = ['districtName', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC'];
     }
     if (this.currentUserRole === 'DISTRICT_RELIGION_WISE_COUNT_REPORT') {
-      this.currentStatusCode = 'District Count Wise Report';
-      this.displayedColumns = ['panchayat', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC',
-        'rejectedA', 'rejectedB', 'rejectedC'];
+      this.currentStatusCode = 'District Religion Wise Count Report';
+      this.displayedColumns = ['panchayat', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC'];
     }
     if (this.currentUserRole === 'PANCHAYAT_RELIGION_WISE_COUNT_REPORT') {
-      this.currentStatusCode = 'Panchayat Count Wise Report';
-      this.displayedColumns = ['panchayat', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC',
-        'rejectedA', 'rejectedB', 'rejectedC'];
+      this.currentStatusCode = 'Panchayat Religion Wise Count Report';
+      this.displayedColumns = ['panchayat', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC'];
     }
 
     this.getReligionData();
@@ -157,13 +153,13 @@ export class ReligionWiseConsolidatedReportComponent implements OnInit {
     }
 
 
-    if (this.casteWiseReport.religionName === null || this.casteWiseReport.religionName === undefined || this.casteWiseReport.religionName === '') {     
+    if (this.casteWiseReport.religionName === null || this.casteWiseReport.religionName === undefined || this.casteWiseReport.religionName === '') {
       this.toastr.error('Religion is Mandotary !!');
       return;
     }
 
-    if (this.casteWiseReport.gradeType === null || this.casteWiseReport.gradeType === undefined || this.casteWiseReport.gradeType === '') {
-      this.toastr.error('Grade Type is Mandotary !!');
+    if (this.casteWiseReport.religionName === null || this.casteWiseReport.religionName === undefined || this.casteWiseReport.religionName === '') {
+      this.toastr.error('Religion Name is Mandotary !!');
       return;
     }
 
@@ -191,16 +187,19 @@ export class ReligionWiseConsolidatedReportComponent implements OnInit {
 
     this.casteWiseReport.userId = Number(this.userId);
 
+    if (!this.isDateRangeSelected) {
+      this.reportFromDate = '';
+      this.reportToDate = '';
+    }
     let reqObj = {
       userId: this.casteWiseReport.userId,
       districtId: this.casteWiseReport.districtId,
-      gradeType: this.casteWiseReport.gradeType,
+      religionName: this.casteWiseReport.religionName,
       fromDate: this.reportFromDate,
       toDate: this.reportToDate,
       reportType: this.casteWiseReport.reportType
     }
     console.log('reqObj', reqObj);
-
 
     if (this.role == 'STATE' || this.role == 'ADMIN') {
 
@@ -269,8 +268,7 @@ export class ReligionWiseConsolidatedReportComponent implements OnInit {
 
     for (let i = 0; i < arr.length; i++) {
       if (arr[i].APPROVED_A == null && arr[i].APPROVED_B == null && arr[i].APPROVED_C == null &&
-        arr[i].HOLD_A == null && arr[i].HOLD_B == null && arr[i].HOLD_C == null &&
-        arr[i].REJECTED_A == null && arr[i].REJECTED_B == null && arr[i].REJECTED_C == null
+        arr[i].HOLD_A == null && arr[i].HOLD_B == null && arr[i].HOLD_C == null
       ) {
         continue;
       }

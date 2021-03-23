@@ -125,38 +125,31 @@ export class GradeWiseConsolidatedReportComponent implements OnInit {
     });
 
     if (this.currentUserRole === 'STATE_GRADE_TYPE_COUNT_REPORT') {
-      this.currentStatusCode = 'State Art Wise Count Report';
-      this.displayedColumns = ['districtName', 'approvedGradeA', 'holdGradeA', 'rejectedA'];
+      this.currentStatusCode = 'State Grade Wise Count Report';
+      this.displayedColumns = ['districtName', 'approvedGradeA', 'holdGradeA'];
     }
     if (this.currentUserRole === 'ADMIN_GRADE_TYPE_COUNT_REPORT') {
-      this.currentStatusCode = 'Admin Art Wise Count Report';
-      this.displayedColumns = ['districtName', 'approvedGradeA', 'holdGradeA', 'rejectedA',];
+      this.currentStatusCode = 'Admin Grade Wise Count Report';
+      this.displayedColumns = ['districtName', 'approvedGradeA', 'holdGradeA'];
     }
     if (this.currentUserRole === 'DISTRICT_GRADE_TYPE_COUNT_REPORT') {
-      this.currentStatusCode = 'District Art Wise Count Report';
-      this.displayedColumns = ['panchayat', 'approvedGradeA', 'holdGradeA', 'rejectedA',];
+      this.currentStatusCode = 'District Grade Wise Count Report';
+      this.displayedColumns = ['panchayat', 'approvedGradeA', 'holdGradeA'];
     }
     if (this.currentUserRole === 'PANCHAYAT_GRADE_TYPE_COUNT_REPORT') {
-      this.currentStatusCode = 'Panchayat Art Wise Count Report';
-      this.displayedColumns = ['panchayat', 'approvedGradeA', 'holdGradeA', 'rejectedA',];
+      this.currentStatusCode = 'Panchayat Grade Wise Count Report';
+      this.displayedColumns = ['panchayat', 'approvedGradeA', 'holdGradeA'];
     }
   }
   radioChange($event: MatRadioChange) {
     console.log($event.source.name, $event.value);
     if ($event.value === 'Date Wise') {
-
-      if (!this.casteWiseReport.fromDate || !this.casteWiseReport.toDate) {
-        this.isDateRangeSelected = true;
-      }
-      else {
-        this.isDateRangeSelected = false;
-      }
-
+      this.isDateRangeSelected = true;
       this.countForm.controls.reportFromDate.enable();
       this.countForm.controls.reportToDate.enable();
     }
     if ($event.value === 'ALL') {
-      this.isDateRangeSelected = true;
+      this.isDateRangeSelected = false;
       this.countForm.controls.reportFromDate.disable();
       this.countForm.controls.reportToDate.disable();
     }
@@ -180,8 +173,7 @@ export class GradeWiseConsolidatedReportComponent implements OnInit {
 
     for (let i = 0; i < arr.length; i++) {
       if (arr[i].APPROVED == null &&
-        arr[i].HOLD == null &&
-        arr[i].REJECTED == null
+        arr[i].HOLD == null
       ) {
         continue;
       }
@@ -240,7 +232,10 @@ export class GradeWiseConsolidatedReportComponent implements OnInit {
 
 
     this.casteWiseReport.userId = Number(this.userId);
-
+    if (!this.isDateRangeSelected) {
+      this.reportFromDate = '';
+      this.reportToDate = '';
+    }
     let reqObj = {
       userId: this.casteWiseReport.userId,
       districtId: this.casteWiseReport.districtId,
@@ -250,6 +245,8 @@ export class GradeWiseConsolidatedReportComponent implements OnInit {
       reportType: this.casteWiseReport.reportType
     }
     console.log('reqObj', reqObj);
+
+    
 
     if (this.role == 'STATE' || this.role == 'ADMIN') {
 
@@ -262,7 +259,7 @@ export class GradeWiseConsolidatedReportComponent implements OnInit {
       });
     }
     if (this.role == 'DISTRICT') {
-      this.employeeService.postConsolidatedCasteWiseReportByDistrict(this.casteWiseReport).subscribe(res => {
+      this.employeeService.postConsolidatedGradeWiseReportByDistrict(this.casteWiseReport).subscribe(res => {
         this.ReportDataStateAndAdmin = res;
 
         this.dataSource = new MatTableDataSource(this.ReportDataStateAndAdmin);

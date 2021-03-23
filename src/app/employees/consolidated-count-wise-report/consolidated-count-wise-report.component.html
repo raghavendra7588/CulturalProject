@@ -11,10 +11,10 @@
         <div class="row">
           <div class="col-md-4 mt-3">
 
-         
-            <mat-radio-group placeholder="Report Type" aria-labelledby="example-radio-group-label"
-              class="example-radio-group mt-3" [(ngModel)]="casteWiseReport.reportType" formControlName="reportType"
-              style="width: 100%;" (change)="radioChange($event)">
+            <mat-label class="mt-1">Report Type :       </mat-label>
+            <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group mt-5 ml-3"
+              [(ngModel)]="casteWiseReport.reportType" formControlName="reportType" style="width: 100%;"
+              (change)="radioChange($event)">
               <mat-radio-button class="example-radio-button mr-2" *ngFor="let reportType of reportTypeArray"
                 [value]="reportType.title">
                 {{reportType.title}}
@@ -27,7 +27,7 @@
             <mat-form-field class="example-full-width" style="width: 100%;">
               <mat-label>From</mat-label>
               <input matInput [matDatepicker]="pickerOne" formControlName="reportFromDate"
-              [(ngModel)]="casteWiseReport.fromDate" readonly [max]="maxDate">
+                [(ngModel)]="casteWiseReport.fromDate" readonly [max]="maxDate">
               <mat-datepicker-toggle matSuffix [for]="pickerOne"></mat-datepicker-toggle>
               <mat-datepicker #pickerOne></mat-datepicker>
             </mat-form-field>
@@ -38,7 +38,7 @@
             <mat-form-field class="example-full-width" style="width: 100%;">
               <mat-label>TO</mat-label>
               <input matInput [matDatepicker]="picker" formControlName="reportToDate"
-              [(ngModel)]="casteWiseReport.toDate" readonly [max]="maxDate">
+                [(ngModel)]="casteWiseReport.toDate" readonly [max]="maxDate">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
@@ -117,25 +117,6 @@
               </td>
             </ng-container>
 
-            <ng-container matColumnDef="rejectedA">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Rejected A</th>
-              <td mat-cell *matCellDef="let element">
-                {{element.REJECTED_A == null?
-                '0' : element.REJECTED_A}} </td>
-            </ng-container>
-            <ng-container matColumnDef="rejectedB">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Rejected B</th>
-              <td mat-cell *matCellDef="let element">
-                {{element.REJECTED_B == null?
-                '0' : element.REJECTED_B}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="rejectedC">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Rejected C</th>
-              <td mat-cell *matCellDef="let element">
-                {{element.REJECTED_C == null?
-                '0' : element.REJECTED_C}} </td>
-            </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
@@ -201,25 +182,7 @@
               </td>
             </ng-container>
 
-            <ng-container matColumnDef="rejectedA">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Rejected A</th>
-              <td mat-cell *matCellDef="let element">
-                {{element.REJECTED_A == null?
-                '0' : element.REJECTED_A}} </td>
-            </ng-container>
-            <ng-container matColumnDef="rejectedB">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Rejected B</th>
-              <td mat-cell *matCellDef="let element">
-                {{element.REJECTED_B == null?
-                '0' : element.REJECTED_B}} </td>
-            </ng-container>
 
-            <ng-container matColumnDef="rejectedC">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Rejected C</th>
-              <td mat-cell *matCellDef="let element">
-                {{element.REJECTED_C == null?
-                '0' : element.REJECTED_C}} </td>
-            </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>

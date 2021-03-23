@@ -83,7 +83,7 @@ export class ConsolidatedCountWiseReportComponent implements OnInit {
     this.currentUserRole = sessionStorage.getItem('userManagement');
     this.role = sessionStorage.getItem('role');
     this.districtId = Number(sessionStorage.getItem('DistrictId'));
-    this.casteWiseReport.districtId = Number(sessionStorage.getItem('DistrictId'));
+   
     this.maxDate = new Date();
     this.countForm.controls.reportFromDate.disable();
     this.countForm.controls.reportToDate.disable();
@@ -117,23 +117,19 @@ export class ConsolidatedCountWiseReportComponent implements OnInit {
 
     if (this.currentUserRole === 'STATE_COUNT_REPORT') {
       this.currentStatusCode = 'State Count Wise Report';
-      this.displayedColumns = ['districtName', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC',
-        'rejectedA', 'rejectedB', 'rejectedC'];
+      this.displayedColumns = ['districtName', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC'];
     }
     if (this.currentUserRole === 'ADMIN_COUNT_REPORT') {
       this.currentStatusCode = 'Admin Count Wise Report';
-      this.displayedColumns = ['districtName', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC',
-        'rejectedA', 'rejectedB', 'rejectedC'];
+      this.displayedColumns = ['districtName', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC'];
     }
     if (this.currentUserRole === 'DISTRICT_COUNT_REPORT') {
       this.currentStatusCode = 'District Count Wise Report';
-      this.displayedColumns = ['panchayat', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC',
-        'rejectedA', 'rejectedB', 'rejectedC'];
+      this.displayedColumns = ['panchayat', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC'];
     }
     if (this.currentUserRole === 'PANCHAYAT_COUNT_REPORT') {
       this.currentStatusCode = 'Panchayat Count Wise Report';
-      this.displayedColumns = ['panchayat', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC',
-        'rejectedA', 'rejectedB', 'rejectedC'];
+      this.displayedColumns = ['panchayat', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC'];
     }
   }
 
@@ -150,6 +146,8 @@ export class ConsolidatedCountWiseReportComponent implements OnInit {
       this.isDateRangeSelected = false;
       this.countForm.controls.reportFromDate.disable();
       this.countForm.controls.reportToDate.disable();
+
+
     }
 
   }
@@ -167,7 +165,7 @@ export class ConsolidatedCountWiseReportComponent implements OnInit {
   }
 
   onSearch() {
-
+    this.casteWiseReport.districtId = parseInt(sessionStorage.getItem('DistrictId'));
     if (this.casteWiseReport.reportType == 'Date Wise') {
       if (this.casteWiseReport.fromDate === null || this.casteWiseReport.fromDate === undefined || this.casteWiseReport.fromDate === ''
         || this.casteWiseReport.toDate === null || this.casteWiseReport.toDate === undefined || this.casteWiseReport.toDate === '') {
@@ -201,6 +199,11 @@ export class ConsolidatedCountWiseReportComponent implements OnInit {
     }
 
     this.casteWiseReport.userId = Number(this.userId);
+
+    if (!this.isDateRangeSelected) {
+      this.reportFromDate = '';
+      this.reportToDate = '';
+    }
 
     let reqObj = {
       userId: this.casteWiseReport.userId,
@@ -251,8 +254,7 @@ export class ConsolidatedCountWiseReportComponent implements OnInit {
 
     for (let i = 0; i < arr.length; i++) {
       if (arr[i].APPROVED_A == null && arr[i].APPROVED_B == null && arr[i].APPROVED_C == null &&
-        arr[i].HOLD_A == null && arr[i].HOLD_B == null && arr[i].HOLD_C == null &&
-        arr[i].REJECTED_A == null && arr[i].REJECTED_B == null && arr[i].REJECTED_C == null
+        arr[i].HOLD_A == null && arr[i].HOLD_B == null && arr[i].HOLD_C == null
       ) {
         continue;
       }
