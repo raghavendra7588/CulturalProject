@@ -1,19 +1,21 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { EmitterService } from 'src/app/shared/emitter.service';
 import { BasicuserService } from 'src/app/user/basicuser.service';
-import { AppDateAdapter, APP_DATE_FORMATS } from '../dialog-view-proposal-form/date.adapter';
-import { CasteWiseReport} from '../employees.model';
+
+import { CasteWiseReport } from '../employees.model';
 import { EmployeesService } from '../employees.service';
 import * as _ from 'lodash';
 import { MatRadioChange } from '@angular/material/radio';
 import * as moment from 'moment';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { ToastrService } from 'ngx-toastr';
+import { AppDateAdapter, APP_DATE_FORMATS } from '../dialog-view-proposal-form/date.adapter';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 
 @Component({
   selector: 'app-grade-wise-consolidated-report',
@@ -42,6 +44,7 @@ export class GradeWiseConsolidatedReportComponent implements OnInit {
   currentStatusCode: string;
   reportTypeArray: any;
   isDateRangeSelected: boolean = false;
+  dateRangeSelected: boolean = false;
   maxDate: any;
   ReportDataStateAndAdmin: any = [];
   artTypeData: any = [];
@@ -84,7 +87,7 @@ export class GradeWiseConsolidatedReportComponent implements OnInit {
     this.gradeData = [
       { id: 0, title: 'A' },
       { id: 1, title: 'B' },
-      { id: 1, title: 'C' }
+      { id: 2, title: 'C' }
     ];
 
     this.userId = Number(sessionStorage.getItem('userId'));
@@ -145,11 +148,13 @@ export class GradeWiseConsolidatedReportComponent implements OnInit {
     console.log($event.source.name, $event.value);
     if ($event.value === 'Date Wise') {
       this.isDateRangeSelected = true;
+      this.dateRangeSelected = true;
       this.countForm.controls.reportFromDate.enable();
       this.countForm.controls.reportToDate.enable();
     }
     if ($event.value === 'ALL') {
       this.isDateRangeSelected = false;
+      this.dateRangeSelected = false;
       this.countForm.controls.reportFromDate.disable();
       this.countForm.controls.reportToDate.disable();
     }
@@ -167,6 +172,16 @@ export class GradeWiseConsolidatedReportComponent implements OnInit {
     let stringDate = [day, month, year].join("/");
     return stringDate;
   }
+
+  valueChangedToDate(selectedDate) {
+    let date = new Date(selectedDate);
+    const year = date.getFullYear()
+    const month = `${date.getMonth() + 1}`.padStart(2, "0")
+    const day = `${date.getDate() + 1}`.padStart(2, "0")
+    let stringDate = [day, month, year].join("/");
+    return stringDate;
+  }
+
 
   extractObjects(arr) {
     let extractedArray: any = [];
@@ -199,7 +214,7 @@ export class GradeWiseConsolidatedReportComponent implements OnInit {
 
 
     if (this.casteWiseReport.reportType === null || this.casteWiseReport.reportType === undefined || this.casteWiseReport.reportType === '') {
-     
+
       this.toastr.error('Report Type is Mandotary !!');
       return;
     }
@@ -217,7 +232,6 @@ export class GradeWiseConsolidatedReportComponent implements OnInit {
     else {
       let fullFromDate = this.valueChangedDate(this.casteWiseReport.fromDate);
       this.reportFromDate = moment(fullFromDate, 'DD/MM/YYYY').format("DD-MMM-YYYY");
-
     }
 
     if (this.casteWiseReport.toDate === null || this.casteWiseReport.toDate === undefined || this.casteWiseReport.toDate === '') {
@@ -225,17 +239,19 @@ export class GradeWiseConsolidatedReportComponent implements OnInit {
       this.reportToDate = '';
     }
     else {
-      let fullToDate = this.valueChangedDate(this.casteWiseReport.toDate);
+      let fullToDate = this.valueChangedToDate(this.casteWiseReport.toDate);
       this.reportToDate = moment(fullToDate, 'DD/MM/YYYY').format("DD-MMM-YYYY");
     }
 
 
 
     this.casteWiseReport.userId = Number(this.userId);
-    if (!this.isDateRangeSelected) {
+
+    if (!this.dateRangeSelected) {
       this.reportFromDate = '';
       this.reportToDate = '';
     }
+
     let reqObj = {
       userId: this.casteWiseReport.userId,
       districtId: this.casteWiseReport.districtId,
@@ -246,7 +262,7 @@ export class GradeWiseConsolidatedReportComponent implements OnInit {
     }
     console.log('reqObj', reqObj);
 
-    
+
 
     if (this.role == 'STATE' || this.role == 'ADMIN') {
 

@@ -133,6 +133,9 @@ export class ReligionWiseConsolidatedReportComponent implements OnInit {
     }
 
     this.getReligionData();
+
+    let date = new Date();
+    console.log('today date', date);
   }
   getReligionData() {
     this.employeeService.getAllReligionTypeData().subscribe(data => {
@@ -179,7 +182,7 @@ export class ReligionWiseConsolidatedReportComponent implements OnInit {
       this.reportToDate = '';
     }
     else {
-      let fullToDate = this.valueChangedDate(this.casteWiseReport.toDate);
+      let fullToDate = this.valueChangedToDate(this.casteWiseReport.toDate);
       this.reportToDate = moment(fullToDate, 'DD/MM/YYYY').format("DD-MMM-YYYY");
     }
 
@@ -259,6 +262,15 @@ export class ReligionWiseConsolidatedReportComponent implements OnInit {
     const year = date.getFullYear()
     const month = `${date.getMonth() + 1}`.padStart(2, "0")
     const day = `${date.getDate()}`.padStart(2, "0")
+    let stringDate = [day, month, year].join("/");
+    return stringDate;
+  }
+
+  valueChangedToDate(selectedDate) {
+    let date = new Date(selectedDate);
+    const year = date.getFullYear()
+    const month = `${date.getMonth() + 1}`.padStart(2, "0")
+    const day = `${date.getDate() + 1}`.padStart(2, "0")
     let stringDate = [day, month, year].join("/");
     return stringDate;
   }

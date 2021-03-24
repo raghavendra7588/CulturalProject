@@ -37,19 +37,19 @@
                     <div class="col-md-3">
                         <mat-form-field class="example-full-width" style="width: 100%;">
                             <mat-label>From</mat-label>
-                            <input matInput [matDatepicker]="pickerOne" formControlName="reportFromDate" readonly
-                                [max]="maxDate" [(ngModel)]="casteWiseReport.fromDate">
+                            <input matInput [matDatepicker]="pickerOne" formControlName="reportFromDate"
+                            [(ngModel)]="casteWiseReport.fromDate" readonly [max]="maxDate">
                             <mat-datepicker-toggle matSuffix [for]="pickerOne"></mat-datepicker-toggle>
                             <mat-datepicker #pickerOne></mat-datepicker>
                         </mat-form-field>
-
+        
                     </div>
-
+        
                     <div class="col-md-3">
                         <mat-form-field class="example-full-width" style="width: 100%;">
                             <mat-label>TO</mat-label>
-                            <input matInput [matDatepicker]="picker" formControlName="reportToDate" readonly
-                                [max]="maxDate" [(ngModel)]="casteWiseReport.toDate" (dateInput)="addEvent('input', $event)">
+                            <input matInput [matDatepicker]="picker" formControlName="reportToDate"
+                            [(ngModel)]="casteWiseReport.toDate" readonly [max]="maxDate">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>

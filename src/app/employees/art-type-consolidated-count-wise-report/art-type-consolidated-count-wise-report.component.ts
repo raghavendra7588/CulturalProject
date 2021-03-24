@@ -145,6 +145,15 @@ export class ArtTypeConsolidatedCountWiseReportComponent implements OnInit {
     return stringDate;
   }
 
+  valueChangedToDate(selectedDate) {
+    let date = new Date(selectedDate);
+    const year = date.getFullYear()
+    const month = `${date.getMonth() + 1}`.padStart(2, "0")
+    const day = `${date.getDate() + 1}`.padStart(2, "0")
+    let stringDate = [day, month, year].join("/");
+    return stringDate;
+  }
+
   onSearch() {
     this.casteWiseReport.districtId = parseInt(sessionStorage.getItem('DistrictId'));
     if (this.casteWiseReport.reportType == 'Date Wise') {
@@ -180,7 +189,7 @@ export class ArtTypeConsolidatedCountWiseReportComponent implements OnInit {
       this.reportToDate = '';
     }
     else {
-      let fullToDate = this.valueChangedDate(this.casteWiseReport.toDate);
+      let fullToDate = this.valueChangedToDate(this.casteWiseReport.toDate);
       this.reportToDate = moment(fullToDate, 'DD/MM/YYYY').format("DD-MMM-YYYY");
     }
 
