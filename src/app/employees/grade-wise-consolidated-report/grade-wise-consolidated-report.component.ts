@@ -230,8 +230,11 @@ export class GradeWiseConsolidatedReportComponent implements OnInit {
       this.reportFromDate = '';
     }
     else {
+      console.log('his.casteWiseReport.fromDate', this.casteWiseReport.fromDate);
       let fullFromDate = this.valueChangedDate(this.casteWiseReport.fromDate);
+      console.log('fullFromDate', fullFromDate);
       this.reportFromDate = moment(fullFromDate, 'DD/MM/YYYY').format("DD-MMM-YYYY");
+      console.log('this.reportFromDate ', this.reportFromDate);
     }
 
     if (this.casteWiseReport.toDate === null || this.casteWiseReport.toDate === undefined || this.casteWiseReport.toDate === '') {
@@ -239,8 +242,11 @@ export class GradeWiseConsolidatedReportComponent implements OnInit {
       this.reportToDate = '';
     }
     else {
+      console.log('his.casteWiseReport.toDate', this.casteWiseReport.toDate);
       let fullToDate = this.valueChangedToDate(this.casteWiseReport.toDate);
+      console.log('fullToDate', fullToDate);
       this.reportToDate = moment(fullToDate, 'DD/MM/YYYY').format("DD-MMM-YYYY");
+      console.log('this.reportToDate ', this.reportToDate );
     }
 
 
@@ -264,32 +270,32 @@ export class GradeWiseConsolidatedReportComponent implements OnInit {
 
 
 
-    if (this.role == 'STATE' || this.role == 'ADMIN') {
+    // if (this.role == 'STATE' || this.role == 'ADMIN') {
 
-      this.employeeService.postConsolidatedGradeWiseReportByStateAndAdmin(this.casteWiseReport).subscribe(res => {
-        this.ReportDataStateAndAdmin = res;
-        console.log('this.ReportDataStateAndAdmin', this.ReportDataStateAndAdmin);
-        let removedKeys = _.omitBy(this.ReportDataStateAndAdmin, _.isNil);
-        console.log('removedKeys', removedKeys);
-        this.extractObjects(this.ReportDataStateAndAdmin);
-      });
-    }
-    if (this.role == 'DISTRICT') {
-      this.employeeService.postConsolidatedGradeWiseReportByDistrict(this.casteWiseReport).subscribe(res => {
-        this.ReportDataStateAndAdmin = res;
+    //   this.employeeService.postConsolidatedGradeWiseReportByStateAndAdmin(this.casteWiseReport).subscribe(res => {
+    //     this.ReportDataStateAndAdmin = res;
+    //     console.log('this.ReportDataStateAndAdmin', this.ReportDataStateAndAdmin);
+    //     let removedKeys = _.omitBy(this.ReportDataStateAndAdmin, _.isNil);
+    //     console.log('removedKeys', removedKeys);
+    //     this.extractObjects(this.ReportDataStateAndAdmin);
+    //   });
+    // }
+    // if (this.role == 'DISTRICT') {
+    //   this.employeeService.postConsolidatedGradeWiseReportByDistrict(this.casteWiseReport).subscribe(res => {
+    //     this.ReportDataStateAndAdmin = res;
 
-        this.dataSource = new MatTableDataSource(this.ReportDataStateAndAdmin);
-        setTimeout(() => this.dataSource.paginator = this.paginator);
-      });
-    }
-    if (this.role == 'GRAMPANCHAYAT') {
-      this.employeeService.postConsolidatedGradeWiseReportByPanchyat(this.casteWiseReport).subscribe(res => {
-        this.ReportDataStateAndAdmin = res;
+    //     this.dataSource = new MatTableDataSource(this.ReportDataStateAndAdmin);
+    //     setTimeout(() => this.dataSource.paginator = this.paginator);
+    //   });
+    // }
+    // if (this.role == 'GRAMPANCHAYAT') {
+    //   this.employeeService.postConsolidatedGradeWiseReportByPanchyat(this.casteWiseReport).subscribe(res => {
+    //     this.ReportDataStateAndAdmin = res;
 
-        this.dataSource = new MatTableDataSource(this.ReportDataStateAndAdmin);
-        setTimeout(() => this.dataSource.paginator = this.paginator);
-      });
-    }
+    //     this.dataSource = new MatTableDataSource(this.ReportDataStateAndAdmin);
+    //     setTimeout(() => this.dataSource.paginator = this.paginator);
+    //   });
+    // }
 
   }
 
