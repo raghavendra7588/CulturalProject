@@ -12,6 +12,7 @@ import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { AppDateAdapter, APP_DATE_FORMATS } from '../dialog-view-proposal-form/date.adapter';
 import { ToastrService } from 'ngx-toastr';
 import * as moment from 'moment';
+import { ExportToCsv } from 'export-to-csv';
 
 @Component({
   selector: 'app-religion-wise-consolidated-report',
@@ -134,8 +135,20 @@ export class ReligionWiseConsolidatedReportComponent implements OnInit {
 
     this.getReligionData();
 
-    let date = new Date();
-    console.log('today date', date);
+
+
+    const options = {
+      fieldSeparator: ',',
+      quoteStrings: '"',
+      decimalSeparator: '.',
+      showLabels: true,
+      showTitle: true,
+      title: 'My Awesome CSV',
+      useTextFile: false,
+      useBom: true,
+      useKeysAsHeaders: true,
+    };
+    const csvExporter = new ExportToCsv(options);
   }
   getReligionData() {
     this.employeeService.getAllReligionTypeData().subscribe(data => {
@@ -235,7 +248,22 @@ export class ReligionWiseConsolidatedReportComponent implements OnInit {
 
 
   downloadReport() {
+    const options = {
+      fieldSeparator: ',',
+      quoteStrings: '"',
+      decimalSeparator: '.',
+      showLabels: true,
+      showTitle: true,
+      title: 'My Awesome CSV',
+      useTextFile: false,
+      useBom: true,
+      // useKeysAsHeaders: true
+      headers: ['Name', 'Approved Grade A', 'Approved Grade B', 'Approved Grade C',
+        'Holded Grade A', 'Holded Grade B', 'Holded Grade C']
+    };
 
+    const csvExporter = new ExportToCsv(options);
+    csvExporter.generateCsv(this.ReportDataStateAndAdmin);
   }
 
   radioChange($event: MatRadioChange) {
@@ -288,7 +316,7 @@ export class ReligionWiseConsolidatedReportComponent implements OnInit {
         extractedArray.push(arr[i]);
       }
     }
-
+    this.ReportDataStateAndAdmin = extractedArray;
     console.log('extractedArray', extractedArray);
     this.dataSource = new MatTableDataSource(extractedArray);
     setTimeout(() => this.dataSource.paginator = this.paginator);

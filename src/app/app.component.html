@@ -71,7 +71,7 @@
 
         <ng-container *ngIf="role === 'ADMIN'">
           <h3 class="text-center font-weight-bold">Artist Category</h3>
-          <a mat-list-item (click)="gradeAArtistByAdmin()">Category A</a>
+          <a mat-list-item (click)="gradeAArtistByAdmin()">Grade A</a>
           <a mat-list-item (click)="gradeBArtistByAdmin()">Grade B</a>
           <a mat-list-item (click)="gradeCArtistByAdmin()">Grade C</a>
           <mat-divider class="my-2"></mat-divider>
@@ -79,7 +79,7 @@
 
         <ng-container *ngIf="role === 'DISTRICT'">
           <h3 class="text-center font-weight-bold">Artist Category</h3>
-          <a mat-list-item (click)="gradeAArtistByDistrict()">Category A</a>
+          <a mat-list-item (click)="gradeAArtistByDistrict()">Grade A</a>
           <a mat-list-item (click)="gradeBArtistByDistrict()">Grade B</a>
           <a mat-list-item (click)="gradeCArtistByDistrict()">Grade C </a>
           <mat-divider class="my-2"></mat-divider>
@@ -87,7 +87,7 @@
 
         <ng-container *ngIf="role === 'STATE'">
           <h3 class="text-center font-weight-bold">Artist Category</h3>
-          <a mat-list-item (click)="gradeAArtistByState()">Category A </a>
+          <a mat-list-item (click)="gradeAArtistByState()">Grade A </a>
           <a mat-list-item (click)="gradeBArtistByState()">Grade B</a>
           <a mat-list-item (click)="gradeCArtistByState()">Grade C</a>
           <mat-divider class="my-2"></mat-divider>
@@ -132,6 +132,8 @@
           <a mat-list-item (click)="religionWiseConsolidatedReport('STATE_RELIGION_WISE_COUNT_REPORT')">Religion Wise
             Consolidated
             Report</a>
+          <a mat-list-item (click)="rejectedConsolidatedReport('STATE_REJECTED_WISE_COUNT_REPORT')">Rejected
+            Consolidated Report</a>
           <mat-divider class="my-2"></mat-divider>
         </ng-container>
 
@@ -149,6 +151,8 @@
           <a mat-list-item (click)="religionWiseConsolidatedReport('ADMIN_RELIGION_WISE_COUNT_REPORT')">Religion Wise
             Consolidated
             Report</a>
+          <a mat-list-item (click)="rejectedConsolidatedReport('ADMIN_REJECTED_WISE_COUNT_REPORT')">Rejected
+            Consolidated Report</a>
           <mat-divider class="my-2"></mat-divider>
         </ng-container>
 
@@ -167,6 +171,8 @@
           <a mat-list-item (click)="religionWiseConsolidatedReport('DISTRICT_RELIGION_WISE_COUNT_REPORT')">Religion Wise
             Consolidated
             Report</a>
+          <a mat-list-item (click)="rejectedConsolidatedReport('DISTRICT_REJECTED_WISE_COUNT_REPORT')">Rejected
+            Consolidated Report</a>
           <mat-divider class="my-2"></mat-divider>
         </ng-container>
 
@@ -186,6 +192,8 @@
             Wise
             Consolidated
             Report</a>
+          <a mat-list-item (click)="rejectedConsolidatedReport('PANCHAYAT_REJECTED_WISE_COUNT_REPORT')">Rejected
+            Consolidated Report</a>
           <mat-divider class="my-2"></mat-divider>
         </ng-container>
 
@@ -391,6 +399,19 @@
           <a mat-list-item (click)="stateCountWiseReport()">विभागीय संख्यात्मक अहवाल</a>
           <a mat-list-item (click)="artTypeConsolidatedReport('STATE_ART_TYPE_COUNT_REPORT')">कला प्रकार विभागीय
             संख्यात्मक अहवाल</a>
+
+          <a mat-list-item (click)="casteWiseConsolidatedReport('STATE_CAST_WISE_COUNT_REPORT')">जाती प्रमाणे विभागीय
+            संख्यात्मक अहवाल</a>
+          <a mat-list-item (click)="gradeWiseConsolidatedReport('STATE_GRADE_TYPE_COUNT_REPORT')">श्रेणी प्रमाणे
+            विभागीय
+            संख्यात्मक अहवाल</a>
+          <a mat-list-item (click)="religionWiseConsolidatedReport('STATE_RELIGION_WISE_COUNT_REPORT')">धर्मा प्रमाणे
+            विभागीय
+            संख्यात्मक अहवाल</a>
+          <a mat-list-item (click)="rejectedConsolidatedReport('STATE_REJECTED_WISE_COUNT_REPORT')">नाकारलेल्या प्रमाणे
+            विभागीय
+            संख्यात्मक अहवाल</a>
+
           <mat-divider class="my-2"></mat-divider>
         </ng-container>
 
@@ -398,6 +419,19 @@
           <h3 class="text-center font-weight-bold">अहवाल</h3>
           <a mat-list-item (click)="adminCountWiseReport()">विभागीय संख्यात्मक अहवाल</a>
           <a mat-list-item (click)="artTypeConsolidatedReport('ADMIN_ART_TYPE_COUNT_REPORT')">कला प्रकार विभागीय
+            संख्यात्मक अहवाल</a>
+
+
+          <a mat-list-item (click)="casteWiseConsolidatedReport('ADMIN_CAST_WISE_COUNT_REPORT')">जाती प्रमाणे विभागीय
+            संख्यात्मक अहवाल</a>
+          <a mat-list-item (click)="gradeWiseConsolidatedReport('ADMIN_GRADE_TYPE_COUNT_REPORT')">श्रेणी प्रमाणे
+            विभागीय
+            संख्यात्मक अहवाल</a>
+          <a mat-list-item (click)="religionWiseConsolidatedReport('ADMIN_RELIGION_WISE_COUNT_REPORT')">धर्मा प्रमाणे
+            विभागीय
+            संख्यात्मक अहवाल</a>
+          <a mat-list-item (click)="rejectedConsolidatedReport('ADMIN_REJECTED_WISE_COUNT_REPORT')">नाकारलेल्या प्रमाणे
+            विभागीय
             संख्यात्मक अहवाल</a>
           <mat-divider class="my-2"></mat-divider>
         </ng-container>
@@ -407,6 +441,21 @@
           <a mat-list-item (click)="districtCountWiseReport()">विभागीय संख्यात्मक अहवाल</a>
           <a mat-list-item (click)="artTypeConsolidatedReport('DISTRICT_ART_TYPE_COUNT_REPORT')">कला प्रकार विभागीय
             संख्यात्मक अहवाल</a>
+
+          <a mat-list-item (click)="casteWiseConsolidatedReport('DISTRICT_CAST_WISE_COUNT_REPORT')">जाती प्रमाणे विभागीय
+            संख्यात्मक अहवाल</a>
+          <a mat-list-item (click)="gradeWiseConsolidatedReport('DISTRICT_GRADE_TYPE_COUNT_REPORT')">श्रेणी प्रमाणे
+            विभागीय
+            संख्यात्मक अहवाल</a>
+          <a mat-list-item (click)="religionWiseConsolidatedReport('DISTRICT_RELIGION_WISE_COUNT_REPORT')">धर्मा प्रमाणे
+            विभागीय
+            संख्यात्मक अहवाल</a>
+          <a mat-list-item (click)="rejectedConsolidatedReport('DISTRICT_REJECTED_WISE_COUNT_REPORT')">नाकारलेल्या
+            प्रमाणे
+            विभागीय
+            संख्यात्मक अहवाल</a>
+
+
           <mat-divider class="my-2"></mat-divider>
         </ng-container>
 
@@ -415,10 +464,27 @@
           <a mat-list-item (click)="panchayatCountWiseReport()">विभागीय संख्यात्मक अहवाल</a>
           <a mat-list-item (click)="artTypeConsolidatedReport('PANCHAYAT_ART_TYPE_COUNT_REPORT')">कला प्रकार विभागीय
             संख्यात्मक अहवाल</a>
-          <a mat-list-item (click)="artTypeConsolidatedReport('PANCHAYAT_ART_TYPE_COUNT_REPORT')">कला प्रकार विभागीय
+
+          <a mat-list-item (click)="casteWiseConsolidatedReport('PANCHAYAT_CAST_WISE_COUNT_REPORT')">जाती प्रमाणे
+            विभागीय
             संख्यात्मक अहवाल</a>
+
+          <a mat-list-item (click)="gradeWiseConsolidatedReport('PANCHAYAT_GRADE_TYPE_COUNT_REPORT')">श्रेणी प्रमाणे
+            विभागीय
+            संख्यात्मक अहवाल</a>
+          <a mat-list-item (click)="religionWiseConsolidatedReport('PANCHAYAT_RELIGION_WISE_COUNT_REPORT')">धर्मा
+            प्रमाणे
+            विभागीय
+            संख्यात्मक अहवाल</a>
+          <a mat-list-item (click)="rejectedConsolidatedReport('PANCHAYAT_REJECTED_WISE_COUNT_REPORT')">नाकारलेल्या
+            प्रमाणे
+            विभागीय
+            संख्यात्मक अहवाल</a>
+
           <mat-divider class="my-2"></mat-divider>
         </ng-container>
+
+
 
         <a mat-list-item (click)="changePassword()">पासवर्ड बदला</a>
         <a mat-list-item (click)="[isLogout(),snav.close()]">बाहेर पडा</a>

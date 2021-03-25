@@ -473,6 +473,13 @@ export class AppComponent {
     this.router.navigate(['/gradeWiseConsolidatedCount/report']);
   }
 
+  rejectedConsolidatedReport(currentUserText) {
+    sessionStorage.removeItem('userManagement');
+    sessionStorage.setItem('userManagement', currentUserText.toString());
+    this.emitterService.isUserMasterSelected.emit(true);
+    this.router.navigate(['/rejectedConsolidatedCount/report']);
+  }
+
   changeSideBarLanguageToEnglish() {
     sessionStorage.removeItem('sideBarLanguage');
     sessionStorage.setItem('sideBarLanguage', 'true');

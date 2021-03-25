@@ -2,23 +2,23 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatRadioChange } from '@angular/material/radio';
+import { MatTableDataSource } from '@angular/material/table';
+import * as moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
 import { EmitterService } from 'src/app/shared/emitter.service';
 import { BasicuserService } from 'src/app/user/basicuser.service';
-import { AppDateAdapter, APP_DATE_FORMATS } from '../dialog-personal-detail/date.adapter';
+import { AppDateAdapter, APP_DATE_FORMATS } from '../dialog-view-proposal-form/date.adapter';
 import { CasteWiseReport, CountWise, CountWiseReport } from '../employees.model';
 import { EmployeesService } from '../employees.service';
 import * as _ from 'lodash';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-import { ToastrService } from 'ngx-toastr';
-import * as moment from 'moment';
 import { ExportToCsv } from 'export-to-csv';
 
 @Component({
-  selector: 'app-consolidated-count-wise-report',
-  templateUrl: './consolidated-count-wise-report.component.html',
-  styleUrls: ['./consolidated-count-wise-report.component.css'],
+  selector: 'app-consolidated-rejected-report',
+  templateUrl: './consolidated-rejected-report.component.html',
+  styleUrls: ['./consolidated-rejected-report.component.css'],
   providers: [
     {
       provide: DateAdapter,
@@ -30,8 +30,7 @@ import { ExportToCsv } from 'export-to-csv';
     }
   ]
 })
-export class ConsolidatedCountWiseReportComponent implements OnInit {
-
+export class ConsolidatedRejectedReportComponent implements OnInit {
   dataSource: any;
   displayedColumns;
 
@@ -89,23 +88,23 @@ export class ConsolidatedCountWiseReportComponent implements OnInit {
     this.countForm.controls.reportFromDate.disable();
     this.countForm.controls.reportToDate.disable();
 
-    this.getArtTypeData();
+
 
     this.emitterService.isUserMasterSelected.subscribe(val => {
       if (val) {
         this.currentUserRole = sessionStorage.getItem('userManagement');
-        if (this.currentUserRole === 'STATE_COUNT_REPORT') {
-          this.currentStatusCode = 'State Count Wise Report';
+        if (this.currentUserRole === 'STATE_REJECTED_WISE_COUNT_REPORT') {
+          this.currentStatusCode = 'State Rejected Report';
 
         }
-        if (this.currentUserRole === 'ADMIN_COUNT_REPORT') {
-          this.currentStatusCode = 'Admin Count Wise Report';
+        if (this.currentUserRole === 'ADMIN_REJECTED_WISE_COUNT_REPORT') {
+          this.currentStatusCode = 'Admin Rejected Report';
         }
-        if (this.currentUserRole === 'DISTRICT_COUNT_REPORT') {
-          this.currentStatusCode = 'District Count Wise Report';
+        if (this.currentUserRole === 'DISTRICT_REJECTED_WISE_COUNT_REPORT') {
+          this.currentStatusCode = 'District Rejected Report';
         }
-        if (this.currentUserRole === 'PANCHAYAT_COUNT_REPORT') {
-          this.currentStatusCode = 'Panchayat Count Wise Report';
+        if (this.currentUserRole === 'PANCHAYAT_REJECTED_WISE_COUNT_REPORT') {
+          this.currentStatusCode = 'Panchayat Rejected Report';
         }
       }
       else {
@@ -116,36 +115,22 @@ export class ConsolidatedCountWiseReportComponent implements OnInit {
 
 
 
-    if (this.currentUserRole === 'STATE_COUNT_REPORT') {
-      this.currentStatusCode = 'State Count Wise Report';
-      this.displayedColumns = ['districtName', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC'];
+    if (this.currentUserRole === 'STATE_REJECTED_WISE_COUNT_REPORT') {
+      this.currentStatusCode = 'State Rejected Report';
+      this.displayedColumns = ['districtName', 'rejected'];
     }
-    if (this.currentUserRole === 'ADMIN_COUNT_REPORT') {
-      this.currentStatusCode = 'Admin Count Wise Report';
-      this.displayedColumns = ['districtName', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC'];
+    if (this.currentUserRole === 'ADMIN_REJECTED_WISE_COUNT_REPORT') {
+      this.currentStatusCode = 'Admin Rejected Report';
+      this.displayedColumns = ['districtName', 'rejected'];
     }
-    if (this.currentUserRole === 'DISTRICT_COUNT_REPORT') {
-      this.currentStatusCode = 'District Count Wise Report';
-      this.displayedColumns = ['panchayat', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC'];
+    if (this.currentUserRole === 'DISTRICT_REJECTED_WISE_COUNT_REPORT') {
+      this.currentStatusCode = 'District Rejected Report';
+      this.displayedColumns = ['panchayat', 'rejected'];
     }
-    if (this.currentUserRole === 'PANCHAYAT_COUNT_REPORT') {
-      this.currentStatusCode = 'Panchayat Count Wise Report';
-      this.displayedColumns = ['panchayat', 'approvedGradeA', 'approvedGradeB', 'approvedGradeC', 'holdGradeA', 'holdGradeB', 'holdGradeC'];
+    if (this.currentUserRole === 'PANCHAYAT_REJECTED_WISE_COUNT_REPORT') {
+      this.currentStatusCode = 'Panchayat Rejected Report';
+      this.displayedColumns = ['panchayat', 'rejected'];
     }
-
-
-    const options = {
-      fieldSeparator: ',',
-      quoteStrings: '"',
-      decimalSeparator: '.',
-      showLabels: true,
-      showTitle: true,
-      title: 'My Awesome CSV',
-      useTextFile: false,
-      useBom: true,
-      useKeysAsHeaders: true,
-    };
-    const csvExporter = new ExportToCsv(options);
   }
 
 
@@ -164,7 +149,18 @@ export class ConsolidatedCountWiseReportComponent implements OnInit {
 
 
     }
-
+    const options = {
+      fieldSeparator: ',',
+      quoteStrings: '"',
+      decimalSeparator: '.',
+      showLabels: true,
+      showTitle: true,
+      title: 'My Awesome CSV',
+      useTextFile: false,
+      useBom: true,
+      useKeysAsHeaders: true,
+    };
+    const csvExporter = new ExportToCsv(options);
   }
 
 
@@ -189,6 +185,8 @@ export class ConsolidatedCountWiseReportComponent implements OnInit {
     let stringDate = [day, month, year].join("/");
     return stringDate;
   }
+
+
 
   onSearch() {
     this.casteWiseReport.districtId = parseInt(sessionStorage.getItem('DistrictId'));
@@ -242,7 +240,7 @@ export class ConsolidatedCountWiseReportComponent implements OnInit {
 
     if (this.role == 'STATE' || this.role == 'ADMIN') {
 
-      this.employeeService.getConsolidatedReportByAdmin(reqObj).subscribe(res => {
+      this.employeeService.postConsolidatedRejectedReportByStateAndAdmin(reqObj).subscribe(res => {
         this.ReportDataStateAndAdmin = res;
         console.log('this.ReportDataStateAndAdmin', this.ReportDataStateAndAdmin);
         let removedKeys = _.omitBy(this.ReportDataStateAndAdmin, _.isNil);
@@ -251,7 +249,7 @@ export class ConsolidatedCountWiseReportComponent implements OnInit {
       });
     }
     if (this.role == 'DISTRICT') {
-      this.employeeService.getConsolidatedReportByDistrict(reqObj).subscribe(res => {
+      this.employeeService.postConsolidatedRejectedReportByDistrict(reqObj).subscribe(res => {
         this.ReportDataStateAndAdmin = res;
 
         this.dataSource = new MatTableDataSource(this.ReportDataStateAndAdmin);
@@ -259,7 +257,7 @@ export class ConsolidatedCountWiseReportComponent implements OnInit {
       });
     }
     if (this.role == 'GRAMPANCHAYAT') {
-      this.employeeService.getConsolidatedReportByPanchayat(reqObj).subscribe(res => {
+      this.employeeService.postConsolidatedRejectedReportByPanchyat(reqObj).subscribe(res => {
         this.ReportDataStateAndAdmin = res;
 
         this.dataSource = new MatTableDataSource(this.ReportDataStateAndAdmin);
@@ -271,6 +269,7 @@ export class ConsolidatedCountWiseReportComponent implements OnInit {
 
 
   downloadReport() {
+
     const options = {
       fieldSeparator: ',',
       quoteStrings: '"',
@@ -281,8 +280,7 @@ export class ConsolidatedCountWiseReportComponent implements OnInit {
       useTextFile: false,
       useBom: true,
       // useKeysAsHeaders: true
-      headers: ['Name', 'Approved Grade A', 'Approved Grade B', 'Approved Grade C',
-        'Holded Grade A', 'Holded Grade B', 'Holded Grade C']
+      headers: ['Name', 'Rejected']
     };
 
     const csvExporter = new ExportToCsv(options);
@@ -294,9 +292,7 @@ export class ConsolidatedCountWiseReportComponent implements OnInit {
     let extractedArray: any = [];
 
     for (let i = 0; i < arr.length; i++) {
-      if (arr[i].APPROVED_A == null && arr[i].APPROVED_B == null && arr[i].APPROVED_C == null &&
-        arr[i].HOLD_A == null && arr[i].HOLD_B == null && arr[i].HOLD_C == null
-      ) {
+      if (arr[i].REJECTED_A == null) {
         continue;
       }
       else {
@@ -307,12 +303,5 @@ export class ConsolidatedCountWiseReportComponent implements OnInit {
     console.log('extractedArray', extractedArray);
     this.dataSource = new MatTableDataSource(extractedArray);
     setTimeout(() => this.dataSource.paginator = this.paginator);
-  }
-
-  getArtTypeData() {
-    this.employeeService.getAllArtTypeData().subscribe(data => {
-      this.artTypeData = data;
-      console.log(' this.artTypeData', this.artTypeData);
-    });
   }
 }

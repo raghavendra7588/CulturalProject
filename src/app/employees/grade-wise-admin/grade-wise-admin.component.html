@@ -1,9 +1,9 @@
 <h4 class="text-center mt-3" style="color:blue">Artist Category Grade {{currentGrade}}</h4>
 
-    <div class="container mt-4">
+    <div class="container">
 
-      <div class="row">
-        <div class="col-md-4 col-4 col-sm-4">
+      <div class="row ">
+        <div class="col-md-4 col-4 col-sm-4 mt-3">
           <mat-form-field style="width: 100% !important;">
             <mat-select placeholder="District List" [(ngModel)]="dynamicStateApproved.districtName">
               <mat-option *ngFor="let item of districtData;" [value]="item.DistrictId"

@@ -16,6 +16,7 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { ToastrService } from 'ngx-toastr';
 import { AppDateAdapter, APP_DATE_FORMATS } from '../dialog-view-proposal-form/date.adapter';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { ExportToCsv } from 'export-to-csv';
 
 @Component({
   selector: 'app-grade-wise-consolidated-report',
@@ -143,6 +144,21 @@ export class GradeWiseConsolidatedReportComponent implements OnInit {
       this.currentStatusCode = 'Panchayat Grade Wise Count Report';
       this.displayedColumns = ['panchayat', 'approvedGradeA', 'holdGradeA'];
     }
+
+
+
+    const options = {
+      fieldSeparator: ',',
+      quoteStrings: '"',
+      decimalSeparator: '.',
+      showLabels: true,
+      showTitle: true,
+      title: 'My Awesome CSV',
+      useTextFile: false,
+      useBom: true,
+      useKeysAsHeaders: true,
+    };
+    const csvExporter = new ExportToCsv(options);
   }
   radioChange($event: MatRadioChange) {
     console.log($event.source.name, $event.value);
@@ -158,6 +174,7 @@ export class GradeWiseConsolidatedReportComponent implements OnInit {
       this.countForm.controls.reportFromDate.disable();
       this.countForm.controls.reportToDate.disable();
     }
+
 
   }
 
@@ -196,7 +213,7 @@ export class GradeWiseConsolidatedReportComponent implements OnInit {
         extractedArray.push(arr[i]);
       }
     }
-
+    this.ReportDataStateAndAdmin = extractedArray;
     console.log('extractedArray', extractedArray);
     this.dataSource = new MatTableDataSource(extractedArray);
     setTimeout(() => this.dataSource.paginator = this.paginator);
@@ -246,7 +263,7 @@ export class GradeWiseConsolidatedReportComponent implements OnInit {
       let fullToDate = this.valueChangedToDate(this.casteWiseReport.toDate);
       console.log('fullToDate', fullToDate);
       this.reportToDate = moment(fullToDate, 'DD/MM/YYYY').format("DD-MMM-YYYY");
-      console.log('this.reportToDate ', this.reportToDate );
+      console.log('this.reportToDate ', this.reportToDate);
     }
 
 
@@ -270,38 +287,52 @@ export class GradeWiseConsolidatedReportComponent implements OnInit {
 
 
 
-    // if (this.role == 'STATE' || this.role == 'ADMIN') {
+    if (this.role == 'STATE' || this.role == 'ADMIN') {
 
-    //   this.employeeService.postConsolidatedGradeWiseReportByStateAndAdmin(this.casteWiseReport).subscribe(res => {
-    //     this.ReportDataStateAndAdmin = res;
-    //     console.log('this.ReportDataStateAndAdmin', this.ReportDataStateAndAdmin);
-    //     let removedKeys = _.omitBy(this.ReportDataStateAndAdmin, _.isNil);
-    //     console.log('removedKeys', removedKeys);
-    //     this.extractObjects(this.ReportDataStateAndAdmin);
-    //   });
-    // }
-    // if (this.role == 'DISTRICT') {
-    //   this.employeeService.postConsolidatedGradeWiseReportByDistrict(this.casteWiseReport).subscribe(res => {
-    //     this.ReportDataStateAndAdmin = res;
+      this.employeeService.postConsolidatedGradeWiseReportByStateAndAdmin(this.casteWiseReport).subscribe(res => {
+        this.ReportDataStateAndAdmin = res;
+        console.log('this.ReportDataStateAndAdmin', this.ReportDataStateAndAdmin);
+        let removedKeys = _.omitBy(this.ReportDataStateAndAdmin, _.isNil);
+        console.log('removedKeys', removedKeys);
+        this.extractObjects(this.ReportDataStateAndAdmin);
+      });
+    }
+    if (this.role == 'DISTRICT') {
+      this.employeeService.postConsolidatedGradeWiseReportByDistrict(this.casteWiseReport).subscribe(res => {
+        this.ReportDataStateAndAdmin = res;
 
-    //     this.dataSource = new MatTableDataSource(this.ReportDataStateAndAdmin);
-    //     setTimeout(() => this.dataSource.paginator = this.paginator);
-    //   });
-    // }
-    // if (this.role == 'GRAMPANCHAYAT') {
-    //   this.employeeService.postConsolidatedGradeWiseReportByPanchyat(this.casteWiseReport).subscribe(res => {
-    //     this.ReportDataStateAndAdmin = res;
+        this.dataSource = new MatTableDataSource(this.ReportDataStateAndAdmin);
+        setTimeout(() => this.dataSource.paginator = this.paginator);
+      });
+    }
+    if (this.role == 'GRAMPANCHAYAT') {
+      this.employeeService.postConsolidatedGradeWiseReportByPanchyat(this.casteWiseReport).subscribe(res => {
+        this.ReportDataStateAndAdmin = res;
 
-    //     this.dataSource = new MatTableDataSource(this.ReportDataStateAndAdmin);
-    //     setTimeout(() => this.dataSource.paginator = this.paginator);
-    //   });
-    // }
+        this.dataSource = new MatTableDataSource(this.ReportDataStateAndAdmin);
+        setTimeout(() => this.dataSource.paginator = this.paginator);
+      });
+    }
 
   }
 
 
   downloadReport() {
+    const options = {
+      fieldSeparator: ',',
+      quoteStrings: '"',
+      decimalSeparator: '.',
+      showLabels: true,
+      showTitle: true,
+      title: 'My Awesome CSV',
+      useTextFile: false,
+      useBom: true,
+      // useKeysAsHeaders: true
+      headers: ['Name', 'Approved', 'Holded']
+    };
 
+    const csvExporter = new ExportToCsv(options);
+    csvExporter.generateCsv(this.ReportDataStateAndAdmin);
   }
 
   addEvent(type: string, event: MatDatepickerInputEvent<Date>) {

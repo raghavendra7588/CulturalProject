@@ -64,6 +64,7 @@ import { ArtTypeConsolidatedCountWiseReportComponent } from './art-type-consolid
 import { CasteWiseConsolidatedReportComponent } from './caste-wise-consolidated-report/caste-wise-consolidated-report.component';
 import { ReligionWiseConsolidatedReportComponent } from './religion-wise-consolidated-report/religion-wise-consolidated-report.component';
 import { GradeWiseConsolidatedReportComponent } from './grade-wise-consolidated-report/grade-wise-consolidated-report.component';
+import { ConsolidatedRejectedReportComponent } from './consolidated-rejected-report/consolidated-rejected-report.component';
 
 @NgModule({
   declarations: [
@@ -105,7 +106,8 @@ import { GradeWiseConsolidatedReportComponent } from './grade-wise-consolidated-
     ArtTypeConsolidatedCountWiseReportComponent,
     CasteWiseConsolidatedReportComponent,
     ReligionWiseConsolidatedReportComponent,
-    GradeWiseConsolidatedReportComponent
+    GradeWiseConsolidatedReportComponent,
+    ConsolidatedRejectedReportComponent
   ],
   imports: [
     CommonModule,
@@ -145,7 +147,7 @@ import { GradeWiseConsolidatedReportComponent } from './grade-wise-consolidated-
     ConsolidatedCountWiseReportComponent, ArtTypeConsolidatedCountWiseReportComponent,
     CasteWiseConsolidatedReportComponent,
     ReligionWiseConsolidatedReportComponent,
-    GradeWiseConsolidatedReportComponent],
+    GradeWiseConsolidatedReportComponent, ConsolidatedRejectedReportComponent],
 
   entryComponents: [DialogPersonalDetailComponent, DialogAddUserMasterComponent, DialogViewProposalFormComponent,
     DialogApprovArtistComponent, ReasonForRejectionComponent, DialogRoleManagementComponent, DialogPersonalDetailsEditComponent]

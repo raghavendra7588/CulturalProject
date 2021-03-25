@@ -183,7 +183,9 @@ export class EmployeesService {
   private POST_CONSOLIDATED_GRADE_WISE_REPORT_BY_DISTRICT = environment.BASE_URL + 'api/Reports/ConsolidatedGradeWiseReportByDistrict';
   private POST_CONSOLIDATED_GRADE_WISE_REPORT_BY_PANCHAYAT = environment.BASE_URL + 'api/Reports/ConsolidatedGradeWiseReportByPanchayat';
 
-
+  private POST_CONSOLIDATED_REJECTED_REPORT_BY_ADMIN_STATE = environment.BASE_URL + 'api/Reports/ConsolidatedRejectedReportByAdminOrState';
+  private POST_CONSOLIDATED_REJECTED_REPORT_BY_DISTRICT = environment.BASE_URL + 'api/Reports/ConsolidatedRejectedReportByDistrict';
+  private POST_CONSOLIDATED_REJECTED_REPORT_BY_PANCHAYAT = environment.BASE_URL + 'api/Reports/ConsolidatedRejectedReportByPanchayat';
 
   constructor(
     public http: HttpClient
@@ -746,6 +748,20 @@ export class EmployeesService {
   }
 
 
-  
+
+  postConsolidatedRejectedReportByStateAndAdmin(casteWise) {
+    return this.http.post(this.POST_CONSOLIDATED_REJECTED_REPORT_BY_ADMIN_STATE, casteWise);
+  }
+
+  postConsolidatedRejectedReportByDistrict(casteWise) {
+    return this.http.post(this.POST_CONSOLIDATED_REJECTED_REPORT_BY_DISTRICT, casteWise);
+  }
+
+  postConsolidatedRejectedReportByPanchyat(casteWise) {
+    return this.http.post(this.POST_CONSOLIDATED_REJECTED_REPORT_BY_PANCHAYAT, casteWise);
+  }
+
+
+
 
 }

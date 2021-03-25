@@ -12,6 +12,7 @@ import * as _ from 'lodash';
 import { CasteWiseReport, CountWise, CountWiseReport } from '../employees.model';
 import { ToastrService } from 'ngx-toastr';
 import * as moment from 'moment';
+import { ExportToCsv } from 'export-to-csv';
 
 @Component({
   selector: 'app-caste-wise-consolidated-report',
@@ -135,6 +136,19 @@ export class CasteWiseConsolidatedReportComponent implements OnInit {
     }
 
     this.getCastData();
+
+    const options = {
+      fieldSeparator: ',',
+      quoteStrings: '"',
+      decimalSeparator: '.',
+      showLabels: true,
+      showTitle: true,
+      title: 'My Awesome CSV',
+      useTextFile: false,
+      useBom: true,
+      useKeysAsHeaders: true,
+    };
+    const csvExporter = new ExportToCsv(options);
   }
 
 
@@ -189,7 +203,7 @@ export class CasteWiseConsolidatedReportComponent implements OnInit {
         extractedArray.push(arr[i]);
       }
     }
-
+    this.ReportDataStateAndAdmin = extractedArray;
     console.log('extractedArray', extractedArray);
     this.dataSource = new MatTableDataSource(extractedArray);
     setTimeout(() => this.dataSource.paginator = this.paginator);
@@ -285,7 +299,22 @@ export class CasteWiseConsolidatedReportComponent implements OnInit {
 
 
   downloadReport() {
+    const options = {
+      fieldSeparator: ',',
+      quoteStrings: '"',
+      decimalSeparator: '.',
+      showLabels: true,
+      showTitle: true,
+      title: 'My Awesome CSV',
+      useTextFile: false,
+      useBom: true,
+      // useKeysAsHeaders: true
+      headers: ['Name', 'Approved Grade A', 'Approved Grade B', 'Approved Grade C',
+        'Holded Grade A', 'Holded Grade B', 'Holded Grade C']
+    };
 
+    const csvExporter = new ExportToCsv(options);
+    csvExporter.generateCsv(this.ReportDataStateAndAdmin);
   }
 
   getCastData() {

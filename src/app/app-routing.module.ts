@@ -11,6 +11,7 @@ import { CategoryWiseDistrictReportComponent } from './employees/category-wise-d
 import { CategoryWisePanchayatReportComponent } from './employees/category-wise-panchayat-report/category-wise-panchayat-report.component';
 import { CategoryWiseStateReportComponent } from './employees/category-wise-state-report/category-wise-state-report.component';
 import { ConsolidatedCountWiseReportComponent } from './employees/consolidated-count-wise-report/consolidated-count-wise-report.component';
+import { ConsolidatedRejectedReportComponent } from './employees/consolidated-rejected-report/consolidated-rejected-report.component';
 import { DistrictRoleManagementComponent } from './employees/district-role-management/district-role-management.component';
 import { EditAndHoldDistrictComponent } from './employees/edit-and-hold-district/edit-and-hold-district.component';
 import { ExistingMemberAlterationComponent } from './employees/existing-member-alteration/existing-member-alteration.component';
@@ -80,6 +81,10 @@ const routes: Routes = [
   {
     path: 'gradeWiseConsolidatedCount/report', component: GradeWiseConsolidatedReportComponent
   },
+  {
+    path: 'rejectedConsolidatedCount/report', component: ConsolidatedRejectedReportComponent
+  },
+  
   { path: '**', redirectTo: '/login' }
 ];
 
