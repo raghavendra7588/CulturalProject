@@ -10,6 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DialogViewProposalFormComponent } from '../dialog-view-proposal-form/dialog-view-proposal-form.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { DynamicOnHoldArtistByState, DynamicStateReject, ReqToPutOnHoldByPanchayat } from '../employees.model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-list-on-hold',
@@ -47,7 +48,8 @@ export class ListOnHoldComponent implements OnInit {
     public emitterService: EmitterService,
     public basicuserService: BasicuserService,
     public toastr: ToastrService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private spinner: NgxSpinnerService
   ) {
     sessionStorage.removeItem('language');
     sessionStorage.setItem('language', 'true');
@@ -98,42 +100,80 @@ export class ListOnHoldComponent implements OnInit {
   }
 
   getListOnHoldDataByDistrict(userId) {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getOnHoldAtDistrict(userId).subscribe(res => {
       this.listOnHoldData = res;
       let uniquePersonalDetailsData = _.uniqBy(this.listOnHoldData, 'id');
       this.listOnHoldData = uniquePersonalDetailsData;
       this.dataSource = new MatTableDataSource(this.listOnHoldData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
     });
   }
 
   getListOnHoldDataByPachayat(userId) {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getOnHoldAtPanchayat(userId).subscribe(res => {
       this.listOnHoldData = res;
       let uniquePersonalDetailsData = _.uniqBy(this.listOnHoldData, 'id');
       this.listOnHoldData = uniquePersonalDetailsData;
       this.dataSource = new MatTableDataSource(this.listOnHoldData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
   getOnHoldArtistDataByState() {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getReqToHoldAtState().subscribe(res => {
       this.listOnHoldData = res;
       let uniquePersonalDetailsData = _.uniqBy(this.listOnHoldData, 'id');
       this.listOnHoldData = uniquePersonalDetailsData;
       this.dataSource = new MatTableDataSource(this.listOnHoldData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
   getOnHoldArtistDataByAdmin() {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getListOnHoldByAdminUser().subscribe(res => {
       this.listOnHoldData = res;
       let uniquePersonalDetailsData = _.uniqBy(this.listOnHoldData, 'id');
       this.listOnHoldData = uniquePersonalDetailsData;
       this.dataSource = new MatTableDataSource(this.listOnHoldData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 

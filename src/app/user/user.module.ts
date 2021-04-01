@@ -27,6 +27,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { BasicuserService } from './basicuser.service';
 import { UserService } from './user.service';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [LoginComponent, ChangePasswordComponent],
@@ -54,7 +55,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     MatDividerModule,
     MatListModule,
     MatPaginatorModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    NgxSpinnerModule
   ],
   exports: [ChangePasswordComponent],
   providers: [BasicuserService, UserService]

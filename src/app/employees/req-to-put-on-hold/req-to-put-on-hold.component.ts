@@ -9,6 +9,7 @@ import { DialogViewProposalFormComponent } from '../dialog-view-proposal-form/di
 import { EmployeesService } from '../employees.service';
 import * as _ from 'lodash';
 import { DynamicStateApproved } from '../employees.model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-req-to-put-on-hold',
@@ -35,7 +36,8 @@ export class ReqToPutOnHoldComponent implements OnInit {
     public employeeService: EmployeesService,
     public emitterService: EmitterService,
     public basicuserService: BasicuserService,
-    public toastr: ToastrService
+    public toastr: ToastrService,
+    private spinner: NgxSpinnerService
   ) {
     sessionStorage.removeItem('language');
     sessionStorage.setItem('language', 'true');
@@ -93,44 +95,84 @@ export class ReqToPutOnHoldComponent implements OnInit {
 
 
   getRequestToPutOnHoldDataByDistrict(userId) {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getReqToPutOnHoldAtDistrict(userId).subscribe(res => {
       this.putOnHoldData = res;
       let uniquePersonalDetailsData = _.uniqBy(this.putOnHoldData, 'id');
       this.putOnHoldData = uniquePersonalDetailsData;
       this.dataSource = new MatTableDataSource(this.putOnHoldData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
 
 
   getRequestToPutOnHoldDataByPanchayat(userId) {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getReqToPutOnHoldAtPanchayat(userId).subscribe(res => {
       this.putOnHoldData = res;
       let uniquePersonalDetailsData = _.uniqBy(this.putOnHoldData, 'id');
       this.putOnHoldData = uniquePersonalDetailsData;
       this.dataSource = new MatTableDataSource(this.putOnHoldData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
   getRequestToPutOnHoldByState() {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getRequestToPutOnHoldByState().subscribe(res => {
       this.putOnHoldData = res;
       let uniquePersonalDetailsData = _.uniqBy(this.putOnHoldData, 'id');
       this.putOnHoldData = uniquePersonalDetailsData;
       this.dataSource = new MatTableDataSource(this.putOnHoldData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
   getRequestToPutOnHoldByAdmin() {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getRequestToPutOnHoldDataByAdminUser().subscribe(res => {
       this.putOnHoldData = res;
       let uniquePersonalDetailsData = _.uniqBy(this.putOnHoldData, 'id');
       this.putOnHoldData = uniquePersonalDetailsData;
       this.dataSource = new MatTableDataSource(this.putOnHoldData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
@@ -160,16 +202,36 @@ export class ReqToPutOnHoldComponent implements OnInit {
   selectedDistrictFromList(district) {
     this.isDistrictSelected = true;
     this.dynamicStateApproved.districtId = district.DistrictId;
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getPanchayatBasedOnDistrictId(this.dynamicStateApproved.districtId).subscribe(res => {
       this.panchayatData = res;
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
     this.dynamicStateApproved.panchayatName = '';
 
   }
 
   getDistrictMasterData() {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getDistrictMasterData().subscribe(res => {
       this.districtData = res;
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
@@ -182,7 +244,13 @@ export class ReqToPutOnHoldComponent implements OnInit {
       this.dynamicStateApproved.panchayatName = 'ALL';
 
     }
-
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.postDynamicReqToPutOnHoldByState(this.dynamicStateApproved).subscribe(res => {
 
       this.putOnHoldData = res;
@@ -190,6 +258,9 @@ export class ReqToPutOnHoldComponent implements OnInit {
       this.putOnHoldData = uniquePersonalDetailsData;
       this.dataSource = new MatTableDataSource(this.putOnHoldData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
@@ -202,7 +273,13 @@ export class ReqToPutOnHoldComponent implements OnInit {
       this.dynamicStateApproved.panchayatName = 'ALL';
 
     }
-
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.postDynamicReqToPutOnHoldListByAdmin(this.dynamicStateApproved).subscribe(res => {
 
       this.putOnHoldData = res;
@@ -210,6 +287,9 @@ export class ReqToPutOnHoldComponent implements OnInit {
       this.putOnHoldData = uniquePersonalDetailsData;
       this.dataSource = new MatTableDataSource(this.putOnHoldData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { EmitterService } from 'src/app/shared/emitter.service';
 import { DialogViewProposalFormComponent } from '../dialog-view-proposal-form/dialog-view-proposal-form.component';
 import { EmployeesService } from '../employees.service';
@@ -21,7 +22,8 @@ export class GradeBComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public employeeService: EmployeesService,
-    public emitterService: EmitterService
+    public emitterService: EmitterService,
+    private spinner: NgxSpinnerService
   ) {
 
     this.districtId = parseInt(sessionStorage.getItem('DistrictId'));
@@ -38,11 +40,21 @@ export class GradeBComponent implements OnInit {
 
 
   getGradeAData(userId) {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getGradeBWiseData(userId).subscribe(res => {
 
       this.gradeAData = res;
       this.dataSource = new MatTableDataSource(this.gradeAData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 

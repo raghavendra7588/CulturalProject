@@ -3,7 +3,7 @@
     <div class="container">
 
       <div class="row ">
-        <div class="col-md-4 col-4 col-sm-4 mt-3">
+        <div class="col-md-4 col-4 col-sm-4 ">
           <mat-form-field style="width: 100% !important;">
             <mat-select placeholder="District List" [(ngModel)]="dynamicStateApproved.districtName">
               <mat-option *ngFor="let item of districtData;" [value]="item.DistrictId"
@@ -97,3 +97,4 @@
       </table>
       <mat-paginator [pageSizeOptions]="[10, 50, 100]" showFirstLastButtons></mat-paginator>
     </div>
+    <ngx-spinner></ngx-spinner>

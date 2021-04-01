@@ -10,6 +10,7 @@ import { EmployeesService } from '../employees.service';
 import { ToastrService } from 'ngx-toastr';
 import * as _ from 'lodash';
 import { DynamicStateApproved } from '../employees.model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-new-approvals',
@@ -38,7 +39,8 @@ export class NewApprovalsComponent implements OnInit {
     public employeeService: EmployeesService,
     public emitterService: EmitterService,
     public basicuserService: BasicuserService,
-    public toastr: ToastrService
+    public toastr: ToastrService,
+    private spinner: NgxSpinnerService
   ) {
     sessionStorage.removeItem('language');
     sessionStorage.setItem('language', 'true');
@@ -109,32 +111,62 @@ export class NewApprovalsComponent implements OnInit {
   }
 
   getPersonalDetailsData() {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getNewProposalFormData(this.userId).subscribe(res => {
       this.personalDetailsData = res;
       let uniqueData = _.uniqBy(this.personalDetailsData, 'id');
       this.personalDetailsData = uniqueData;
       this.dataSource = new MatTableDataSource(this.personalDetailsData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
   getNewProposalFormDetailsAtState() {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getNewApprovalsByState().subscribe(res => {
       this.personalDetailsData = res;
       let uniqueData = _.uniqBy(this.personalDetailsData, 'id');
       this.personalDetailsData = uniqueData;
       this.dataSource = new MatTableDataSource(this.personalDetailsData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
   getNewProposalFormByAdmin() {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getNewApprovalsDataByAdminUser().subscribe(res => {
       this.personalDetailsData = res;
       let uniqueData = _.uniqBy(this.personalDetailsData, 'id');
       this.personalDetailsData = uniqueData;
       this.dataSource = new MatTableDataSource(this.personalDetailsData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
@@ -167,7 +199,13 @@ export class NewApprovalsComponent implements OnInit {
       this.dynamicStateApproved.panchayatName = 'ALL';
 
     }
-
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
 
     this.employeeService.postDynamicNewProposalByState(this.dynamicStateApproved).subscribe(res => {
       this.personalDetailsData = res;
@@ -175,6 +213,9 @@ export class NewApprovalsComponent implements OnInit {
       this.personalDetailsData = uniqueApprovedListData;
       this.dataSource = new MatTableDataSource(this.personalDetailsData);
       this.dataSource.paginator = this.paginator;
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
@@ -187,12 +228,23 @@ export class NewApprovalsComponent implements OnInit {
       this.dynamicStateApproved.panchayatName = 'ALL';
 
     }
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
+
     this.employeeService.postDynamicNewApprovalsByAdmin(this.dynamicStateApproved).subscribe(res => {
       this.personalDetailsData = res;
       let uniqueApprovedListData = _.uniqBy(this.personalDetailsData, 'id');
       this.personalDetailsData = uniqueApprovedListData;
       this.dataSource = new MatTableDataSource(this.personalDetailsData);
       this.dataSource.paginator = this.paginator;
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
@@ -204,16 +256,36 @@ export class NewApprovalsComponent implements OnInit {
 
   selectedDistrictFromList(district) {
     this.dynamicStateApproved.districtId = district.DistrictId;
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getPanchayatBasedOnDistrictId(this.dynamicStateApproved.districtId).subscribe(res => {
       this.panchayatData = res;
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
     this.dynamicStateApproved.panchayatName = '';
 
   }
 
   getDistrictMasterData() {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getDistrictMasterData().subscribe(res => {
       this.districtData = res;
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 

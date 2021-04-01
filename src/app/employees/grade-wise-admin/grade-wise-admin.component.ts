@@ -8,6 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DynamicPanchayatName, DynamicStateApproved } from '../employees.model';
 import { DialogViewProposalFormComponent } from '../dialog-view-proposal-form/dialog-view-proposal-form.component';
 import { MatDialog } from '@angular/material/dialog';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-grade-wise-admin',
@@ -38,7 +39,8 @@ export class GradeWiseAdminComponent implements OnInit {
     public employeeService: EmployeesService,
     public emitterService: EmitterService,
     public basicuserService: BasicuserService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private spinner: NgxSpinnerService
   ) {
     this.currentUserRole = sessionStorage.getItem('userManagement');
     this.getDistrictMasterData();
@@ -81,8 +83,16 @@ export class GradeWiseAdminComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
   getGradeAArtistByAdmin() {
     let uniqueData: any = [];
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getGradeAArtistByAdmin().subscribe(res => {
       this.userMasterData = res;
 
@@ -90,10 +100,20 @@ export class GradeWiseAdminComponent implements OnInit {
       this.userMasterData = uniqueData;
       this.dataSource = new MatTableDataSource(this.userMasterData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
   getGradeBArtistByAdminUser() {
     let uniqueData: any = [];
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getGradeBArtistByAdmin().subscribe(res => {
       this.userMasterData = res;
 
@@ -101,11 +121,21 @@ export class GradeWiseAdminComponent implements OnInit {
       this.userMasterData = uniqueData;
       this.dataSource = new MatTableDataSource(this.userMasterData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
   getGradeCArtistByAdmin() {
     let uniqueData: any = [];
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getGradeCArtistByAdmin().subscribe(res => {
       this.userMasterData = res;
 
@@ -113,6 +143,9 @@ export class GradeWiseAdminComponent implements OnInit {
       this.userMasterData = uniqueData;
       this.dataSource = new MatTableDataSource(this.userMasterData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
@@ -125,8 +158,18 @@ export class GradeWiseAdminComponent implements OnInit {
 
   selectedDistrictFromList(district) {
     this.dynamicStateApproved.districtId = district.DistrictId;
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getPanchayatBasedOnDistrictId(this.dynamicStateApproved.districtId).subscribe(res => {
       this.panchayatData = res;
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
     this.dynamicStateApproved.panchayatName = '';
 
@@ -134,8 +177,18 @@ export class GradeWiseAdminComponent implements OnInit {
 
 
   getDistrictMasterData() {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getDistrictMasterData().subscribe(res => {
       this.districtData = res;
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
   selectedPanchyatFromList(res) {
@@ -155,30 +208,60 @@ export class GradeWiseAdminComponent implements OnInit {
     let uniqueData: any = [];
 
     if (this.currentUserRole === 'ADMIN_A') {
+      this.spinner.show(undefined,
+        {
+          type: "square-jelly-box",
+          size: "medium",
+          color: 'white'
+        }
+      );
       this.employeeService.getArtistCategoryADataByAdmin(this.dynamicStateApproved).subscribe(res => {
         this.userMasterData = res;
         uniqueData = _.uniqBy(this.userMasterData, 'UserId');
         this.userMasterData = uniqueData;
         this.dataSource = new MatTableDataSource(this.userMasterData);
         setTimeout(() => this.dataSource.paginator = this.paginator);
+        this.spinner.hide();
+      }, err => {
+        this.spinner.hide();
       });
     }
     if (this.currentUserRole === 'ADMIN_B') {
+      this.spinner.show(undefined,
+        {
+          type: "square-jelly-box",
+          size: "medium",
+          color: 'white'
+        }
+      );
       this.employeeService.getArtistCategoryBDataByAdmin(this.dynamicStateApproved).subscribe(res => {
         this.userMasterData = res;
         uniqueData = _.uniqBy(this.userMasterData, 'UserId');
         this.userMasterData = uniqueData;
         this.dataSource = new MatTableDataSource(this.userMasterData);
         setTimeout(() => this.dataSource.paginator = this.paginator);
+        this.spinner.hide();
+      }, err => {
+        this.spinner.hide();
       });
     }
     if (this.currentUserRole === 'ADMIN_C') {
+      this.spinner.show(undefined,
+        {
+          type: "square-jelly-box",
+          size: "medium",
+          color: 'white'
+        }
+      );
       this.employeeService.getArtistCategoryCDataByAdmin(this.dynamicStateApproved).subscribe(res => {
         this.userMasterData = res;
         uniqueData = _.uniqBy(this.userMasterData, 'UserId');
         this.userMasterData = uniqueData;
         this.dataSource = new MatTableDataSource(this.userMasterData);
         setTimeout(() => this.dataSource.paginator = this.paginator);
+        this.spinner.hide();
+      }, err => {
+        this.spinner.hide();
       });
     }
   }

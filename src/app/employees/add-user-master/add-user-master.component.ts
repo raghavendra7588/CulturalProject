@@ -7,6 +7,7 @@ import { EmployeesService } from '../employees.service';
 import * as _ from 'lodash';
 import { MatPaginator } from '@angular/material/paginator';
 import { DynamicOnHoldArtistByState, DynamicStateRoleDistrict } from '../employees.model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-add-user-master',
@@ -33,7 +34,9 @@ export class AddUserMasterComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public emitterService: EmitterService,
-    public employeeService: EmployeesService) {
+    public employeeService: EmployeesService,
+    private spinner: NgxSpinnerService
+  ) {
     this.roleId = parseInt(sessionStorage.getItem('RoleId'));
     this.role = sessionStorage.getItem('role');
     sessionStorage.removeItem('language');
@@ -85,6 +88,13 @@ export class AddUserMasterComponent implements OnInit {
 
   getUserMasterData(roleId) {
     let uniqueRoleMasterData: any = [];
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getUserMasterData(roleId).subscribe(res => {
       this.userMaster = res;
       uniqueRoleMasterData = _.uniqBy(this.userMaster, 'UserId');
@@ -92,11 +102,21 @@ export class AddUserMasterComponent implements OnInit {
       this.userMaster = uniqueRoleMasterData;
       this.dataSource = new MatTableDataSource(this.userMaster);
       this.dataSource.paginator = this.paginator;
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
   getStateUserMasterData() {
     let uniqueRoleMasterData: any = [];
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getStateUserMaster().subscribe(res => {
       this.userMaster = res;
       uniqueRoleMasterData = _.uniqBy(this.userMaster, 'UserId');
@@ -104,6 +124,9 @@ export class AddUserMasterComponent implements OnInit {
       this.userMaster = uniqueRoleMasterData;
       this.dataSource = new MatTableDataSource(this.userMaster);
       this.dataSource.paginator = this.paginator;
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
@@ -123,7 +146,13 @@ export class AddUserMasterComponent implements OnInit {
 
     this.dynamicOnHoldArtistByState.RoleName = sessionStorage.getItem('role');
     console.log(this.dynamicOnHoldArtistByState);
-
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.postDynamicUserCreationDataAtAdmin(this.dynamicOnHoldArtistByState).subscribe(res => {
       this.userMaster = res;
       let uniqueRoleMasterData = _.uniqBy(this.userMaster, 'UserId');
@@ -131,6 +160,9 @@ export class AddUserMasterComponent implements OnInit {
       this.userMaster = uniqueRoleMasterData;
       this.dataSource = new MatTableDataSource(this.userMaster);
       this.dataSource.paginator = this.paginator;
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
@@ -139,20 +171,40 @@ export class AddUserMasterComponent implements OnInit {
   }
   selectedDistrictFromList(district) {
     this.dynamicOnHoldArtistByState.DistrictId = district.DistrictId;
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getPanchayatBasedOnDistrictId(this.dynamicOnHoldArtistByState.DistrictId).subscribe(res => {
       this.panchayatData = res;
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
     this.dynamicOnHoldArtistByState.panchayatName = '';
   }
 
   getDistrictMasterData() {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getDistrictMasterData().subscribe(res => {
       this.districtData = res;
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
 
-  searchRecordForPanchayatByState(){
+  searchRecordForPanchayatByState() {
     if (this.dynamicOnHoldArtistByState.DistrictId === null || this.dynamicOnHoldArtistByState.DistrictId === undefined) {
       this.dynamicOnHoldArtistByState.DistrictId = 0;
     }
@@ -162,7 +214,13 @@ export class AddUserMasterComponent implements OnInit {
 
     this.dynamicOnHoldArtistByState.RoleName = sessionStorage.getItem('role');
     console.log(this.dynamicOnHoldArtistByState);
-
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.postDynamicUserCreationDataAtAdmin(this.dynamicOnHoldArtistByState).subscribe(res => {
       this.userMaster = res;
       let uniqueRoleMasterData = _.uniqBy(this.userMaster, 'UserId');
@@ -170,6 +228,9 @@ export class AddUserMasterComponent implements OnInit {
       this.userMaster = uniqueRoleMasterData;
       this.dataSource = new MatTableDataSource(this.userMaster);
       this.dataSource.paginator = this.paginator;
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 

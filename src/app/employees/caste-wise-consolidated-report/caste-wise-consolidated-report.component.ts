@@ -13,6 +13,7 @@ import { CasteWiseReport, CountWise, CountWiseReport } from '../employees.model'
 import { ToastrService } from 'ngx-toastr';
 import * as moment from 'moment';
 import { ExportToCsv } from 'export-to-csv';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-caste-wise-consolidated-report',
@@ -62,7 +63,8 @@ export class CasteWiseConsolidatedReportComponent implements OnInit {
     public employeeService: EmployeesService,
     public emitterService: EmitterService,
     public basicuserService: BasicuserService,
-    public toastr: ToastrService
+    public toastr: ToastrService,
+    private spinner: NgxSpinnerService
   ) {
     this.countForm = this.formBuilder.group({
       castType: [''],
@@ -171,13 +173,12 @@ export class CasteWiseConsolidatedReportComponent implements OnInit {
 
 
 
-
   valueChangedDate(selectedDate) {
     let date = new Date(selectedDate);
     const year = date.getFullYear()
     const month = `${date.getMonth() + 1}`.padStart(2, "0")
     const day = `${date.getDate()}`.padStart(2, "0")
-    let stringDate = [day, month, year].join("/");
+    let stringDate = [year, month, day].join("/");
     return stringDate;
   }
 
@@ -186,10 +187,15 @@ export class CasteWiseConsolidatedReportComponent implements OnInit {
     const year = date.getFullYear()
     const month = `${date.getMonth() + 1}`.padStart(2, "0")
     const day = `${date.getDate() + 1}`.padStart(2, "0")
-    let stringDate = [day, month, year].join("/");
+    let stringDate = '';
+    if (day == '32') {
+      stringDate = [year, month, '31'].join("/") + ' ' + '23:59:59.999';
+    }
+    else {
+      stringDate = [year, month, day].join("/");
+    }
     return stringDate;
   }
-
   extractObjects(arr) {
     let extractedArray: any = [];
 
@@ -221,7 +227,7 @@ export class CasteWiseConsolidatedReportComponent implements OnInit {
 
 
     if (this.casteWiseReport.reportType === null || this.casteWiseReport.reportType === undefined || this.casteWiseReport.reportType === '') {
-     
+
       this.toastr.error('Report Type is Mandotary !!');
       return;
     }
@@ -238,7 +244,7 @@ export class CasteWiseConsolidatedReportComponent implements OnInit {
     }
     else {
       let fullFromDate = this.valueChangedDate(this.casteWiseReport.fromDate);
-      this.reportFromDate = moment(fullFromDate, 'DD/MM/YYYY').format("DD-MMM-YYYY");
+      this.reportFromDate = fullFromDate;
 
     }
 
@@ -248,7 +254,7 @@ export class CasteWiseConsolidatedReportComponent implements OnInit {
     }
     else {
       let fullToDate = this.valueChangedToDate(this.casteWiseReport.toDate);
-      this.reportToDate = moment(fullToDate, 'DD/MM/YYYY').format("DD-MMM-YYYY");
+      this.reportToDate = fullToDate;
     }
 
 
@@ -267,31 +273,63 @@ export class CasteWiseConsolidatedReportComponent implements OnInit {
       reportType: this.casteWiseReport.reportType
     }
 
-  
+
     console.log('reqObj', reqObj);
 
     if (this.role == 'STATE' || this.role == 'ADMIN') {
-
+      this.spinner.show(undefined,
+        {
+          type: "square-jelly-box",
+          size: "medium",
+          color: 'white'
+        }
+      );
       this.employeeService.postConsolidatedCasteWiseReportByStateAndAdmin(reqObj).subscribe(res => {
         this.ReportDataStateAndAdmin = res;
         console.log('this.ReportDataStateAndAdmin', this.ReportDataStateAndAdmin);
         let removedKeys = _.omitBy(this.ReportDataStateAndAdmin, _.isNil);
         console.log('removedKeys', removedKeys);
         this.extractObjects(this.ReportDataStateAndAdmin);
+        this.spinner.hide();
+
+      }, err => {
+        this.spinner.hide();
       });
     }
     if (this.role == 'DISTRICT') {
+      this.spinner.show(undefined,
+        {
+          type: "square-jelly-box",
+          size: "medium",
+          color: 'white'
+        }
+      );
       this.employeeService.postConsolidatedCasteWiseReportByDistrict(reqObj).subscribe(res => {
         this.ReportDataStateAndAdmin = res;
         this.dataSource = new MatTableDataSource(this.ReportDataStateAndAdmin);
         setTimeout(() => this.dataSource.paginator = this.paginator);
+        this.spinner.hide();
+
+      }, err => {
+        this.spinner.hide();
       });
     }
     if (this.role == 'GRAMPANCHAYAT') {
+      this.spinner.show(undefined,
+        {
+          type: "square-jelly-box",
+          size: "medium",
+          color: 'white'
+        }
+      );
       this.employeeService.postConsolidatedCasteWiseReportByPanchyat(reqObj).subscribe(res => {
         this.ReportDataStateAndAdmin = res;
         this.dataSource = new MatTableDataSource(this.ReportDataStateAndAdmin);
         setTimeout(() => this.dataSource.paginator = this.paginator);
+        this.spinner.hide();
+
+      }, err => {
+        this.spinner.hide();
       });
     }
 

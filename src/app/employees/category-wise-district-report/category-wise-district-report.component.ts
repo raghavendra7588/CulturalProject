@@ -7,6 +7,7 @@ import { DynamicPanchayatName, DynamicStateApproved } from '../employees.model';
 import { EmployeesService } from '../employees.service';
 import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-category-wise-district-report',
@@ -38,7 +39,8 @@ export class CategoryWiseDistrictReportComponent implements OnInit, OnDestroy {
   constructor(
     public employeeService: EmployeesService,
     public emitterService: EmitterService,
-    public basicuserService: BasicuserService
+    public basicuserService: BasicuserService,
+    private spinner: NgxSpinnerService
   ) {
     this.userId = parseInt(sessionStorage.getItem('userId'));
     this.currentUserRole = sessionStorage.getItem('userManagement');
@@ -131,6 +133,13 @@ export class CategoryWiseDistrictReportComponent implements OnInit, OnDestroy {
 
   getGradeAArtistByDistrict() {
     let uniqueData: any = [];
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getGradeAArtistDataByDistrict(this.userId).subscribe(res => {
       this.categoryWiseMasterData = res;
 
@@ -138,11 +147,21 @@ export class CategoryWiseDistrictReportComponent implements OnInit, OnDestroy {
       this.categoryWiseMasterData = uniqueData;
       this.dataSource = new MatTableDataSource(this.categoryWiseMasterData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
   getGradeBArtistByDistrict() {
     let uniqueData: any = [];
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getGradeBArtistDataByDistrict(this.userId).subscribe(res => {
       this.categoryWiseMasterData = res;
 
@@ -150,12 +169,22 @@ export class CategoryWiseDistrictReportComponent implements OnInit, OnDestroy {
       this.categoryWiseMasterData = uniqueData;
       this.dataSource = new MatTableDataSource(this.categoryWiseMasterData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
 
   getGradeCArtistByDistrict() {
     let uniqueData: any = [];
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getGradeCArtistDataByDistrict(this.userId).subscribe(res => {
       this.categoryWiseMasterData = res;
 
@@ -163,12 +192,22 @@ export class CategoryWiseDistrictReportComponent implements OnInit, OnDestroy {
       this.categoryWiseMasterData = uniqueData;
       this.dataSource = new MatTableDataSource(this.categoryWiseMasterData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
 
   getGradeAllArtistByDistrict() {
     let uniqueData: any = [];
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getALLArtistDataByDistrict(this.userId).subscribe(res => {
       this.categoryWiseMasterData = res;
 
@@ -176,11 +215,21 @@ export class CategoryWiseDistrictReportComponent implements OnInit, OnDestroy {
       this.categoryWiseMasterData = uniqueData;
       this.dataSource = new MatTableDataSource(this.categoryWiseMasterData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
   getHoldedGradeAArtistByDistrict() {
     let uniqueData: any = [];
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getHoldedGradeAArtistDataByDistrict(this.userId).subscribe(res => {
       this.categoryWiseMasterData = res;
 
@@ -188,11 +237,21 @@ export class CategoryWiseDistrictReportComponent implements OnInit, OnDestroy {
       this.categoryWiseMasterData = uniqueData;
       this.dataSource = new MatTableDataSource(this.categoryWiseMasterData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
   getHoldedGradeBArtistByDistrict() {
     let uniqueData: any = [];
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getHoldedGradeBArtistDataByDistrict(this.userId).subscribe(res => {
       this.categoryWiseMasterData = res;
 
@@ -200,11 +259,21 @@ export class CategoryWiseDistrictReportComponent implements OnInit, OnDestroy {
       this.categoryWiseMasterData = uniqueData;
       this.dataSource = new MatTableDataSource(this.categoryWiseMasterData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
   getHoldedGradeCArtistByDistrict() {
     let uniqueData: any = [];
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getHoldedGradeCArtistDataByDistrict(this.userId).subscribe(res => {
       this.categoryWiseMasterData = res;
 
@@ -212,11 +281,21 @@ export class CategoryWiseDistrictReportComponent implements OnInit, OnDestroy {
       this.categoryWiseMasterData = uniqueData;
       this.dataSource = new MatTableDataSource(this.categoryWiseMasterData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
   getHoldedGradeAllArtistByDistrict() {
     let uniqueData: any = [];
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getHoldedGradeAllArtistDataByDistrict(this.userId).subscribe(res => {
       this.categoryWiseMasterData = res;
 
@@ -224,6 +303,9 @@ export class CategoryWiseDistrictReportComponent implements OnInit, OnDestroy {
       this.categoryWiseMasterData = uniqueData;
       this.dataSource = new MatTableDataSource(this.categoryWiseMasterData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 

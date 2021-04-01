@@ -41,6 +41,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { UserService } from './user/user.service';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 
@@ -79,7 +80,8 @@ import { UserService } from './user/user.service';
     MatDividerModule,
     MatListModule,
     MatCheckboxModule,
-    MatSidenavModule
+    MatSidenavModule,
+    NgxSpinnerModule
   ],
   providers: [EmployeesService, EmitterService, BasicuserService, UserService],
   bootstrap: [AppComponent]

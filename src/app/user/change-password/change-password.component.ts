@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { EmitterService } from 'src/app/shared/emitter.service';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-change-password',
@@ -22,7 +23,8 @@ export class ChangePasswordComponent implements OnInit {
     public emitterService: EmitterService,
     public toastr: ToastrService,
     public userService: UserService,
-    public router: Router
+    public router: Router,
+    private spinner: NgxSpinnerService
   ) {
     this.userId = Number(sessionStorage.getItem('userId'));
   }
@@ -32,12 +34,19 @@ export class ChangePasswordComponent implements OnInit {
 
   changeCurrentPassword() {
     this.changePassword.userId = this.userId;
-
+    
     if (this.changePassword.confirmPassword !== this.changePassword.newPassword) {
       this.toastr.error('New And Confirm Password Do Not Matched');
       return;
     }
     else {
+      this.spinner.show(undefined,
+        {
+          type: "square-jelly-box",
+          size: "medium",
+          color: 'white'
+        }
+      );
       this.userService.changePassword(this.changePassword).subscribe(res => {
         if (res === 0) {
           this.toastr.error('Password Not Matched !!');
@@ -47,6 +56,9 @@ export class ChangePasswordComponent implements OnInit {
           this.toastr.success('Password Changed Successfully !!');
           this.router.navigate(['/dashboard']);
         }
+        this.spinner.hide();
+      }, err => {
+        this.spinner.hide();
       });
     }
   }

@@ -9,6 +9,7 @@ import { OnHoldProposalForm } from '../employees.model';
 import { ToastrService } from 'ngx-toastr';
 import { DialogPersonalDetailComponent } from '../dialog-personal-detail/dialog-personal-detail.component';
 import { DialogPersonalDetailsEditComponent } from '../dialog-personal-details-edit/dialog-personal-details-edit.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-approved-list-panchayat',
@@ -35,7 +36,8 @@ export class ApprovedListPanchayatComponent implements OnInit {
     public employeeService: EmployeesService,
     public emitterService: EmitterService,
     private modalService: BsModalService,
-    public toastr: ToastrService
+    public toastr: ToastrService,
+    private spinner: NgxSpinnerService
   ) {
     sessionStorage.removeItem('language');
     sessionStorage.setItem('language', 'true');
@@ -58,9 +60,19 @@ export class ApprovedListPanchayatComponent implements OnInit {
 
 
   getApprovedListData(userId) {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getApprovedListPanchayat(userId).subscribe(res => {
       this.approvedListData = res;
       this.dataSource = new MatTableDataSource(this.approvedListData);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
@@ -91,7 +103,7 @@ export class ApprovedListPanchayatComponent implements OnInit {
       data: res,
       disableClose: false
     });
-    
+
   }
 
   onHoldEmployee(res) {
@@ -107,11 +119,22 @@ export class ApprovedListPanchayatComponent implements OnInit {
   }
 
   getStatusMaster() {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getStatusMasterData().subscribe(res => {
       this.statusMaster = res;
       this.submittedByPanchayat = this.statusMaster[12].StatusId;
       this.onHoldProposalForm.statusId = this.submittedByPanchayat;
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
+
   }
 
 
@@ -123,9 +146,19 @@ export class ApprovedListPanchayatComponent implements OnInit {
   confirm(): void {
     this.message = 'Confirmed!';
     this.onHoldProposalForm.id = this.selectedArtist.id;
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.postOnHoldByPanchayat(this.onHoldProposalForm).subscribe(res => {
       this.toastr.success('Artist OnHolded Successfully');
       this.emitterService.isPanchyatArtistPuttedOnHold.emit(true);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
     this.modalRef.hide();
   }

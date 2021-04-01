@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogPersonalDetailComponent } from '../dialog-personal-detail/dialog-personal-detail.component';
 import { DynamicPanchayatName, DynamicStateApproved } from '../employees.model';
 import { DialogViewProposalFormComponent } from '../dialog-view-proposal-form/dialog-view-proposal-form.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-list-of-rejected-members',
@@ -31,7 +32,8 @@ export class ListOfRejectedMembersComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public employeeService: EmployeesService,
-    public emitterService: EmitterService
+    public emitterService: EmitterService,
+    private spinner: NgxSpinnerService
   ) {
     sessionStorage.removeItem('language');
     sessionStorage.setItem('language', 'true');
@@ -76,42 +78,82 @@ export class ListOfRejectedMembersComponent implements OnInit {
 
 
   getRejectedMembersByDistrict(userId) {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getListOfRejectedMembersByDistrict(userId).subscribe(res => {
       this.rejectedMembersData = res;
       let uniqueRejectedMembersData = _.uniqBy(this.rejectedMembersData, 'id');
       this.rejectedMembersData = uniqueRejectedMembersData;
       this.dataSource = new MatTableDataSource(this.rejectedMembersData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
   getRejectedMembersByState() {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getListOfRejectedMembersByState().subscribe(res => {
       this.rejectedMembersData = res;
       let uniqueRejectedMembersData = _.uniqBy(this.rejectedMembersData, 'id');
       this.rejectedMembersData = uniqueRejectedMembersData;
       this.dataSource = new MatTableDataSource(this.rejectedMembersData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
   getRejectedMembersByAdmin() {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getListRejectedByAdminUser().subscribe(res => {
       this.rejectedMembersData = res;
       let uniqueRejectedMembersData = _.uniqBy(this.rejectedMembersData, 'id');
       this.rejectedMembersData = uniqueRejectedMembersData;
       this.dataSource = new MatTableDataSource(this.rejectedMembersData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
   getRejectedMembersByPanchayat(userId) {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getListOfRejectedMembersByPanchyat(userId).subscribe(res => {
       this.rejectedMembersData = res;
       let uniqueRejectedMembersData = _.uniqBy(this.rejectedMembersData, 'id');
       this.rejectedMembersData = uniqueRejectedMembersData;
       this.dataSource = new MatTableDataSource(this.rejectedMembersData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 

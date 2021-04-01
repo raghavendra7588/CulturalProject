@@ -10,6 +10,7 @@ import { EmployeesService } from '../employees.service';
 import * as _ from 'lodash';
 import { DynamicStateApproved } from '../employees.model';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-approved-list',
@@ -39,7 +40,8 @@ export class ApprovedListComponent implements OnInit {
     public employeeService: EmployeesService,
     public emitterService: EmitterService,
     public basicuserService: BasicuserService,
-    public toastr: ToastrService
+    public toastr: ToastrService,
+    private spinner: NgxSpinnerService
   ) {
     this.roleName = sessionStorage.getItem('role');
     sessionStorage.removeItem('language');
@@ -76,32 +78,62 @@ export class ApprovedListComponent implements OnInit {
 
 
   getApprovedListDataByAdmin() {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getApprovedListByAdminUser().subscribe(res => {
       this.approvedListData = res;
       let uniqueApprovedListData = _.uniqBy(this.approvedListData, 'id');
       this.approvedListData = uniqueApprovedListData;
       this.dataSource = new MatTableDataSource(this.approvedListData);
       this.dataSource.paginator = this.paginator;
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
   getApprovedListData() {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getApprovedList().subscribe(res => {
       this.approvedListData = res;
       let uniqueApprovedListData = _.uniqBy(this.approvedListData, 'id');
       this.approvedListData = uniqueApprovedListData;
       this.dataSource = new MatTableDataSource(this.approvedListData);
       this.dataSource.paginator = this.paginator;
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
   getApprovedListByDistrictData(userId: number) {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getApprovedListByDistrict(userId).subscribe(res => {
       this.approvedListData = res;
       let uniqueApprovedListData = _.uniqBy(this.approvedListData, 'id');
       this.approvedListData = uniqueApprovedListData;
       this.dataSource = new MatTableDataSource(this.approvedListData);
       this.dataSource.paginator = this.paginator;
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
@@ -125,16 +157,36 @@ export class ApprovedListComponent implements OnInit {
 
   selectedDistrictFromList(district) {
     this.dynamicStateApproved.districtId = district.DistrictId;
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getPanchayatBasedOnDistrictId(this.dynamicStateApproved.districtId).subscribe(res => {
       this.panchayatData = res;
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
     this.dynamicStateApproved.panchayatName = '';
 
   }
 
   getDistrictMasterData() {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getDistrictMasterData().subscribe(res => {
       this.districtData = res;
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
@@ -146,17 +198,26 @@ export class ApprovedListComponent implements OnInit {
       this.dynamicStateApproved.panchayatName = 'ALL';
 
     }
-
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.postDynamicStateApprovedList(this.dynamicStateApproved).subscribe(res => {
       this.approvedListData = res;
       let uniqueApprovedListData = _.uniqBy(this.approvedListData, 'id');
       this.approvedListData = uniqueApprovedListData;
       this.dataSource = new MatTableDataSource(this.approvedListData);
       this.dataSource.paginator = this.paginator;
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
-  searchRecordByAdmin(){
+  searchRecordByAdmin() {
     if (this.dynamicStateApproved.districtId === null || this.dynamicStateApproved.districtId === undefined) {
       this.dynamicStateApproved.districtId = 0;
     }
@@ -164,13 +225,22 @@ export class ApprovedListComponent implements OnInit {
       this.dynamicStateApproved.panchayatName = 'ALL';
 
     }
-
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.postDynamicApprovedListByAdmin(this.dynamicStateApproved).subscribe(res => {
       this.approvedListData = res;
       let uniqueApprovedListData = _.uniqBy(this.approvedListData, 'id');
       this.approvedListData = uniqueApprovedListData;
       this.dataSource = new MatTableDataSource(this.approvedListData);
       this.dataSource.paginator = this.paginator;
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 

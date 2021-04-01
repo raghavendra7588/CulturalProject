@@ -9,6 +9,7 @@ import { BasicuserService } from '../../../app/user/basicuser.service';
 import * as _ from 'lodash';
 import { DialogViewProposalFormComponent } from '../dialog-view-proposal-form/dialog-view-proposal-form.component';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-personal-details',
@@ -36,7 +37,8 @@ export class PersonalDetailsComponent implements OnInit {
     public employeeService: EmployeesService,
     public emitterService: EmitterService,
     public basicuserService: BasicuserService,
-    public toastr: ToastrService
+    public toastr: ToastrService,
+    private spinner: NgxSpinnerService
   ) {
 
     this.role = sessionStorage.getItem('role');
@@ -124,22 +126,42 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
   getPersonalDetailsData() {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getAllPersonalDetailsData(this.userId).subscribe(res => {
       this.personalDetailsData = res;
       let uniquePersonalDetailsData = _.uniqBy(this.personalDetailsData, 'id');
       this.personalDetailsData = uniquePersonalDetailsData;
       this.dataSource = new MatTableDataSource(this.personalDetailsData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
   getNewProposalFormByAdmin() {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getNewApprovalsDataByAdminUser().subscribe(res => {
       this.personalDetailsData = res;
       let uniquePersonalDetailsData = _.uniqBy(this.personalDetailsData, 'id');
       this.personalDetailsData = uniquePersonalDetailsData;
       this.dataSource = new MatTableDataSource(this.personalDetailsData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 

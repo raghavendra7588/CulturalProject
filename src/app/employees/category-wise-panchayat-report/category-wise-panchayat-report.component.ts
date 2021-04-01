@@ -6,6 +6,7 @@ import { BasicuserService } from 'src/app/user/basicuser.service';
 import { DynamicPanchayatName, DynamicStateApproved } from '../employees.model';
 import { EmployeesService } from '../employees.service';
 import * as _ from 'lodash';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-category-wise-panchayat-report',
@@ -36,7 +37,8 @@ export class CategoryWisePanchayatReportComponent implements OnInit {
   constructor(
     public employeeService: EmployeesService,
     public emitterService: EmitterService,
-    public basicuserService: BasicuserService
+    public basicuserService: BasicuserService,
+    private spinner: NgxSpinnerService
   ) {
     this.userId = parseInt(sessionStorage.getItem('userId'));
     this.currentUserRole = sessionStorage.getItem('userManagement');
@@ -131,23 +133,43 @@ export class CategoryWisePanchayatReportComponent implements OnInit {
 
   getGradeAApprovedData(userId) {
     let uniqueData: any = [];
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getGradeWiseData(userId).subscribe(res => {
       this.categoryWiseMasterData = res;
       uniqueData = _.uniqBy(this.categoryWiseMasterData, 'id');
       this.categoryWiseMasterData = uniqueData;
       this.dataSource = new MatTableDataSource(this.categoryWiseMasterData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
   getGradeBApprovedData(userId) {
     let uniqueData: any = [];
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getGradeBWiseData(userId).subscribe(res => {
       this.categoryWiseMasterData = res;
       uniqueData = _.uniqBy(this.categoryWiseMasterData, 'id');
       this.categoryWiseMasterData = uniqueData;
       this.dataSource = new MatTableDataSource(this.categoryWiseMasterData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
@@ -155,24 +177,44 @@ export class CategoryWisePanchayatReportComponent implements OnInit {
 
   getGradeCApprovedData(userId) {
     let uniqueData: any = [];
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getGradeCWiseData(userId).subscribe(res => {
       this.categoryWiseMasterData = res;
       uniqueData = _.uniqBy(this.categoryWiseMasterData, 'id');
       this.categoryWiseMasterData = uniqueData;
       this.dataSource = new MatTableDataSource(this.categoryWiseMasterData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
 
   getAllGradeApprovedData(userId) {
     let uniqueData: any = [];
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getAllGradeWiseDataAtPanchayat(userId).subscribe(res => {
       this.categoryWiseMasterData = res;
       uniqueData = _.uniqBy(this.categoryWiseMasterData, 'id');
       this.categoryWiseMasterData = uniqueData;
       this.dataSource = new MatTableDataSource(this.categoryWiseMasterData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
@@ -180,46 +222,86 @@ export class CategoryWisePanchayatReportComponent implements OnInit {
 
   getHoldedGradeAData(userId) {
     let uniqueData: any = [];
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getHoldedGradeAArtistData(userId).subscribe(res => {
       this.categoryWiseMasterData = res;
       uniqueData = _.uniqBy(this.categoryWiseMasterData, 'id');
       this.categoryWiseMasterData = uniqueData;
       this.dataSource = new MatTableDataSource(this.categoryWiseMasterData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
   getHoldedGradeBData(userId) {
     let uniqueData: any = [];
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getHoldedGradeBArtistData(userId).subscribe(res => {
       this.categoryWiseMasterData = res;
       uniqueData = _.uniqBy(this.categoryWiseMasterData, 'id');
       this.categoryWiseMasterData = uniqueData;
       this.dataSource = new MatTableDataSource(this.categoryWiseMasterData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
   getHoldedGradeCData(userId) {
     let uniqueData: any = [];
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getHoldedGradeCArtistData(userId).subscribe(res => {
       this.categoryWiseMasterData = res;
       uniqueData = _.uniqBy(this.categoryWiseMasterData, 'id');
       this.categoryWiseMasterData = uniqueData;
       this.dataSource = new MatTableDataSource(this.categoryWiseMasterData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
 
   getAllHoldeGradeData(userId) {
     let uniqueData: any = [];
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getHoldedAllGradeWiseDataAtPanchayat(userId).subscribe(res => {
       this.categoryWiseMasterData = res;
       uniqueData = _.uniqBy(this.categoryWiseMasterData, 'id');
       this.categoryWiseMasterData = uniqueData;
       this.dataSource = new MatTableDataSource(this.categoryWiseMasterData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 

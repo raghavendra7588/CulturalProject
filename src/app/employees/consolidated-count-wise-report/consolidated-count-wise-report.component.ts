@@ -14,6 +14,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
 import * as moment from 'moment';
 import { ExportToCsv } from 'export-to-csv';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-consolidated-count-wise-report',
@@ -46,7 +47,6 @@ export class ConsolidatedCountWiseReportComponent implements OnInit {
   isDateRangeSelected: boolean = false;
   maxDate: any;
   ReportDataStateAndAdmin: any = [];
-  artTypeData: any = [];
   role: string;
   districtId: Number;
 
@@ -62,7 +62,8 @@ export class ConsolidatedCountWiseReportComponent implements OnInit {
     public emitterService: EmitterService,
     public basicuserService: BasicuserService,
     public dialog: MatDialog,
-    public toastr: ToastrService
+    public toastr: ToastrService,
+    private spinner: NgxSpinnerService
   ) {
     this.countForm = this.formBuilder.group({
       reportType: [''],
@@ -89,10 +90,10 @@ export class ConsolidatedCountWiseReportComponent implements OnInit {
     this.countForm.controls.reportFromDate.disable();
     this.countForm.controls.reportToDate.disable();
 
-    this.getArtTypeData();
 
     this.emitterService.isUserMasterSelected.subscribe(val => {
       if (val) {
+
         this.currentUserRole = sessionStorage.getItem('userManagement');
         if (this.currentUserRole === 'STATE_COUNT_REPORT') {
           this.currentStatusCode = 'State Count Wise Report';
@@ -169,24 +170,28 @@ export class ConsolidatedCountWiseReportComponent implements OnInit {
 
 
 
-
   valueChangedDate(selectedDate) {
     let date = new Date(selectedDate);
     const year = date.getFullYear()
     const month = `${date.getMonth() + 1}`.padStart(2, "0")
     const day = `${date.getDate()}`.padStart(2, "0")
-    let stringDate = [day, month, year].join("/");
+    let stringDate = [year, month, day].join("/");
     return stringDate;
   }
-
-
 
   valueChangedToDate(selectedDate) {
     let date = new Date(selectedDate);
     const year = date.getFullYear()
     const month = `${date.getMonth() + 1}`.padStart(2, "0")
     const day = `${date.getDate() + 1}`.padStart(2, "0")
-    let stringDate = [day, month, year].join("/");
+    let stringDate = '';
+    console.log('day', day);
+    if (day == '32') {
+      stringDate = [year, month, '31'].join("/") + ' ' + '23:59:59.999';
+    }
+    else {
+      stringDate = [year, month, day].join("/");
+    }
     return stringDate;
   }
 
@@ -212,7 +217,7 @@ export class ConsolidatedCountWiseReportComponent implements OnInit {
     }
     else {
       let fullFromDate = this.valueChangedDate(this.casteWiseReport.fromDate);
-      this.reportFromDate = moment(fullFromDate, 'DD/MM/YYYY').format("DD-MMM-YYYY");
+      this.reportFromDate = fullFromDate;
     }
 
     if (this.casteWiseReport.toDate === null || this.casteWiseReport.toDate === undefined || this.casteWiseReport.toDate === '') {
@@ -221,7 +226,7 @@ export class ConsolidatedCountWiseReportComponent implements OnInit {
     }
     else {
       let fullToDate = this.valueChangedToDate(this.casteWiseReport.toDate);
-      this.reportToDate = moment(fullToDate, 'DD/MM/YYYY').format("DD-MMM-YYYY");
+      this.reportToDate = fullToDate;
     }
 
     this.casteWiseReport.userId = Number(this.userId);
@@ -241,29 +246,57 @@ export class ConsolidatedCountWiseReportComponent implements OnInit {
     console.log('reqObj', reqObj);
 
     if (this.role == 'STATE' || this.role == 'ADMIN') {
-
+      this.spinner.show(undefined,
+        {
+          type: "square-jelly-box",
+          size: "medium",
+          color: 'white'
+        }
+      );
       this.employeeService.getConsolidatedReportByAdmin(reqObj).subscribe(res => {
         this.ReportDataStateAndAdmin = res;
         console.log('this.ReportDataStateAndAdmin', this.ReportDataStateAndAdmin);
         let removedKeys = _.omitBy(this.ReportDataStateAndAdmin, _.isNil);
         console.log('removedKeys', removedKeys);
         this.extractObjects(this.ReportDataStateAndAdmin);
+        this.spinner.hide();
+      }, err => {
+        this.spinner.hide();
       });
     }
     if (this.role == 'DISTRICT') {
+      this.spinner.show(undefined,
+        {
+          type: "square-jelly-box",
+          size: "medium",
+          color: 'white'
+        }
+      );
       this.employeeService.getConsolidatedReportByDistrict(reqObj).subscribe(res => {
         this.ReportDataStateAndAdmin = res;
 
         this.dataSource = new MatTableDataSource(this.ReportDataStateAndAdmin);
         setTimeout(() => this.dataSource.paginator = this.paginator);
+        this.spinner.hide();
+      }, err => {
+        this.spinner.hide();
       });
     }
     if (this.role == 'GRAMPANCHAYAT') {
+      this.spinner.show(undefined,
+        {
+          type: "square-jelly-box",
+          size: "medium",
+          color: 'white'
+        }
+      );
       this.employeeService.getConsolidatedReportByPanchayat(reqObj).subscribe(res => {
         this.ReportDataStateAndAdmin = res;
-
+        this.spinner.hide();
         this.dataSource = new MatTableDataSource(this.ReportDataStateAndAdmin);
         setTimeout(() => this.dataSource.paginator = this.paginator);
+      }, err => {
+        this.spinner.hide();
       });
     }
 
@@ -309,10 +342,5 @@ export class ConsolidatedCountWiseReportComponent implements OnInit {
     setTimeout(() => this.dataSource.paginator = this.paginator);
   }
 
-  getArtTypeData() {
-    this.employeeService.getAllArtTypeData().subscribe(data => {
-      this.artTypeData = data;
-      console.log(' this.artTypeData', this.artTypeData);
-    });
-  }
+
 }

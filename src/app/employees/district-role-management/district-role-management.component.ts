@@ -9,6 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { DialogRoleManagementComponent } from '../dialog-role-management/dialog-role-management.component';
 import { DynamicStateRoleDistrict } from '../employees.model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-district-role-management',
@@ -34,7 +35,8 @@ export class DistrictRoleManagementComponent implements OnInit {
     public employeeService: EmployeesService,
     public emitterService: EmitterService,
     public basicuserService: BasicuserService,
-    public toastr: ToastrService
+    public toastr: ToastrService,
+    private spinner: NgxSpinnerService
   ) {
     sessionStorage.removeItem('language');
     sessionStorage.setItem('language', 'true');
@@ -52,12 +54,22 @@ export class DistrictRoleManagementComponent implements OnInit {
 
 
   getUserMasterDataForDistrict() {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getUserMasterDataForDistrict().subscribe(res => {
       this.userMasterData = res;
       let uniquePersonalDetailsData = _.uniqBy(this.userMasterData, 'UserId');
       this.userMasterData = uniquePersonalDetailsData;
       this.dataSource = new MatTableDataSource(this.userMasterData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
@@ -81,8 +93,18 @@ export class DistrictRoleManagementComponent implements OnInit {
   }
 
   getDistrictMasterData() {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getDistrictMasterData().subscribe(res => {
       this.districtData = res;
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
@@ -91,13 +113,22 @@ export class DistrictRoleManagementComponent implements OnInit {
     if (this.dynamicStateRoleDistrict.districtId === null || this.dynamicStateRoleDistrict.districtId === undefined) {
       this.dynamicStateRoleDistrict.districtId = 0;
     }
-    
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.postDynamicDistrictDataByState(this.dynamicStateRoleDistrict).subscribe(res => {
       this.userMasterData = res;
       let uniquePersonalDetailsData = _.uniqBy(this.userMasterData, 'UserId');
       this.userMasterData = uniquePersonalDetailsData;
       this.dataSource = new MatTableDataSource(this.userMasterData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 

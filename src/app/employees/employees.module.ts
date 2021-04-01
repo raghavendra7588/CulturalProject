@@ -66,6 +66,8 @@ import { ReligionWiseConsolidatedReportComponent } from './religion-wise-consoli
 import { GradeWiseConsolidatedReportComponent } from './grade-wise-consolidated-report/grade-wise-consolidated-report.component';
 import { ConsolidatedRejectedReportComponent } from './consolidated-rejected-report/consolidated-rejected-report.component';
 
+import { NgxSpinnerModule } from "ngx-spinner";
+
 @NgModule({
   declarations: [
     PersonalDetailsComponent,
@@ -133,6 +135,7 @@ import { ConsolidatedRejectedReportComponent } from './consolidated-rejected-rep
     MatPaginatorModule,
     MatCheckboxModule,
     ModalModule.forRoot(),
+    NgxSpinnerModule,
     ToastrModule.forRoot({
       timeOut: 1200,
       preventDuplicates: true

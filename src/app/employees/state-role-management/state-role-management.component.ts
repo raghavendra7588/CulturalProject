@@ -9,6 +9,7 @@ import { EmployeesService } from '../employees.service';
 import * as _ from 'lodash';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogRoleManagementComponent } from '../dialog-role-management/dialog-role-management.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-state-role-management',
@@ -28,7 +29,8 @@ export class StateRoleManagementComponent implements OnInit {
     public employeeService: EmployeesService,
     public emitterService: EmitterService,
     public basicuserService: BasicuserService,
-    public toastr: ToastrService
+    public toastr: ToastrService,
+    private spinner: NgxSpinnerService
   ) {
     this.userId = parseInt(sessionStorage.getItem('userId'));
     sessionStorage.removeItem('language');
@@ -45,13 +47,23 @@ export class StateRoleManagementComponent implements OnInit {
   }
 
   getUserMasterDataForState() {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getUserMasterDataForState().subscribe(res => {
       this.userMasterData = res;
-   
+
       let uniquePersonalDetailsData = _.uniqBy(this.userMasterData, 'UserId');
       this.userMasterData = uniquePersonalDetailsData;
       this.dataSource = new MatTableDataSource(this.userMasterData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 

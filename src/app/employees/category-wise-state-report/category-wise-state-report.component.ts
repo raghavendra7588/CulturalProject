@@ -7,6 +7,7 @@ import { DynamicPanchayatName, DynamicStateApproved } from '../employees.model';
 import { EmployeesService } from '../employees.service';
 import * as _ from 'lodash';
 import { MatTableDataSource } from '@angular/material/table';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 @Component({
@@ -39,7 +40,8 @@ export class CategoryWiseStateReportComponent implements OnInit {
   constructor(
     public employeeService: EmployeesService,
     public emitterService: EmitterService,
-    public basicuserService: BasicuserService
+    public basicuserService: BasicuserService,
+    private spinner: NgxSpinnerService
   ) {
 
     this.userId = parseInt(sessionStorage.getItem('userId'));
@@ -130,45 +132,85 @@ export class CategoryWiseStateReportComponent implements OnInit {
 
   getGradeAArtistByState() {
     let uniqueData: any = [];
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getGradeAArtistByState().subscribe(res => {
       this.categoryWiseMasterData = res;
       uniqueData = _.uniqBy(this.categoryWiseMasterData, 'id');
       this.categoryWiseMasterData = uniqueData;
       this.dataSource = new MatTableDataSource(this.categoryWiseMasterData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
   getGradeBArtistByState() {
     let uniqueData: any = [];
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getGradeBArtistByState().subscribe(res => {
       this.categoryWiseMasterData = res;
       uniqueData = _.uniqBy(this.categoryWiseMasterData, 'id');
       this.categoryWiseMasterData = uniqueData;
       this.dataSource = new MatTableDataSource(this.categoryWiseMasterData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
   getGradeCArtistByState() {
     let uniqueData: any = [];
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getGradeCArtistByState().subscribe(res => {
       this.categoryWiseMasterData = res;
       uniqueData = _.uniqBy(this.categoryWiseMasterData, 'id');
       this.categoryWiseMasterData = uniqueData;
       this.dataSource = new MatTableDataSource(this.categoryWiseMasterData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
   getAllGradeArtistByState() {
     let uniqueData: any = [];
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getAllGradeDataByState().subscribe(res => {
       this.categoryWiseMasterData = res;
       uniqueData = _.uniqBy(this.categoryWiseMasterData, 'id');
       this.categoryWiseMasterData = uniqueData;
       this.dataSource = new MatTableDataSource(this.categoryWiseMasterData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 

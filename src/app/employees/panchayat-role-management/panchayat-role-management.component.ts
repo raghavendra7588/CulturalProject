@@ -10,6 +10,7 @@ import { EmployeesService } from '../employees.service';
 import * as _ from 'lodash';
 import { DialogRoleManagementComponent } from '../dialog-role-management/dialog-role-management.component';
 import { DynamicStateRolePanchayat } from '../employees.model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-panchayat-role-management',
@@ -32,7 +33,8 @@ export class PanchayatRoleManagementComponent implements OnInit {
     public employeeService: EmployeesService,
     public emitterService: EmitterService,
     public basicuserService: BasicuserService,
-    public toastr: ToastrService
+    public toastr: ToastrService,
+    private spinner: NgxSpinnerService
   ) {
     sessionStorage.removeItem('language');
     sessionStorage.setItem('language', 'true');
@@ -49,12 +51,22 @@ export class PanchayatRoleManagementComponent implements OnInit {
   }
 
   getUserMasterDataForPanchayat() {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getUserMasterDataForPanchayat().subscribe(res => {
       this.userMasterData = res;
       let uniquePersonalDetailsData = _.uniqBy(this.userMasterData, 'UserId');
       this.userMasterData = uniquePersonalDetailsData;
       this.dataSource = new MatTableDataSource(this.userMasterData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
@@ -75,17 +87,37 @@ export class PanchayatRoleManagementComponent implements OnInit {
   }
 
   selectedDistrictFromList(district) {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.dynamicStateRolePanchayat.districtId = district.DistrictId;
     this.employeeService.getPanchayatBasedOnDistrictId(this.dynamicStateRolePanchayat.districtId).subscribe(res => {
       this.panchayatData = res;
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
     this.dynamicStateRolePanchayat.panchayatName = '';
 
   }
 
   getDistrictMasterData() {
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.getDistrictMasterData().subscribe(res => {
       this.districtData = res;
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 
@@ -103,13 +135,22 @@ export class PanchayatRoleManagementComponent implements OnInit {
       this.dynamicStateRolePanchayat.panchayatName = 'ALL';
 
     }
-
+    this.spinner.show(undefined,
+      {
+        type: "square-jelly-box",
+        size: "medium",
+        color: 'white'
+      }
+    );
     this.employeeService.postDynamicDistrictDataByPanchayat(this.dynamicStateRolePanchayat).subscribe(res => {
       this.userMasterData = res;
       let uniquePersonalDetailsData = _.uniqBy(this.userMasterData, 'UserId');
       this.userMasterData = uniquePersonalDetailsData;
       this.dataSource = new MatTableDataSource(this.userMasterData);
       setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     });
   }
 }
